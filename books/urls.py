@@ -2,10 +2,11 @@ from django.conf.urls import patterns, url
 
 from books import views
 from books.views import ItemListView, ItemDetailView, ItemByCategoryView, ItemCategoryDetailView
-from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView
+from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView, BookListView, BookDetailView
 
 urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
+    url(r'^$', BookListView.as_view(), name='index'),
+    url(r'^book/(?P<pk>\d+)/$', BookDetailView.as_view(), name='book'),
     url(r'^items/$', ItemListView.as_view(), name='items'),
     url(r'^items_bc/$', ItemByCategoryView.as_view(), name='items_bc'),
     url(r'^items_bc/(?P<pk>\d+)/$', ItemCategoryDetailView.as_view(), name='item_category'),

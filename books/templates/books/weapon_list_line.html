@@ -1,0 +1,14 @@
+<tr class="{% cycle 'light' 'dark' %}">
+    <td class="item_name"><a href="{% url 'books:weapon' weapon.id %}">{{ weapon.name }}</a></td>
+    <td class="weapon_skill">{{ weapon.weapon.skill }}</td>
+    <td>{{ weapon.weapon.damage }}</td>
+    <td>{{ weapon.weapon.display_crit }}</td>
+    <td class="weapon_encum">{{ weapon.weapon.encumbrance }}</td>
+    <td class="weapon_range">{{ weapon.weapon.range_band }}</td>
+    <td>{{ weapon.weapon.hard_points }}</td>
+    <td>{{ weapon.display_price }}</td>
+    <td>{{ weapon.encumbrance }}</td>
+    <td>{{ weapon.rarity }}</td>
+    <td class="weapon_special">{{ weapon.weapon.special }}</td>
+    <td>{{ weapon.indexes }}</td>
+</tr>

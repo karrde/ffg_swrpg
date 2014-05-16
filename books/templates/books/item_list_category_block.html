@@ -1,12 +1,6 @@
 {% if category.item_set.count > 0 %}
 <tr class="item_category"><td colspan=5><a href="{% url 'books:item_category' category.id %}">{{ category.name }}</a></td></tr>
 {% for item in category.item_set.all %}
-    <tr class="{% cycle 'light' 'dark' %}">
-        <td class="item_name"><a href="{% url 'books:item' item.id %}">{{ item.name }}</a></td>
-        <td>{{ item.display_price }}</td>
-        <td>{{ item.encumbrance }}</td>
-        <td>{{ item.rarity }}</td>
-        <td>{{ item.indexes }}</td>
-    </tr>
+{% include "books/item_list_line.html" with item=item %}
 {% endfor %}
 {% endif %}

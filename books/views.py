@@ -1,10 +1,23 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
-from books.models import Item, Category, Weapon
+from books.models import Item, Category, Weapon, Book
 
 def index(request):
   return HttpResponse("Hello, world. You're at the FFG SWRPG index.")
+  
+class BookListView(ListView):
+  model = Book
+  
+class BookDetailView(DetailView):
+  model = Book
+  
+  def get_context_data(self, **kwargs):
+    context = super(BookDetailView, self).get_context_data(**kwargs)
+    object = self.get_object()
+    context['item_list'] = Item.objects.filter(pk__in=[x.item.id for x in object.index_set.filter(item__category__model=1)])
+    context['weapon_list'] = Item.objects.filter(pk__in=[x.item.id for x in object.index_set.filter(item__category__model=2)])
+    return context
   
 class ItemListView(ListView):
   queryset = Item.objects.filter(category__model=1)
