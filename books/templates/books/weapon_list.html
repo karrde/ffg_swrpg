@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Weapons{% endblock title %}
+
+{% block content %}
+{% if weapon_list %}
+    <div  class="itemtable">
+    <table>
+    <tr>
+        <td>Weapon</td><td>Price</td><td>Encum</td><td>Rarity</td><td>Index</td>
+    </tr>
+    {% for weapon in weapon_list %}            
+        <tr class="{% cycle 'light' 'dark' %}">
+            <td class="item_name"><a href="{% url 'books:weapon' weapon.id %}">{{ weapon.name }}</a></td>
+            <td>{{ weapon.skill }}</td>
+            <td>{{ weapon.display_price }}</td>
+            <td>{{ weapon.encumbrance }}</td>
+            <td>{{ weapon.rarity }}</td>
+            <td>{{ weapon.indexes }}</td>
+        </tr>
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No weapons.</p>
+{% endif %}
+{% endblock content %}

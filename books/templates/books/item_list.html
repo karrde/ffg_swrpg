@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Items{% endblock title %}
+
+{% block content %}
+{% if item_list %}
+    <div  class="itemtable">
+    <table>
+    <tr>
+        <td>Item</td><td>Price</td><td>Encum</td><td>Rarity</td><td>Index</td>
+    </tr>
+    {% for item in item_list %}            
+        <tr class="{% cycle 'light' 'dark' %}">
+            <td class="item_name"><a href="{% url 'books:item' item.id %}">{{ item.name }}</a></td>
+            <td>{{ item.display_price }}</td>
+            <td>{{ item.encumbrance }}</td>
+            <td>{{ item.rarity }}</td>
+            <td>{{ item.indexes }}</td>
+        </tr>
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No items.</p>
+{% endif %}
+{% endblock content %}

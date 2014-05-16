@@ -1,0 +1,14 @@
+{% extends "books/item_list.html" %}
+
+
+{% block content %}
+{% if object_list %}
+    {% include "books/item_list_header.html" %}
+    {% for category in object_list %}
+    {% include "books/item_list_category_block.html" with category=category %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No items.</p>
+{% endif %}
+{% endblock content %}

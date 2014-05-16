@@ -1,0 +1,12 @@
+{% extends "books/weapon_list.html" %}
+
+
+{% block content %}
+{% if category %}
+    {% include "books/weapon_list_header.html" %}
+    {% include "books/weapon_list_category_block.html" with category=category %}
+    </table></div>
+{% else %}
+    <p>No weapons.</p>
+{% endif %}
+{% endblock content %}
