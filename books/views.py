@@ -7,7 +7,7 @@ def index(request):
   return HttpResponse("Hello, world. You're at the FFG SWRPG index.")
   
 class ItemListView(ListView):
-  model = Item
+  queryset = Item.objects.filter(category__model=1)
   
 class ItemByCategoryView(ListView):
   queryset = Category.objects.filter(model=1)

@@ -19,17 +19,21 @@ class IndexInline(admin.TabularInline):
 
 class ItemAdmin(admin.ModelAdmin):  
   list_display = ('name', 'price', 'encumbrance', 'rarity', 'indexes')
-  fields = ['name', ('price', 'restricted'), 'encumbrance', 'rarity', 'category']
+  fields = ['name', ('price', 'restricted'), 'encumbrance', 'rarity', 'category', 'image']
   inlines = [IndexInline]
   
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':
       kwargs['queryset'] = Category.objects.filter(model=1)
     return super(ItemAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-  
+
+  def queryset(self, request):
+    qs = super(ItemAdmin, self).queryset(request)
+    return qs.filter(category__model=1)
+
   
 class WeaponAdmin(ItemAdmin):
-  fields = ['name', 'skill', 'damage', 'critical', 'range_band', 'encumbrance', 'hard_points', ('price', 'restricted'), 'rarity', 'special', 'category']
+  fields = ['name', 'skill', 'damage', 'critical', 'range_band', 'encumbrance', 'hard_points', ('price', 'restricted'), 'rarity', 'special', 'category', 'image']
 
   def formfield_for_dbfield(self, db_field, **kwargs):
     formfield = super(WeaponAdmin, self).formfield_for_dbfield(db_field, **kwargs)
@@ -46,6 +50,10 @@ class WeaponAdmin(ItemAdmin):
       kwargs['queryset'] = RangeBand.objects.filter(range_band=1)
     return super(ItemAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
     
+  def queryset(self, request):
+    qs = super(ItemAdmin, self).queryset(request)
+    return qs.filter(category__model=2)
+  
 class CategoryAdmin(admin.ModelAdmin):
   list_display = ('model', 'name')
 

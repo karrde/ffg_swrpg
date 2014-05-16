@@ -1,4 +1,5 @@
 from django.db import models
+import os
 
 # Create your models here.
 
@@ -48,6 +49,12 @@ class RangeBand(models.Model):
   def __unicode__(self):
     return self.name
 
+def get_item_image_path(instance, filename):
+  if hasattr(instance, 'weapon'):
+    path_start = 'weapon'
+  else:
+    path_start = 'item'
+  return os.path.join(path_start, str(instance.id), filename)
 
 class Item(models.Model):
   name = models.CharField(max_length=100)
@@ -56,6 +63,7 @@ class Item(models.Model):
   encumbrance = models.IntegerField()
   rarity = models.IntegerField()
   category = models.ForeignKey(Category)
+  image = models.ImageField(upload_to=get_item_image_path, null=True, blank=True)
   
   def __unicode__(self):
     return self.name
