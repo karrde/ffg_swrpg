@@ -17,6 +17,14 @@ class Book(models.Model):
   product_key = models.CharField(max_length=10)
   def __unicode__(self):
     return "{0} ({1})".format(self.name, self.system.initials)
+    
+  def _item_set(self):
+    return Item.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=1)])
+  def _weapon_set(self):
+    return Item.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=2)])
+    
+  item_set = property(_item_set)
+  weapon_set = property(_weapon_set)
   
 class Category(models.Model):
   MODEL_CHOICES = (

@@ -2,6 +2,7 @@
 
 
 {% block content %}
+<h1>{{ category.name }} Items</h1>
 {% if category %}
     {% include "books/item_list_header.html" %}
     {% include "books/item_list_category_block.html" with category=category %}

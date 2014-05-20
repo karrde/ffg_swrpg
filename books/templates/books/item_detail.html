@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ item.name }}</h1>
+
+<div class="item_block">
+<span class="item_name">{{ item.name }}</span><br />
+{% if item.image %}<img class="item_image" src="{{ item.image.url }}" />{% endif %}
+<div class="item_detail"><span class="item_titles">Price:</span> {{ item.display_price }}<br />
+<span class="item_titles">Encumbrance:</span> {{ item.encumbrance }}<br />
+<span class="item_titles">Rarity:</span> {{ item.rarity }}<br />
+<span class="item_titles">Indexes:</span> {{ item.indexes }}<br />
+</div>
+</div>
+
 {% endblock content %}

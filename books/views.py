@@ -15,8 +15,8 @@ class BookDetailView(DetailView):
   def get_context_data(self, **kwargs):
     context = super(BookDetailView, self).get_context_data(**kwargs)
     object = self.get_object()
-    context['item_list'] = Item.objects.filter(pk__in=[x.item.id for x in object.index_set.filter(item__category__model=1)])
-    context['weapon_list'] = Item.objects.filter(pk__in=[x.item.id for x in object.index_set.filter(item__category__model=2)])
+    context['item_list'] = object.item_set
+    context['weapon_list'] = object.weapon_set
     return context
   
 class ItemListView(ListView):

@@ -3,6 +3,7 @@
 {% block title %}{{ block.super }} - Weapons{% endblock title %}
 
 {% block content %}
+<h1>Weapons</h1>
 {% if weapon_list %}
     {% include "books/weapon_list_header.html" %}
     {% for weapon in weapon_list %}            

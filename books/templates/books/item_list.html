@@ -3,6 +3,7 @@
 {% block title %}{{ block.super }} - Items{% endblock title %}
 
 {% block content %}
+<h1>Items</h1>
 {% if item_list %}
     {% include "books/item_list_header.html" %}
     {% for item in item_list %}            
