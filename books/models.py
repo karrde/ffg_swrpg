@@ -84,9 +84,27 @@ class Item(models.Model):
       res = "(R) "
     else:
       res = ""
-    return '{0}{1}'.format(res, self.price)
+    if self.price:
+      rprice = self.price
+    else:
+      rprice = "-"
+    return '{0}{1}'.format(res, rprice)
+
+  def _display_encum(self):
+    if self.price or self.encumbrance:
+      return str(self.encumbrance)
+    else:
+      return "-"
+
+  def _display_rarity(self):
+    if self.price or self.rarity:
+      return str(self.rarity)
+    else:
+      return "-"
     
   display_price = property(_display_price)
+  display_encum = property(_display_encum)
+  display_rarity = property(_display_rarity)
   indexes = property(_indexes)
   
   class Meta:
@@ -116,8 +134,15 @@ class Weapon(Item):
       return str(self.critical)
     else:
       return "-"
+
+  def _display_hp(self):
+    if self.price or self.hard_points:
+      return str(self.hard_points)
+    else:
+      return "-"
       
   display_crit = property(_display_crit)
+  display_hp = property(_display_hp)
   
   class Meta:
     ordering = ['name']
