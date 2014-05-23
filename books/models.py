@@ -34,6 +34,12 @@ class Category(models.Model):
   model = models.IntegerField(choices=MODEL_CHOICES)
   name = models.CharField(max_length=50)
 
+  def _weapon_set(self):
+    if self.model == 2:
+      return self.item_set
+  
+  weapon_set = property(_weapon_set)
+
   def __unicode__(self):
     return self.name
 
@@ -123,11 +129,17 @@ class Index(models.Model):
   
 class Weapon(Item):
   skill = models.ForeignKey(Skill)
-  damage = models.CharField(max_length=4)
+  damage = models.IntegerField()
   critical = models.IntegerField()
   range_band = models.ForeignKey(RangeBand)
   hard_points = models.IntegerField()
   special = models.CharField(max_length=200)
+  
+  def _display_damage(self):
+    if (self.skill.name in ['Melee', 'Brawl']):
+      return "{0:+d}".format(self.damage)
+    else:
+      return self.damage
   
   def _display_crit(self):
     if self.critical:
@@ -143,6 +155,7 @@ class Weapon(Item):
       
   display_crit = property(_display_crit)
   display_hp = property(_display_hp)
+  display_damage = property(_display_damage)
   
   class Meta:
     ordering = ['name']

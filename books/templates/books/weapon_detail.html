@@ -7,7 +7,7 @@
 {% if weapon.image %}<img class="item_image" src="{{ weapon.image.url }}" />{% endif %}
 <div class="item_detail">
 <span class="item_titles">Skill:</span> {{ weapon.skill.name }}<br />
-<span class="item_titles">Damage:</span> {{ weapon.damage }}<br />
+<span class="item_titles">Damage:</span> {{ weapon.display_damage }}<br />
 <span class="item_titles">Critical:</span> {{ weapon.display_crit }}<br />
 <span class="item_titles">Range:</span> {{ weapon.range_band.name }}<br />
 <span class="item_titles">Encumbrance:</span> {{ weapon.display_encum }}<br />

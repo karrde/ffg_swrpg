@@ -1,7 +1,7 @@
 <tr>
     <td class="item_name"><a href="{% url 'books:weapon' weapon.id %}">{{ weapon.name }}</a></td>
     <td class="weapon_skill">{{ weapon.weapon.skill }}</td>
-    <td>{{ weapon.weapon.damage }}</td>
+    <td>{{ weapon.weapon.display_damage }}</td>
     <td>{{ weapon.weapon.display_crit }}</td>
     <td class="weapon_range">{{ weapon.weapon.range_band.name }}</td>
     <td class="weapon_encum">{{ weapon.weapon.display_encum }}</td>
