@@ -36,7 +36,7 @@ class Category(models.Model):
 
   def _weapon_set(self):
     if self.model == 2:
-      return self.item_set
+      return Weapon.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
   
   weapon_set = property(_weapon_set)
 
