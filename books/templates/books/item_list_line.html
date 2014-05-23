@@ -1,7 +1,7 @@
 <tr>
     <td class="item_name"><a href="{% url 'books:item' item.id %}">{{ item.name }}</a></td>
     <td>{{ item.display_price }}</td>
-    <td>{{ item.encumbrance }}</td>
-    <td>{{ item.rarity }}</td>
+    <td>{{ item.display_encum }}</td>
+    <td>{{ item.display_rarity }}</td>
     <td>{{ item.indexes }}</td>
 </tr>
