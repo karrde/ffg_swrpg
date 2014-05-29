@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
-from books.models import Item, Category, Weapon, Book
+from books.models import Item, Category, Weapon, Book, Armor
 
 def index(request):
   return HttpResponse("Hello, world. You're at the FFG SWRPG index.")
@@ -17,6 +17,7 @@ class BookDetailView(DetailView):
     object = self.get_object()
     context['item_list'] = object.item_set
     context['weapon_list'] = object.weapon_set
+    context['armor_list'] = object.armor_set    
     return context
   
 class ItemListView(ListView):
@@ -54,6 +55,12 @@ class ItemCategoryDetailView(DetailView):
 class WeaponListView(ListView):
   model = Weapon
 
+  def get_context_data(self, **kwargs):
+    context = super(WeaponListView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['weapon_list'] = Weapon.objects.filter(category__model=2).order_by(order_by, 'name')
+    return context 
+
 class WeaponByCategoryView(ListView):
   queryset = Category.objects.filter(model=2)
   template_name = 'books/weapon_by_category_list.html'
@@ -76,3 +83,16 @@ class WeaponCategoryDetailView(DetailView):
     order_by = self.request.GET.get('order_by', 'name')
     context['order_by'] = order_by
     return context
+
+class ArmorListView(ListView):
+  model = Armor
+
+  def get_context_data(self, **kwargs):
+    context = super(ArmorListView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['weapon_list'] = Weapon.objects.filter(category__model=3).order_by(order_by, 'name')
+    return context 
+
+class ArmorDetailView(DetailView):
+  model = Armor
+

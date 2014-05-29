@@ -18,5 +18,13 @@
     {% endfor %}
     </table></div>
 {% endif %}
+{% if armor_list %}
+<h3>Armor</h3>
+    {% include "books/armor_list_header.html" %}
+    {% for armor in armor_list %}            
+    {% include "books/armor_list_line.html" with armor=armor %}
+    {% endfor %}
+    </table></div>
+{% endif %}
 
 {% endblock content %}

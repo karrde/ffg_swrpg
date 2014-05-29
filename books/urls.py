@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from books import views
 from books.views import ItemListView, ItemDetailView, ItemByCategoryView, ItemCategoryDetailView
-from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView, BookListView, BookDetailView
+from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView, BookListView, BookDetailView, ArmorListView, ArmorDetailView
 
 urlpatterns = patterns('',
     url(r'^$', BookListView.as_view(), name='index'),
@@ -15,4 +15,6 @@ urlpatterns = patterns('',
     url(r'^weapons_bc/$', WeaponByCategoryView.as_view(), name='weapons_bc'),
     url(r'^weapons_bc/(?P<pk>\d+)/$', WeaponCategoryDetailView.as_view(), name='weapon_category'),
     url(r'^weapons/(?P<pk>\d+)/$', WeaponDetailView.as_view(), name='weapon'),
+    url(r'^armor/$', ArmorListView.as_view(), name='armors'),
+    url(r'^armor/(?P<pk>\d+)/$', ArmorDetailView.as_view(), name='armor'),
 )

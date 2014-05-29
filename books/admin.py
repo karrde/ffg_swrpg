@@ -2,7 +2,7 @@ from django.contrib import admin
 from django import forms
 
 # Register your models here.
-from books.models import System, Book, Index, Item, Weapon, Category, Skill, RangeBand
+from books.models import System, Book, Index, Item, Weapon, Category, Skill, RangeBand, Armor
 
 class SystemAdmin(admin.ModelAdmin):
   list_display = ('name', 'initials')
@@ -53,6 +53,18 @@ class WeaponAdmin(ItemAdmin):
   def queryset(self, request):
     qs = super(ItemAdmin, self).queryset(request)
     return qs.filter(category__model=2)
+    
+class ArmorAdmin(ItemAdmin):
+  fields = ['name', 'defense', 'soak', ('price', 'restricted'), 'encumbrance', 'hard_points', 'rarity', 'category']
+
+  def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    if db_field.name == 'category':
+      kwargs['queryset'] = Category.objects.filter(model=3)
+    return super(ItemAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+  def queryset(self, request):
+    qs = super(ItemAdmin, self).queryset(request)
+    return qs.filter(category__model=3)
   
 class CategoryAdmin(admin.ModelAdmin):
   list_display = ('model', 'name')
@@ -61,6 +73,7 @@ admin.site.register(System, SystemAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Weapon, WeaponAdmin)
+admin.site.register(Armor, ArmorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Skill)
 admin.site.register(RangeBand)

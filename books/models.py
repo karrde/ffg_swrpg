@@ -21,15 +21,19 @@ class Book(models.Model):
   def _item_set(self):
     return Item.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=1)])
   def _weapon_set(self):
-    return Item.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=2)])
+    return Weapon.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=2)])
+  def _armor_set(self):
+    return Armor.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=3)])
     
   item_set = property(_item_set)
   weapon_set = property(_weapon_set)
+  armor_set = property(_armor_set)
   
 class Category(models.Model):
   MODEL_CHOICES = (
     (1, 'Item'),
     (2, 'Weapon'),
+    (3, 'Armor'),
   )
   model = models.IntegerField(choices=MODEL_CHOICES)
   name = models.CharField(max_length=50)
@@ -157,5 +161,21 @@ class Weapon(Item):
   display_hp = property(_display_hp)
   display_damage = property(_display_damage)
   
+  class Meta:
+    ordering = ['name']
+    
+class Armor(Item):
+  defense = models.IntegerField()
+  soak = models.IntegerField()
+  hard_points = models.IntegerField()
+
+  def _display_hp(self):
+    if self.price or self.hard_points:
+      return str(self.hard_points)
+    else:
+      return "-"
+      
+  display_hp = property(_display_hp)
+
   class Meta:
     ordering = ['name']
