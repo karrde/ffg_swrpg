@@ -22,18 +22,21 @@ class BookDetailView(DetailView):
 class ItemListView(ListView):
   queryset = Item.objects.filter(category__model=1)
   
+  def get_context_data(self, **kwargs):
+    context = super(ItemListView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['item_list'] = Item.objects.filter(category__model=1).order_by(order_by, 'name')
+    return context 
+  
 class ItemByCategoryView(ListView):
   queryset = Category.objects.filter(model=1)
   template_name = 'books/item_by_category_list.html'
 
-# def get_context_data(self, **kwargs):
-#     # Call the base implementation first to get a context
-#     context = super(ListView, self).get_context_data(**kwargs)
-#     context['items_by_category'] = {}
-#     for category in context['queryset']:
-#       context['items_by_category'][category.name] = Item.objects.filter(category=category.id)
-#     return context
-  
+  def get_context_data(self, **kwargs):
+    context = super(ItemByCategoryView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context
   
 class ItemDetailView(DetailView):
   model = Item
@@ -42,6 +45,12 @@ class ItemCategoryDetailView(DetailView):
   model = Category
   template_name = 'books/item_category_detail.html'
 
+  def get_context_data(self, **kwargs):
+    context = super(ItemCategoryDetailView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context
+
 class WeaponListView(ListView):
   model = Weapon
 
@@ -49,9 +58,21 @@ class WeaponByCategoryView(ListView):
   queryset = Category.objects.filter(model=2)
   template_name = 'books/weapon_by_category_list.html'
 
+  def get_context_data(self, **kwargs):
+    context = super(WeaponByCategoryView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context
+
 class WeaponDetailView(DetailView):
   model = Weapon
 
 class WeaponCategoryDetailView(DetailView):
   model = Category
   template_name = 'books/weapon_category_detail.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(WeaponCategoryDetailView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context

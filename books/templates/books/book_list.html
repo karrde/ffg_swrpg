@@ -9,7 +9,7 @@
         <td>Book</td><td>System</td><td>Product Key</td><td>Initials</td>
     </tr>
     {% for book in book_list %}            
-        <tr class="{% cycle 'light' 'dark' %}">
+        <tr>
             <td class="item_name"><a href="{% url 'books:book' book.id %}">{{ book.name }}</a></td>
             <td>{{ book.system }}</td>
             <td>{{ book.product_key }}</td>
