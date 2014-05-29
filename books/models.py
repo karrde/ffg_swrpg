@@ -24,16 +24,20 @@ class Book(models.Model):
     return Weapon.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=2)])
   def _armor_set(self):
     return Armor.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=3)])
+  def _attachment_set(self):
+    return Attachment.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=4)])
     
   item_set = property(_item_set)
   weapon_set = property(_weapon_set)
   armor_set = property(_armor_set)
+  attachment_set = property(_attachment_set)
   
 class Category(models.Model):
   MODEL_CHOICES = (
     (1, 'Item'),
     (2, 'Weapon'),
     (3, 'Armor'),
+    (4, 'Attachment'),
   )
   model = models.IntegerField(choices=MODEL_CHOICES)
   name = models.CharField(max_length=50)
@@ -43,6 +47,12 @@ class Category(models.Model):
       return Weapon.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
   
   weapon_set = property(_weapon_set)
+
+  def _attachment_set(self):
+    if self.model == 4:
+      return Attachment.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
+  
+  attachment_set = property(_attachment_set)
 
   def __unicode__(self):
     return self.name
@@ -179,3 +189,23 @@ class Armor(Item):
 
   class Meta:
     ordering = ['name']
+    
+class Attachment(Item):
+  by_silhoutte = models.BooleanField()
+  hard_points = models.IntegerField()
+  
+  def _display_price(self):
+    item_price = super(Attachment, self)._display_price()
+    if self.by_silhoutte:
+      return "{0} x silhoutte".format(item_price)
+    else:
+      return item_price
+      
+  def _display_encum(self):
+    if self.price and self.encumbrance:
+      return "{0:+d}".format(self.encumbrance)
+    else:
+      return "-"
+
+  display_price = property(_display_price)
+  display_encum = property(_display_encum)

@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from books import views
 from books.views import ItemListView, ItemDetailView, ItemByCategoryView, ItemCategoryDetailView
-from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView, BookListView, BookDetailView, ArmorListView, ArmorDetailView
+from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView, BookListView, BookDetailView, ArmorListView, ArmorDetailView, AttachmentListView, AttachmentByCategoryView, AttachmentCategoryDetailView, AttachmentDetailView
 
 urlpatterns = patterns('',
     url(r'^$', BookListView.as_view(), name='index'),
@@ -17,4 +17,8 @@ urlpatterns = patterns('',
     url(r'^weapons/(?P<pk>\d+)/$', WeaponDetailView.as_view(), name='weapon'),
     url(r'^armor/$', ArmorListView.as_view(), name='armors'),
     url(r'^armor/(?P<pk>\d+)/$', ArmorDetailView.as_view(), name='armor'),
+    url(r'^attachments/$', AttachmentListView.as_view(), name='attachments'),
+    url(r'^attachments_bc/$', AttachmentByCategoryView.as_view(), name='attachments_bc'),
+    url(r'^attachments_bc/(?P<pk>\d+)/$', AttachmentCategoryDetailView.as_view(), name='attachment_category'),
+    url(r'^attachments/(?P<pk>\d+)/$', AttachmentDetailView.as_view(), name='attachment'),
 )

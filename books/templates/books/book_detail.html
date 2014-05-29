@@ -26,5 +26,13 @@
     {% endfor %}
     </table></div>
 {% endif %}
+{% if attachment_list %}
+<h3>Attachments</h3>
+    {% include "books/attachment_list_header.html" %}
+    {% for attachment in attachment_list %}            
+    {% include "books/attachment_list_line.html" with attachment=attachment %}
+    {% endfor %}
+    </table></div>
+{% endif %}
 
 {% endblock content %}

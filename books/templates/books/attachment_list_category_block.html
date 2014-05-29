@@ -1,0 +1,6 @@
+{% if category.item_set.count > 0 %}
+<tr class="item_category"><td colspan=12><a href="{% url 'books:attachment_category' category.id %}">{{ category.name }}</a></td></tr>
+{% for attachment in category.attachment_set.all|dictsort:order_by %}
+{% include "books/attachment_list_line.html" with attachment=attachment %}
+{% endfor %}
+{% endif %}

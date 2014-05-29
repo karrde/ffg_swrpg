@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
-from books.models import Item, Category, Weapon, Book, Armor
+from books.models import Item, Category, Weapon, Book, Armor, Attachment
 
 def index(request):
   return HttpResponse("Hello, world. You're at the FFG SWRPG index.")
@@ -17,7 +17,8 @@ class BookDetailView(DetailView):
     object = self.get_object()
     context['item_list'] = object.item_set
     context['weapon_list'] = object.weapon_set
-    context['armor_list'] = object.armor_set    
+    context['armor_list'] = object.armor_set
+    context['attachment_list'] = object.attachment_set
     return context
   
 class ItemListView(ListView):
@@ -96,3 +97,34 @@ class ArmorListView(ListView):
 class ArmorDetailView(DetailView):
   model = Armor
 
+class AttachmentListView(ListView):
+  model = Attachment
+
+  def get_context_data(self, **kwargs):
+    context = super(AttachmentListView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['attachment_list'] = Attachment.objects.filter(category__model=4).order_by(order_by, 'name')
+    return context 
+
+class AttachmentByCategoryView(ListView):
+  queryset = Category.objects.filter(model=4)
+  template_name = 'books/attachment_by_category_list.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(AttachmentByCategoryView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context
+
+class AttachmentDetailView(DetailView):
+  model = Attachment
+
+class AttachmentCategoryDetailView(DetailView):
+  model = Category
+  template_name = 'books/attachment_category_detail.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(AttachmentCategoryDetailView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context

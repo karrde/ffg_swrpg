@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Weapons{% endblock title %}
+
+{% block content %}
+<h1>Attachments</h1>
+{% if attachment_list %}
+    {% include "books/attachment_list_header.html" %}
+    {% for attachment in attachment_list %}            
+    {% include "books/attachment_list_line.html" with attachment=attachment %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No attachments.</p>
+{% endif %}
+{% endblock content %}

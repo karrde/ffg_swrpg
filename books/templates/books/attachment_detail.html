@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+<span class="item_name">{{ attachment.name }}</span><br />
+{% if attachment.image %}<img class="item_image" src="{{ attachment.image.url }}" />{% endif %}
+<div class="item_detail">
+<span class="item_titles">Price:</span> {{ attachment.display_price }}<br />
+<span class="item_titles">Encumbrance:</span> {{ attachment.display_encum }}<br />
+<span class="item_titles">HP Required:</span> {{ attachment.hard_points }}<br />
+<span class="item_titles">Rarity:</span> {{ attachment.display_rarity }}<br />
+<span class="item_titles">Type:</span> {{ attachment.category.name }}<br />
+<span class="item_titles">Indexes:</span> {{ attachment.indexes }}<br />
+</div>
+</div>
+
+{% endblock content %}

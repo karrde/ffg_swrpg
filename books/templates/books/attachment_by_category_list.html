@@ -1,0 +1,15 @@
+{% extends "books/attachment_list.html" %}
+
+
+{% block content %}
+<h1>Attachments by Category</h1>
+{% if category_list %}
+    {% include "books/attachment_list_header.html" %}
+    {% for category in category_list %}
+    {% include "books/attachment_list_category_block.html" with category=category %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No attachments.</p>
+{% endif %}
+{% endblock content %}
