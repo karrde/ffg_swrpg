@@ -90,7 +90,7 @@ class ArmorListView(ListView):
   def get_context_data(self, **kwargs):
     context = super(ArmorListView, self).get_context_data(**kwargs)
     order_by = self.request.GET.get('order_by', 'name')
-    context['weapon_list'] = Weapon.objects.filter(category__model=3).order_by(order_by, 'name')
+    context['armor_list'] = Armor.objects.filter(category__model=3).order_by(order_by, 'name')
     return context 
 
 class ArmorDetailView(DetailView):
