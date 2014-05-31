@@ -2,7 +2,7 @@ from django.contrib import admin
 from django import forms
 
 # Register your models here.
-from books.models import System, Book, Index, Item, Weapon, Category, Skill, RangeBand, Armor, Attachment
+from books.models import System, Book, Index, Item, Weapon, Category, Skill, RangeBand, Armor, Attachment, CrewDescriptor, CrewEntry, Vehicle
 
 class SystemAdmin(admin.ModelAdmin):
   list_display = ('name', 'initials')
@@ -81,6 +81,25 @@ class AttachmentAdmin(ItemAdmin):
     qs = super(ItemAdmin, self).queryset(request)
     return qs.filter(category__model=4)
 
+class CrewEntryInline(admin.TabularInline):
+  model = CrewEntry
+  extra = 1
+  
+class VehicleAdmin(ItemAdmin):
+  fields = ['name', 'silhoutte', 'speed', 'handling', ('def_fore', 'def_port', 'def_starboard', 'def_aft'), 'armor_value', 'hull_trauma', 'system_strain', 'category', 'model',  'manufacturer', 'max_altitude', 'sensor_range', 'encumbrance', 'passenger', ('price', 'restricted'), 'rarity', 'hard_points', 'weapon_count']
+  inlines = [CrewEntryInline, IndexInline]
+
+  def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    if db_field.name == 'category':
+      kwargs['queryset'] = Category.objects.filter(model=5)
+    elif db_field.name == 'sensor_range':
+      kwargs['queryset'] = RangeBand.objects.filter(range_band=2)    
+    return super(ItemAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+  def queryset(self, request):
+    qs = super(ItemAdmin, self).queryset(request)
+    return qs.filter(category__model=5)
+
 
 admin.site.register(System, SystemAdmin)
 admin.site.register(Book, BookAdmin)
@@ -91,3 +110,5 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Attachment, AttachmentAdmin)
 admin.site.register(Skill)
 admin.site.register(RangeBand)
+admin.site.register(CrewDescriptor)
+admin.site.register(Vehicle, VehicleAdmin)

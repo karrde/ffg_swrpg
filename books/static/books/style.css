@@ -126,15 +126,15 @@ img {
 	background:#fff;		/* right column background colour */
 }
 .leftmenu .colleft {
-	right:75%;			/* right column width */
+	right:80%;			/* right column width */
 	background:#f4f4f4;	/* left column background colour */
 }
 .leftmenu .col1 {
-	width:71%;			/* right column content width */
+	width:76%;			/* right column content width */
 	left:102%;			/* 100% plus left column left padding */
 }
 .leftmenu .col2 {
-	width:21%;			/* left column content width (column width minus left and right padding) */
+	width:16%;			/* left column content width (column width minus left and right padding) */
 	left:6%;			/* (right column left and right padding) plus (left column left padding) */
 }
 /* Footer styles */
@@ -157,7 +157,7 @@ img {
 	width:95%;
 	box-shadow: 10px 10px 5px #888888;
 	border:1px solid #000000;
-	
+
 	-moz-border-radius-bottomleft:0px;
 	-webkit-border-bottom-left-radius:0px;
 	border-bottom-left-radius:0px;
@@ -173,13 +173,23 @@ img {
 	-moz-border-radius-topleft:0px;
 	-webkit-border-top-left-radius:0px;
 	border-top-left-radius:0px;
-}.itemtable table{
+}
+
+@media print {
+  .itemtable {
+    box-shadow: none;
+  }
+/*  .itemtable tr:nth-child(odd)  { background-color:#cccccc; }
+  .itemtable tr:nth-child(even) { background-color:#ffffff; } */
+}
+.itemtable table{
     border-collapse: collapse;
         border-spacing: 0;
 	width:100%;
 	height:100%;
 	margin:0px;padding:0px;
-}.itemtable tr:last-child td:last-child {
+}
+.itemtable tr:last-child td:last-child {
 	-moz-border-radius-bottomright:0px;
 	-webkit-border-bottom-right-radius:0px;
 	border-bottom-right-radius:0px;
@@ -193,43 +203,46 @@ img {
 	-moz-border-radius-topright:0px;
 	-webkit-border-top-right-radius:0px;
 	border-top-right-radius:0px;
-}.itemtable tr:last-child td:first-child{
+}
+.itemtable tr:last-child td:first-child{
 	-moz-border-radius-bottomleft:0px;
 	-webkit-border-bottom-left-radius:0px;
 	border-bottom-left-radius:0px;
-}.itemtable tr:hover td{
+}
+.itemtable tr:hover td{
 	
 }
 .itemtable tr:nth-child(odd){ background-color:#bf9670; }
 .itemtable tr:nth-child(even)    { background-color:#ffffff; }
 .itemtable td{
 	vertical-align:top;
-	
-	
 	border:1px solid #000000;
-	border-width:0px 1px 1px 0px;
+/*	border-width:0px 1px 1px 0px; */
 	text-align:right;
 	padding:7px;
 	font-size:10px;
 	font-family:Arial;
 	font-weight:normal;
 	color:#000000;
-}.itemtable tr:last-child td{
-	border-width:0px 1px 0px 0px;
-}.itemtable tr td:last-child{
-	border-width:0px 0px 1px 0px;
-}.itemtable tr:last-child td:last-child{
-	border-width:0px 0px 0px 0px;
 }
+/* .itemtable tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}
+.itemtable tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}
+.itemtable tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+} */
 .itemtable tr:first-child td{
 		background:-o-linear-gradient(bottom, #666666 5%, #666666 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #666666), color-stop(1, #666666) );
 	background:-moz-linear-gradient( center top, #666666 5%, #666666 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#666666", endColorstr="#666666");	background: -o-linear-gradient(top,#666666,666666);
 
 	background-color:#666666;
-	border:0px solid #000000;
+	border:1px solid #000000;
 	text-align:left;
-	border-width:0px 0px 1px 1px;
+/*	border-width:1px 0px 1px 1px; */
 	font-size:14px;
 	font-family:Arial;
 	font-weight:bold;
@@ -242,11 +255,32 @@ img {
 
 	background-color:#666666;
 }
-.itemtable tr:first-child td:first-child{
+/* .itemtable tr:first-child td:first-child{
 	border-width:0px 0px 1px 0px;
 }
 .itemtable tr:first-child td:last-child{
 	border-width:0px 0px 1px 1px;
+} */
+
+/* class for hiding objects during print */
+@media all {
+  .page-break	{ display: none; }
+}
+
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
+    .leftmenu .col1 {
+      width: 100% !important;
+    }
+    .leftmenu .col2 {
+      width: 0% !important;
+    }
+    .leftmenu .colleft {
+      right: 100%;
+    }
+    .page-break { display: block; break-before: always; }
 }
 
 /* Additions for table def added by me */

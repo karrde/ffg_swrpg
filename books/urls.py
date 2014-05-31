@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from books import views
 from books.views import ItemListView, ItemDetailView, ItemByCategoryView, ItemCategoryDetailView
-from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView, BookListView, BookDetailView, ArmorListView, ArmorDetailView, AttachmentListView, AttachmentByCategoryView, AttachmentCategoryDetailView, AttachmentDetailView
+from books.views import WeaponListView, WeaponDetailView, WeaponByCategoryView, WeaponCategoryDetailView, BookListView, BookDetailView, ArmorListView, ArmorDetailView, AttachmentListView, AttachmentByCategoryView, AttachmentCategoryDetailView, AttachmentDetailView, VehicleDetailView, VehicleListView, VehicleByCategoryView, VehicleCategoryDetailView
 
 urlpatterns = patterns('',
     url(r'^$', BookListView.as_view(), name='index'),
@@ -21,4 +21,8 @@ urlpatterns = patterns('',
     url(r'^attachments_bc/$', AttachmentByCategoryView.as_view(), name='attachments_bc'),
     url(r'^attachments_bc/(?P<pk>\d+)/$', AttachmentCategoryDetailView.as_view(), name='attachment_category'),
     url(r'^attachments/(?P<pk>\d+)/$', AttachmentDetailView.as_view(), name='attachment'),
+    url(r'^vehicles/$', VehicleListView.as_view(), name='vehicles'),
+    url(r'^vehicles/(?P<pk>\d+)/$', VehicleDetailView.as_view(), name='vehicle'),
+    url(r'^vehicles_bc/$', VehicleByCategoryView.as_view(), name='vehicle_bc'),
+    url(r'^vehicles_bc/(?P<pk>\d+)/$', VehicleCategoryDetailView.as_view(), name='vehicle_category'),
 )

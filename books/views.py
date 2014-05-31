@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
-from books.models import Item, Category, Weapon, Book, Armor, Attachment
+from books.models import Item, Category, Weapon, Book, Armor, Attachment, Vehicle
 
 def index(request):
   return HttpResponse("Hello, world. You're at the FFG SWRPG index.")
@@ -19,6 +19,7 @@ class BookDetailView(DetailView):
     context['weapon_list'] = object.weapon_set
     context['armor_list'] = object.armor_set
     context['attachment_list'] = object.attachment_set
+    context['vehicle_list'] = object.vehicle_set
     return context
   
 class ItemListView(ListView):
@@ -125,6 +126,43 @@ class AttachmentCategoryDetailView(DetailView):
 
   def get_context_data(self, **kwargs):
     context = super(AttachmentCategoryDetailView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context
+
+class VehicleDetailView(DetailView):
+  model = Vehicle
+  
+class VehicleListView(ListView):
+  model = Vehicle
+
+  def get_context_data(self, **kwargs):
+    context = super(VehicleListView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    if order_by.startswith("-"):
+      order_by = order_by.lstrip("-")
+      context['reverse'] = True
+    context['order_by'] = order_by
+    context['vehicle_list'] = Vehicle.objects.filter(category__model=5) #.order_by(order_by, 'name')
+    context['request'] = self.request
+    return context 
+
+class VehicleByCategoryView(ListView):
+  queryset = Category.objects.filter(model=5)
+  template_name = 'books/vehicle_by_category_list.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(VehicleByCategoryView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    context['order_by'] = order_by
+    return context
+
+class VehicleCategoryDetailView(DetailView):
+  model = Category
+  template_name = 'books/vehicle_category_detail.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(VehicleCategoryDetailView, self).get_context_data(**kwargs)
     order_by = self.request.GET.get('order_by', 'name')
     context['order_by'] = order_by
     return context

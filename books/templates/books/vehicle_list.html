@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Vehicles{% endblock title %}
+
+{% block content %}
+<h1>Vehicles</h1>
+{% if vehicle_list %}
+    {% include "books/vehicle_list_header.html" %}
+    {% if reverse %}
+        {% for vehicle in vehicle_list|dictsortreversed:order_by %}
+        {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
+        {% endfor %}
+    {% else %}
+        {% for vehicle in vehicle_list|dictsort:order_by %}
+        {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
+        {% endfor %}
+    {% endif %}
+    </table></div>
+{% else %}
+    <p>No vehicles.</p>
+{% endif %}
+{% endblock content %}
