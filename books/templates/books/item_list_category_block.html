@@ -1,6 +1,12 @@
 {% if category.item_set.count > 0 %}
 <tr class="item_category"><td colspan=5><a href="{% url 'books:item_category' category.id %}">{{ category.name }}</a></td></tr>
-{% for item in category.item_set.all|dictsort:order_by %}
-{% include "books/item_list_line.html" with item=item %}
-{% endfor %}
+{% if reverse %}
+    {% for item in category.item_set.all|dictsortreversed:order_by %}
+    {% include "books/item_list_line.html" with item=item %}
+    {% endfor %}
+{% else %}
+    {% for item in category.item_set.all|dictsort:order_by %}
+    {% include "books/item_list_line.html" with item=item %}
+    {% endfor %}
+{% endif %}
 {% endif %}

@@ -6,9 +6,15 @@
 <h1>Items</h1>
 {% if item_list %}
     {% include "books/item_list_header.html" %}
-    {% for item in item_list %}            
-    {% include "books/item_list_line.html" with item=item %}
-    {% endfor %}
+    {% if reverse %}
+        {% for item in item_list|dictsortreversed:order_by %}
+        {% include "books/item_list_line.html" with item=item %}
+        {% endfor %}
+    {% else %}
+        {% for item in item_list|dictsort:order_by %}
+        {% include "books/item_list_line.html" with item=item %}
+        {% endfor %}
+    {% endif %}
     </table></div>
 {% else %}
     <p>No items.</p>

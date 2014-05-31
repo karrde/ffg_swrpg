@@ -6,9 +6,15 @@
 <h1>Armor</h1>
 {% if armor_list %}
     {% include "books/armor_list_header.html" %}
-    {% for armor in armor_list %}
+    {% if reverse %}
+    {% for armor in armor_list|dictsortreversed:order_by %}
     {% include "books/armor_list_line.html" with armor=armor %}
     {% endfor %}
+    {% else %}
+    {% for armor in armor_list|dictsort:order_by %}
+    {% include "books/armor_list_line.html" with armor=armor %}
+    {% endfor %}
+    {% endif %}
     </table></div>
 {% else %}
     <p>No armor.</p>

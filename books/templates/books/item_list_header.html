@@ -1,9 +1,10 @@
+{% load sort_table_by %}
 <div  class="itemtable">
 <table>
 <tr class="sortable_header">
-    <td><a href="?order_by=name">Item</a></td>
-    <td><a href="?order_by=price">Price</a></td>
-    <td><a href="?order_by=encumbrance">Encum</a></td>
-    <td><a href="?order_by=rarity">Rarity</a></td>
+    <td><a href="{% sort_table_by request 'name' %}">Item</a></td>
+    <td><a href="{% sort_table_by request 'price' %}">Price</a></td>
+    <td><a href="{% sort_table_by request 'encumbrance' %}">Encum</a></td>
+    <td><a href="{% sort_table_by request 'rarity' %}">Rarity</a></td>
     <td>Index</td>
 </tr>

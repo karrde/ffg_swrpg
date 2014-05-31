@@ -6,9 +6,15 @@
 <h1>Weapons</h1>
 {% if weapon_list %}
     {% include "books/weapon_list_header.html" %}
-    {% for weapon in weapon_list %}            
-    {% include "books/weapon_list_line.html" with weapon=weapon %}
-    {% endfor %}
+    {% if reverse %}
+        {% for weapon in weapon_list|dictsortreversed:order_by %}
+        {% include "books/weapon_list_line.html" with weapon=weapon %}
+        {% endfor %}
+    {% else %}
+        {% for weapon in weapon_list|dictsort:order_by %}
+        {% include "books/weapon_list_line.html" with weapon=weapon %}
+        {% endfor %}
+    {% endif %}
     </table></div>
 {% else %}
     <p>No weapons.</p>

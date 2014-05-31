@@ -1,6 +1,12 @@
 {% if category.item_set.count > 0 %}
 <tr class="item_category"><td colspan=12><a href="{% url 'books:weapon_category' category.id %}">{{ category.name }}</a></td></tr>
-{% for weapon in category.weapon_set.all|dictsort:order_by %}
-{% include "books/weapon_list_line.html" with weapon=weapon %}
-{% endfor %}
+{% if reverse %}
+    {% for weapon in category.weapon_set.all|dictsortreversed:order_by %}
+    {% include "books/weapon_list_line.html" with weapon=weapon %}
+    {% endfor %}
+{% else %}
+    {% for weapon in category.weapon_set.all|dictsort:order_by %}
+    {% include "books/weapon_list_line.html" with weapon=weapon %}
+    {% endfor %}
+{% endif %}
 {% endif %}

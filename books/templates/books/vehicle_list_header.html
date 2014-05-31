@@ -1,23 +1,24 @@
+{% load sort_table_by %}
 <div  class="itemtable">
 <table>
 <tr class="sortable_header">
-    <td><a href="?order_by=name">Item</a></td>
-    <td><a href="?order_by=silhoutte">Sil</a></td>
-    <td><a href="?order_by=speed">Spd</a></td>
-    <td><a href="?order_by=handling">Hand</a></td>
-    <td><a href="?order_by=">Def</a></td>
-    <td><a href="?order_by=armor_value">A</a></td>
-    <td><a href="?order_by=hull_trauma">HT</a></td>
-    <td><a href="?order_by=system_strain">SS</a></td>
-    <td><a href="?order_by=manufacturer">Man</a></td>
-    <td><a href="?order_by=max_altitude">Alt</a></td>
-    <td><a href="?order_by=sensor_range__id">Sensor</a></td>
-    <td><a href="?order_by={% if order_by == 'crew' and not reverse %}-{% endif %}crew">Crew</a></td>
-    <td><a href="?order_by=encumbrance">Encum</a></td>
-    <td><a href="?order_by=passenger">Pass</a></td>
-    <td><a href="?order_by=price">Cost</a></td>
-    <td><a href="?order_by=rarity">Rarity</a></td>
-    <td><a href="?order_by=hard_points">HP</a></td>
-    <td><a href="?order_by=weapon_count">Wep</a></td>
+    <td><a href="{% sort_table_by request 'name' %}">Item</a></td>
+    <td><a href="{% sort_table_by request 'silhoutte' %}">Sil</a></td>
+    <td><a href="{% sort_table_by request 'speed' %}">Spd</a></td>
+    <td><a href="{% sort_table_by request 'handling' %}">Hand</a></td>
+    <td><a href="{% sort_table_by request 'total_defense' %}">Def</a></td>
+    <td><a href="{% sort_table_by request 'armor_value' %}">A</a></td>
+    <td><a href="{% sort_table_by request 'hull_trauma' %}">HT</a></td>
+    <td><a href="{% sort_table_by request 'system_strain' %}">SS</a></td>
+    <td><a href="{% sort_table_by request 'manufacturer' %}">Man</a></td>
+    <td><a href="{% sort_table_by request 'max_altitude' %}">Alt</a></td>
+    <td><a href="{% sort_table_by request 'sensor_range.id' %}">Sensor</a></td>
+    <td><a href="{% sort_table_by request 'crew' %}">Crew</a></td>
+    <td><a href="{% sort_table_by request 'encumbrance' %}">Encum</a></td>
+    <td><a href="{% sort_table_by request 'passenger' %}">Pass</a></td>
+    <td><a href="{% sort_table_by request 'price' %}">Cost</a></td>
+    <td><a href="{% sort_table_by request 'rarity' %}">Rarity</a></td>
+    <td><a href="{% sort_table_by request 'hard_points' %}">HP</a></td>
+    <td><a href="{% sort_table_by request 'weapon_count' %}">Wep</a></td>
     <td>Index</td>
 </tr>

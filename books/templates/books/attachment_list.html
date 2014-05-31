@@ -6,9 +6,15 @@
 <h1>Attachments</h1>
 {% if attachment_list %}
     {% include "books/attachment_list_header.html" %}
-    {% for attachment in attachment_list %}            
+    {% if reverse %}
+    {% for attachment in attachment_list|dictsortreversed:order_by %}
     {% include "books/attachment_list_line.html" with attachment=attachment %}
     {% endfor %}
+    {% else %}
+    {% for attachment in attachment_list|dictsort:order_by %}
+    {% include "books/attachment_list_line.html" with attachment=attachment %}
+    {% endfor %}
+    {% endif %}
     </table></div>
 {% else %}
     <p>No attachments.</p>
