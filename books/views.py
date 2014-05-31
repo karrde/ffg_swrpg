@@ -20,6 +20,7 @@ class BookDetailView(DetailView):
     context['armor_list'] = object.armor_set
     context['attachment_list'] = object.attachment_set
     context['vehicle_list'] = object.vehicle_set
+    context['request'] = self.request
     return context
   
 class ItemListView(ListView):
