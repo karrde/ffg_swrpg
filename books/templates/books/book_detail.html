@@ -35,5 +35,21 @@
     {% endfor %}
     </table></div>
 {% endif %}
+{% if vehicle_list %}
+<h3>Vehicles</h3>
+    {% include "books/vehicle_list_header.html" %}
+    {% for vehicle in vehicle_list %}            
+    {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
+    {% endfor %}
+    </table></div>
+{% endif %}
+{% if starship_list %}
+<h3>Starships</h3>
+    {% include "books/starship_list_header.html" %}
+    {% for starship in starship_list %}            
+    {% include "books/starship_list_line.html" with starship=starship %}
+    {% endfor %}
+    </table></div>
+{% endif %}
 
 {% endblock content %}

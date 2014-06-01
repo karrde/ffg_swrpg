@@ -16,5 +16,10 @@
         <span class="item_titles">Indexes:</span> {{ armor.indexes }}<br />
     </div>
 </div>
+{% if armor.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ armor.notes }}</span>
+</div>
+{% endif %}
 
 {% endblock content %}

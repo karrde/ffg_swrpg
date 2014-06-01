@@ -15,5 +15,10 @@
         <span class="item_titles">Indexes:</span> {{ attachment.indexes }}<br />
     </div>
 </div>
+{% if attachment.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ attachment.notes }}</span>
+</div>
+{% endif %}
 
 {% endblock content %}

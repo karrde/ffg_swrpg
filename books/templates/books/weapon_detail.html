@@ -20,5 +20,10 @@
         <span class="item_titles">Indexes:</span> {{ weapon.indexes }}<br />
     </div>
 </div>
+{% if weapon.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ weapon.notes }}</span>
+</div>
+{% endif %}
 
 {% endblock content %}

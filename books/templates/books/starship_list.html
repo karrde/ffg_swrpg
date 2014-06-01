@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Starships{% endblock title %}
+
+{% block content %}
+<h1>Starships</h1>
+{% if starship_list %}
+    {% include "books/starship_list_header.html" %}
+    {% if reverse %}
+        {% for starship in starship_list|dictsortreversed:order_by %}
+        {% include "books/starship_list_line.html" with starship=starship %}
+        {% endfor %}
+    {% else %}
+        {% for starship in starship_list|dictsort:order_by %}
+        {% include "books/starship_list_line.html" with starship=starship %}
+        {% endfor %}
+    {% endif %}
+    </table></div>
+{% else %}
+    <p>No starships.</p>
+{% endif %}
+{% endblock content %}

@@ -14,5 +14,10 @@
         <span class="item_titles">Indexes:</span> {{ item.indexes }}<br />
     </div>
 </div>
+{% if item.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ item.notes }}</span>
+</div>
+{% endif %}
 
 {% endblock content %}

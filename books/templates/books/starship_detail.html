@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ starship.name }}</span><br />
+    {% if starship.image %}<img class="item_image" src="{{ starship.image.url }}" />{% endif %}
+    <div class="vehicle_stats">
+        <div class="silhoutte"><span class="item_titles">Silhoutte:</sapn> <span class="item_value">{{ starship.silhoutte }}</span></div>
+        <div class="speed"><span class="item_titles">Speed:</sapn> <span class="item_value">{{ starship.speed }}</span></div>
+        <div class="handling"><span class="item_titles">Handling:</sapn> <span class="item_value">{{ starship.display_handling }}</span></div>
+        <div class="defense"><span class="item_titles">Defense:</sapn> <span class="item_value">{{ starship.defense }}</span></div>
+        <div class="armor"><span class="item_titles">Armor:</sapn> <span class="item_value">{{ starship.armor_value }}</span></div>
+        <div class="hull_trauma"><span class="item_titles">Hull Trauma:</sapn> <span class="item_value">{{ starship.hull_trauma }}</span></div>
+        <div class="system_strain"><span class="item_titles">System Strain:</sapn> <span class="item_value">{{ starship.system_strain }}</span></div>
+    </div>
+    <div class="item_detail">
+        {% if starship.aka %}<span class="item_titles">AKA:</span> {{ starship.aka }}<br />{% endif %}
+        <span class="item_titles">Vehicle Type/Model:</span> {{ starship.category.name }}/{{ starship.model }}<br />
+        <span class="item_titles">Manufacturer:</span> {{ starship.manufacturer }}<br />
+        <span class="item_titles">Hyperdrive:</span> {{ starship.hyperdrive }}<br />
+        <span class="item_titles">Navicomputer:</span> {{ starship.display_navicomputer }}<br />
+        <span class="item_titles">Maximum Altitude:</span> {{ starship.display_altitude }}<br />
+        <span class="item_titles">Sensor Range:</span> {{ starship.sensor_range.name }}<br />
+        <span class="item_titles">Crew:</span> {{ starship.crew_detail }}<br />
+        <span class="item_titles">Encumbrance Capacity:</span> {{ starship.encumbrance }}<br />
+        <span class="item_titles">Pasenger Capacity:</span> {{ starship.passenger }}<br />
+        <span class="item_titles">Consumables:</span> {{ starship.consumables }}<br />
+        <span class="item_titles">Cost/Rarity:</span> {{ starship.display_price }} credits/{{ starship.display_rarity }}<br />
+        <span class="item_titles">Customization Hard Points:</span> {{ starship.hard_points }}<br />
+        <span class="item_titles">Weapons:</span> {{ starship.weapon_count }}<br />
+        <span class="item_titles">Indexes:</span> {{ starship.indexes }}<br />
+    </div>
+</div>
+{% if starship.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ starship.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

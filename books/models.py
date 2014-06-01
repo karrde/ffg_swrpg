@@ -42,12 +42,15 @@ class Book(models.Model):
     return Attachment.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=4)])
   def _vehicle_set(self):
     return Vehicle.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=5)])
+  def _starship_set(self):
+    return Starship.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=6)])
     
   item_set = property(_item_set)
   weapon_set = property(_weapon_set)
   armor_set = property(_armor_set)
   attachment_set = property(_attachment_set)
   vehicle_set = property(_vehicle_set)
+  starship_set = property(_starship_set)
   
 class Category(models.Model):
   MODEL_CHOICES = (
@@ -56,6 +59,7 @@ class Category(models.Model):
     (3, 'Armor'),
     (4, 'Attachment'),
     (5, 'Vehicle'),
+    (6, 'Starship'),
   )
   model = models.IntegerField(choices=MODEL_CHOICES)
   name = models.CharField(max_length=50)
@@ -74,6 +78,11 @@ class Category(models.Model):
     if self.model == 5:
       return Vehicle.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
   vehicle_set = property(_vehicle_set)
+
+  def _starship_set(self):
+    if self.model == 6:
+      return Starship.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
+  starship_set = property(_starship_set)
 
   def __unicode__(self):
     return self.name
@@ -114,6 +123,7 @@ class Item(models.Model):
   rarity = models.IntegerField()
   category = models.ForeignKey(Category)
   image = models.ImageField(upload_to=get_item_image_path, null=True, blank=True)
+  notes = models.CharField(max_length=500, blank=True)
   
   def __unicode__(self):
     return self.name
@@ -316,4 +326,83 @@ class CrewEntry(models.Model):
       q = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][self.quantity]
     else:
       q = self.quantity
-    return "{0} {1}".format(q, self.description)
+    plz = 0
+    d = str(self.description)
+    if self.quantity > 1:
+      plz = 1
+    if " and " in d:
+      plz = 0
+    if "/" in d:
+      plz = 0
+    if plz:
+       d += "s"
+    return "{0} {1}".format(q, d)
+    
+class Starship(Vehicle):
+  NAVCOMP_CHOICES = (
+    (1, 'Yes'),
+    (2, 'None'),
+    (3, 'Astromech Droid Socket'),
+  )
+  navicomputer = models.IntegerField(choices=NAVCOMP_CHOICES)
+  
+  def _hyperdrive(self):
+    return ", ".join([str(x) for x in self.hyperdrive_set.order_by('rank')]) or 'None'
+  hyperdrive = property(_hyperdrive)
+  
+  def _consumables(self):
+    return str(self.consumable).capitalize()
+  consumables  = property(_consumables)
+  
+  def _display_navicomputer(self):
+    return dict(Starship.NAVCOMP_CHOICES)[self.navicomputer]
+  display_navicomputer = property(_display_navicomputer)
+  
+class Hyperdrive(models.Model):
+  RANK_CHOICES = (
+    (1, 'Primary'),
+    (2, 'Backup'),
+    (3, 'Tertiary backup'),
+  )
+  rank = models.IntegerField(choices=RANK_CHOICES)
+  class_value = models.IntegerField()
+  starship = models.ForeignKey(Starship)
+  
+  def __unicode__(self):
+    return "{0}: Class {1}".format(dict(Hyperdrive.RANK_CHOICES)[self.rank], self.class_value)
+  
+  
+class Consumable(models.Model):
+  PERIOD_CHOICES = (
+    (1, 'hour'),
+    (2, 'day'),
+    (3, 'week'),
+    (4, 'month'),
+    (5, 'year'),
+  )
+  value = models.IntegerField()
+  period = models.IntegerField(choices=PERIOD_CHOICES)
+  starship = models.OneToOneField(Starship)
+  
+  def _sort_value(self):
+    if self.period is 1:
+      return value
+    elif self.period is 2:
+      return value * 24
+    elif self.period is 3:
+      return value * 24 * 7
+    elif self.period is 4:
+      return value * 24 * 30
+    elif self.period is 5:
+      return value * 24 * 365
+      
+  sort_value = property(_sort_value)
+  
+  def __unicode__(self):
+    if self.value < 10:
+      q = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][self.value]
+    else:
+      q = self.value
+    return "{0} {1}".format(q, dict(Consumable.PERIOD_CHOICES)[self.period])
+    
+  

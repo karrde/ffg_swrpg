@@ -29,5 +29,10 @@
         <span class="item_titles">Indexes:</span> {{ vehicle.indexes }}<br />
     </div>
 </div>
+{% if vehicle.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ vehicle.notes }}</span>
+</div>
+{% endif %}
 
 {% endblock content %}

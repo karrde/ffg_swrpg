@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
-from books.models import Item, Category, Weapon, Book, Armor, Attachment, Vehicle
+from books.models import Item, Category, Weapon, Book, Armor, Attachment, Vehicle, Starship
 
 def index(request):
   return HttpResponse("Hello, world. You're at the FFG SWRPG index.")
@@ -20,6 +20,7 @@ class BookDetailView(DetailView):
     context['armor_list'] = object.armor_set
     context['attachment_list'] = object.attachment_set
     context['vehicle_list'] = object.vehicle_set
+    context['starship_list'] = object.starship_set
     context['request'] = self.request
     return context
   
@@ -219,3 +220,49 @@ class VehicleCategoryDetailView(DetailView):
     context['order_by'] = order_by
     context['request'] = self.request
     return context
+
+class StarshipDetailView(DetailView):
+  model = Starship
+
+class StarshipListView(ListView):
+  model = Starship
+
+  def get_context_data(self, **kwargs):
+    context = super(StarshipListView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    if order_by.startswith("-"):
+      order_by = order_by.lstrip("-")
+      context['reverse'] = True
+    context['order_by'] = order_by
+    context['request'] = self.request
+    context['starship_list'] = Starship.objects.filter(category__model=6) #.order_by(order_by, 'name')
+    return context 
+
+class StarshipByCategoryView(ListView):
+  queryset = Category.objects.filter(model=6)
+  template_name = 'books/starship_by_category_list.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(StarshipByCategoryView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    if order_by.startswith("-"):
+      order_by = order_by.lstrip("-")
+      context['reverse'] = True
+    context['order_by'] = order_by
+    context['request'] = self.request
+    return context
+
+class StarshipCategoryDetailView(DetailView):
+  model = Category
+  template_name = 'books/starship_category_detail.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(StarshipCategoryDetailView, self).get_context_data(**kwargs)
+    order_by = self.request.GET.get('order_by', 'name')
+    if order_by.startswith("-"):
+      order_by = order_by.lstrip("-")
+      context['reverse'] = True
+    context['order_by'] = order_by
+    context['request'] = self.request
+    return context
+
