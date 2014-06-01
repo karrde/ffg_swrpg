@@ -22,6 +22,12 @@ class ItemAdmin(admin.ModelAdmin):
   fields = ['name', ('price', 'restricted'), 'encumbrance', 'rarity', 'category', 'notes', 'image']
   inlines = [IndexInline]
   
+  def formfield_for_dbfield(self, db_field, **kwargs):
+    formfield = super(ItemAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+    if db_field.name == 'notes':
+      formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
+    return formfield
+
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':
       kwargs['queryset'] = Category.objects.filter(model=1)
@@ -38,7 +44,7 @@ class WeaponAdmin(ItemAdmin):
   def formfield_for_dbfield(self, db_field, **kwargs):
     formfield = super(WeaponAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     if db_field.name == 'special':
-        formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
+      formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
     return formfield
           
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
