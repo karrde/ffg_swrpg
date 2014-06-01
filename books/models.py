@@ -308,6 +308,8 @@ class Vehicle(Item):
       if alt > 1000:
         suffix = 'km'
         alt = alt // 1000
+      elif alt == 1:
+        suffix = 'meter'
       return "{0} {1}".format(alt, suffix)
   display_altitude = property(_display_altitude)
 
