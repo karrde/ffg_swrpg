@@ -23,6 +23,14 @@ class Book(models.Model):
       return False
     else:
       return True
+  
+  def _display_initials(self):
+    if self.is_unique():
+      return self.initials
+    else:
+      return "{0}-{1}".format(self.system.initials[0], self.initials)
+  display_initials = property(_display_initials)
+    
     
   def _item_set(self):
     return Item.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=1)])
@@ -135,11 +143,19 @@ class Item(models.Model):
       return str(self.rarity)
     else:
       return "-"
+      
+  def _aka(self):
+    akas = []
+    for x in self.index_set.all():
+      if x.aka:
+        akas.append("{0} ({1})".format(x.aka, x.book.display_initials))
+    return ", ".join(akas)
     
   display_price = property(_display_price)
   display_encum = property(_display_encum)
   display_rarity = property(_display_rarity)
   indexes = property(_indexes)
+  aka = property(_aka)
   
   class Meta:
     ordering = ['name']
@@ -148,12 +164,13 @@ class Index(models.Model):
   book = models.ForeignKey(Book)
   page = models.IntegerField()
   item = models.ForeignKey(Item)
+  aka = models.CharField(max_length=100, blank=True)
   
   def __unicode__(self):
-    sys_str = ''
-    if not self.book.is_unique():
-      sys_str = "{0}-".format(self.book.system.initials[0])
-    return "{0}{1}:{2}".format(sys_str, self.book.initials, self.page)
+    ret_str = "{0}:{1}".format(self.book.display_initials, self.page)
+    if self.aka:
+      ret_str += "*"
+    return ret_str
     
   def str(self):
     return self.__unicode__()

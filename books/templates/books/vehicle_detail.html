@@ -15,6 +15,7 @@
         <div class="system_strain"><span class="item_titles">System Strain:</sapn> <span class="item_value">{{ vehicle.system_strain }}</span></div>
     </div>
     <div class="item_detail">
+        {% if vehicle.aka %}<span class="item_titles">AKA:</span> {{ vehicle.aka }}<br />{% endif %}
         <span class="item_titles">Vehicle Type/Model:</span> {{ vehicle.category.name }}/{{ vehicle.model }}<br />
         <span class="item_titles">Manufacturer:</span> {{ vehicle.manufacturer }}<br />
         <span class="item_titles">Maximum Altitude:</span> {{ vehicle.display_altitude }}<br />
