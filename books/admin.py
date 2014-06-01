@@ -108,7 +108,8 @@ class VehicleAdmin(ItemAdmin):
     
 class HyperdriveInline(admin.TabularInline):
   model = Hyperdrive
-  extra = 1
+  extra = 2
+  max_num = 3
   
 class ConsumableInline(admin.TabularInline):
   model = Consumable
