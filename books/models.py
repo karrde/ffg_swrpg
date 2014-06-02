@@ -341,6 +341,8 @@ class CrewEntry(models.Model):
       plz = 0
     if "/" in d:
       plz = 0
+    if "crew" in d:
+      plz = 0
     if plz:
        d += "s"
     return "{0} {1}".format(q, d)
