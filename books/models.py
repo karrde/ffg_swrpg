@@ -87,6 +87,9 @@ class Category(models.Model):
   def __unicode__(self):
     return self.name
 
+  class Meta:
+    ordering = ['name']
+
 class Skill(models.Model):
   SKILL_CHOICES = (
     (1, 'Weapon'),
@@ -317,6 +320,8 @@ class CrewDescriptor(models.Model):
   description = models.CharField(max_length=100)
   def __unicode__(self):
     return self.description
+  class Meta:
+    ordering = ['description']
 
 class CrewEntry(models.Model):
   quantity = models.IntegerField()
