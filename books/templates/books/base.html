@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }}{% endblock %}
+{% block content %}{{ block.super }}{% endblock %}
+{% block sidebar %}
+{{ block.super }}
+<li><a href="{% url 'books:items' %}">Items</a></li>
+<li><a href="{% url 'books:items_bc' %}">Items by Category</a></li>
+<li><a href="{% url 'books:weapons' %}">Weapons</a></li>
+<li><a href="{% url 'books:weapons_bc' %}">Weapons by Category</a></li>
+<li><a href="{% url 'books:armors' %}">Armor</a></li>
+<li><a href="{% url 'books:attachments' %}">Attachments</a></li>
+<li><a href="{% url 'books:attachments_bc' %}">Attachments by Category</a></li>
+<li><a href="{% url 'books:vehicles' %}">Vehicles</a></li>
+<li><a href="{% url 'books:vehicles_bc' %}">Vehicles by Category</a></li>
+<li><a href="{% url 'books:starships' %}">Starships</a></li>
+<li><a href="{% url 'books:starships_bc' %}">Starships by Category</a></li>
+{% endblock %}

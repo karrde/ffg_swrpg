@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'books/style.css' %}" />
+    <title>{% block title %}FFG Star Wars Index{% endblock %}</title>
+</head>
+
+<body>
+    <div id="header" class="no-print">
+        <h1>FFG Star Wars RPG Index</h1>
+    </div>
+    <div class="colmask leftmenu">
+        <div class="colleft">
+            <div class="col1">
+                {% block content %}{% endblock %}
+            </div>
+
+            <div class="col2 no-print">
+                <ul>
+                    {% block sidebar %}
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'books:index' %}">Books</a></li>
+                    {% endblock %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

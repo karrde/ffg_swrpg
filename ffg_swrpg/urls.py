@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'ffg_swrpg.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', RedirectView.as_view(url='books/')),
+    url(r'^$', 'ffg_swrpg.views.index_view', name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^books/', include('books.urls', namespace='books')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
