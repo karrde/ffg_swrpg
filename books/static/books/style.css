@@ -121,6 +121,9 @@ img {
 	padding:0 0 1em 0;
 	overflow:hidden;
 }
+.col1{
+  margin-top: 5px;
+}
 /* 2 Column (left menu) settings */
 .leftmenu {
 	background:#fff;		/* right column background colour */
@@ -350,4 +353,26 @@ span.item_titles {
   display: block;
   text-decoration: none;
   color: inherit;
+}
+
+.blog_entry {
+  border: 2px solid;
+  border-radius: 10px;
+  border-color: #000000;
+  padding: 5px 10px 5px 10px;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.blog_entry_title {
+  font-size: 120%;
+  font-weight: bold;
+  border-bottom: 2px solid;
+  margin-bottom: 5px;
+}
+
+.blog_entry_posted {
+  font-size: 80%;
+  text-align: right;
+  margin-top: 3px;
 }
