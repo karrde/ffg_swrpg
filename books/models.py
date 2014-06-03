@@ -33,17 +33,17 @@ class Book(models.Model):
     
     
   def _item_set(self):
-    return Item.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=1)])
+    return [x.item for x in self.index_set.filter(item__category__model=1).order_by('page', 'item__name')]
   def _weapon_set(self):
-    return Weapon.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=2)])
+    return [Weapon.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=2).order_by('page', 'item__name')]
   def _armor_set(self):
-    return Armor.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=3)])
+    return [Armor.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=3).order_by('page', 'item__name')]
   def _attachment_set(self):
-    return Attachment.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=4)])
+    return [Attachment.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=4).order_by('page', 'item__name')]
   def _vehicle_set(self):
-    return Vehicle.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=5)])
+    return [Vehicle.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=5).order_by('page', 'item__name')]
   def _starship_set(self):
-    return Starship.objects.filter(pk__in=[x.item.id for x in self.index_set.filter(item__category__model=6)])
+    return [Starship.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=6).order_by('page', 'item__name')]
     
   item_set = property(_item_set)
   weapon_set = property(_weapon_set)
