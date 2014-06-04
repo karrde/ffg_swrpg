@@ -131,7 +131,7 @@ class VehicleListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(VehicleListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Vehicle, 5, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'rarity', 'weapon_count', 'crew', 'index'], ['index', 'crew'], self.request))
+    context.update(sorting_context(Vehicle, 5, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'hard_points', 'rarity', 'weapon_count', 'crew', 'index'], ['index', 'crew'], self.request))
     return context 
 
 class VehicleCategoryView(VehicleListView):
@@ -151,7 +151,7 @@ class StarshipListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(StarshipListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Starship, 6, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'rarity', 'weapon_count', 'crew', 'navicomputer', 'index'], ['index', 'crew'], self.request))
+    context.update(sorting_context(Starship, 6, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'rarity', 'hard_points', 'weapon_count', 'crew', 'navicomputer', 'index'], ['index', 'crew'], self.request))
     return context 
 
 class StarshipCategoryView(StarshipListView):
