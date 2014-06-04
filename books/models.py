@@ -187,6 +187,9 @@ class Index(models.Model):
     
   def str(self):
     return self.__unicode__()
+
+  class Meta:
+    ordering = ['book__product_key', 'page', 'item__name']
   
 class Weapon(Item):
   skill = models.ForeignKey(Skill)

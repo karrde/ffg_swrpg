@@ -3,14 +3,14 @@
 <table>
 <tr class="sortable_header">
     <td><a href="{% sort_table_by request 'name' %}">Weapon</a></td>
-    <td><a href="{% sort_table_by request 'skill.name' %}">Skill</a></td>
+    <td><a href="{% sort_table_by request 'skill__name' %}">Skill</a></td>
     <td><a href="{% sort_table_by request 'damage' %}">Dam</a></td>
     <td><a href="{% sort_table_by request 'critical' %}">Crit</a></td>
-    <td><a href="{% sort_table_by request 'range_band.id' %}">Range</a></td>
+    <td><a href="{% sort_table_by request 'range_band__id' %}">Range</a></td>
     <td><a href="{% sort_table_by request 'encumbrance' %}">Encum</a></td>
     <td><a href="{% sort_table_by request 'hard_points' %}">HP</a></td>
     <td><a href="{% sort_table_by request 'price' %}">Price</a></td>
     <td><a href="{% sort_table_by request 'rarity' %}">Rarity</a></td>
     <td>Special</td>
-    <td>Index</td>
+    <td><a href="{% sort_table_by request 'index' %}">Index</a></td>
 </tr>

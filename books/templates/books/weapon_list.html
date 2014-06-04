@@ -5,14 +5,23 @@
 {% block content %}
 <h1>Weapons</h1>
 {% if weapon_list %}
+    {% if flatened == 'true' %}
+    <a href="?order_by={{ order_by }}">Group by Categories</a>
+    {% else %}
+    <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
+    {% endif %}
     {% include "books/weapon_list_header.html" %}
-    {% if reverse %}
-        {% for weapon in weapon_list|dictsortreversed:order_by %}
-        {% include "books/weapon_list_line.html" with weapon=weapon %}
+    {% if flatened == 'true' %}
+        {% for weapon in weapon_list %}
+            {% include "books/weapon_list_line.html" with weapon=weapon %}
         {% endfor %}
     {% else %}
-        {% for weapon in weapon_list|dictsort:order_by %}
-        {% include "books/weapon_list_line.html" with weapon=weapon %}
+        {% regroup weapon_list|dictsort:"category.id" by category as categories %}
+        {% for category in categories %}
+            <tr class="item_category"><td colspan=12><a href="{% url 'books:weapon_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            {% for weapon in category.list %}
+                {% include "books/weapon_list_line.html" with weapon=weapon %}
+            {% endfor %}
         {% endfor %}
     {% endif %}
     </table></div>

@@ -5,14 +5,23 @@
 {% block content %}
 <h1>Vehicles</h1>
 {% if vehicle_list %}
+    {% if flatened == 'true' %}
+    <a href="?order_by={{ order_by }}">Group by Categories</a>
+    {% else %}
+    <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
+    {% endif %}
     {% include "books/vehicle_list_header.html" %}
-    {% if reverse %}
-        {% for vehicle in vehicle_list|dictsortreversed:order_by %}
-        {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
+    {% if flatened == 'true' %}
+        {% for vehicle in vehicle_list %}
+            {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
         {% endfor %}
     {% else %}
-        {% for vehicle in vehicle_list|dictsort:order_by %}
-        {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
+        {% regroup vehicle_list|dictsort:"category.id" by category as categories %}
+        {% for category in categories %}
+            <tr class="item_category"><td colspan=30><a href="{% url 'books:vehicle_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            {% for vehicle in category.list %}
+                {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
+            {% endfor %}
         {% endfor %}
     {% endif %}
     </table></div>
