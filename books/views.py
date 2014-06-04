@@ -66,39 +66,11 @@ class ItemCategoryView(ItemListView):
 
   def get_context_data(self, **kwargs):
     context = super(ItemCategoryView, self).get_context_data(**kwargs)
-    context['item_list'] = context['item_list'].filter(category__id=self.kwargs['category'])
-    return context
-
-class ItemByCategoryView(ListView):
-  queryset = Category.objects.filter(model=1)
-  template_name = 'books/item_by_category_list.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(ItemByCategoryView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
+    context['item_list'] = [i for i in context['item_list'] if i.category.id == int(self.kwargs['category'])]
     return context
   
 class ItemDetailView(DetailView):
   model = Item
-
-class ItemCategoryDetailView(DetailView):
-  model = Category
-  template_name = 'books/item_category_detail.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(ItemCategoryDetailView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
-    return context
 
 class WeaponListView(ListView):
   model = Weapon
@@ -114,40 +86,11 @@ class WeaponCategoryView(WeaponListView):
   
   def get_context_data(self, **kwargs):
     context = super(WeaponCategoryView, self).get_context_data(**kwargs)
-    context['weapon_list'] = context['weapon_list'].filter(category__id=self.kwargs['category'])
+    context['weapon_list'] = [i for i in context['weapon_list'] if i.category.id == int(self.kwargs['category'])]
     return context
   
-
-class WeaponByCategoryView(ListView):
-  queryset = Category.objects.filter(model=2)
-  template_name = 'books/weapon_by_category_list.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(WeaponByCategoryView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
-    return context
-
 class WeaponDetailView(DetailView):
   model = Weapon
-
-class WeaponCategoryDetailView(DetailView):
-  model = Category
-  template_name = 'books/weapon_category_detail.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(WeaponCategoryDetailView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
-    return context
 
 class ArmorListView(ListView):
   model = Armor
@@ -174,39 +117,11 @@ class AttachmentCategoryView(AttachmentListView):
 
   def get_context_data(self, **kwargs):
     context = super(AttachmentCategoryView, self).get_context_data(**kwargs)
-    context['attachment_list'] = context['attachment_list'].filter(category__id=self.kwargs['category'])
-    return context
-
-class AttachmentByCategoryView(ListView):
-  queryset = Category.objects.filter(model=4)
-  template_name = 'books/attachment_by_category_list.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(AttachmentByCategoryView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
+    context['attachment_list'] = [i for i in context['attachment_list'] if i.category.id == int(self.kwargs['category'])]
     return context
 
 class AttachmentDetailView(DetailView):
   model = Attachment
-
-class AttachmentCategoryDetailView(DetailView):
-  model = Category
-  template_name = 'books/attachment_category_detail.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(AttachmentCategoryDetailView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
-    return context
 
 class VehicleDetailView(DetailView):
   model = Vehicle
@@ -225,35 +140,7 @@ class VehicleCategoryView(VehicleListView):
 
   def get_context_data(self, **kwargs):
     context = super(VehicleCategoryView, self).get_context_data(**kwargs)
-    context['vehicle_list'] = context['vehicle_list'].filter(category__id=self.kwargs['category'])
-    return context
-
-class VehicleByCategoryView(ListView):
-  queryset = Category.objects.filter(model=5)
-  template_name = 'books/vehicle_by_category_list.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(VehicleByCategoryView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
-    return context
-
-class VehicleCategoryDetailView(DetailView):
-  model = Category
-  template_name = 'books/vehicle_category_detail.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(VehicleCategoryDetailView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
+    context['vehicle_list'] = [i for i in context['vehicle_list'] if i.category.id == int(self.kwargs['category'])]
     return context
 
 class StarshipDetailView(DetailView):
@@ -273,34 +160,5 @@ class StarshipCategoryView(StarshipListView):
 
   def get_context_data(self, **kwargs):
     context = super(StarshipCategoryView, self).get_context_data(**kwargs)
-    context['starship_list'] = context['starship_list'].filter(category__id=self.kwargs['category'])
+    context['starship_list'] = [i for i in context['starship_list'] if i.category.id == int(self.kwargs['category'])]
     return context
-
-class StarshipByCategoryView(ListView):
-  queryset = Category.objects.filter(model=6)
-  template_name = 'books/starship_by_category_list.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(StarshipByCategoryView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
-    return context
-
-class StarshipCategoryDetailView(DetailView):
-  model = Category
-  template_name = 'books/starship_category_detail.html'
-
-  def get_context_data(self, **kwargs):
-    context = super(StarshipCategoryDetailView, self).get_context_data(**kwargs)
-    order_by = self.request.GET.get('order_by', 'name')
-    if order_by.startswith("-"):
-      order_by = order_by.lstrip("-")
-      context['reverse'] = True
-    context['order_by'] = order_by
-    context['request'] = self.request
-    return context
-
