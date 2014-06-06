@@ -33,17 +33,17 @@ class Book(models.Model):
     
     
   def _item_set(self):
-    return [x.item for x in self.index_set.filter(item__category__model=1).order_by('page', 'item__name')]
+    return [Item.objects.get(pk=x.entry.id) for x in self.index_set.filter(entry__item__category__model=1).order_by('page', 'entry__name')]
   def _weapon_set(self):
-    return [Weapon.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=2).order_by('page', 'item__name')]
+    return [Weapon.objects.get(pk=x.entry.id) for x in self.index_set.filter(entry__item__category__model=2).order_by('page', 'entry__name')]
   def _armor_set(self):
-    return [Armor.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=3).order_by('page', 'item__name')]
+    return [Armor.objects.get(pk=x.entry.id) for x in self.index_set.filter(entry__item__category__model=3).order_by('page', 'entry__name')]
   def _attachment_set(self):
-    return [Attachment.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=4).order_by('page', 'item__name')]
+    return [Attachment.objects.get(pk=x.entry.id) for x in self.index_set.filter(entry__item__category__model=4).order_by('page', 'entry__name')]
   def _vehicle_set(self):
-    return [Vehicle.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=5).order_by('page', 'item__name')]
+    return [Vehicle.objects.get(pk=x.entry.id) for x in self.index_set.filter(entry__item__category__model=5).order_by('page', 'entry__name')]
   def _starship_set(self):
-    return [Starship.objects.get(pk=x.item.id) for x in self.index_set.filter(item__category__model=6).order_by('page', 'item__name')]
+    return [Starship.objects.get(pk=x.entry.id) for x in self.index_set.filter(entry__item__category__model=6).order_by('page', 'entry__name')]
     
   item_set = property(_item_set)
   weapon_set = property(_weapon_set)
@@ -52,6 +52,18 @@ class Book(models.Model):
   vehicle_set = property(_vehicle_set)
   starship_set = property(_starship_set)
   
+def get_item_image_path(instance, filename):
+  if hasattr(instance, 'weapon'):
+    path_start = 'weapon'
+  else:
+    path_start = 'item'
+  return os.path.join(path_start, str(instance.id), filename)
+
+class Entry(models.Model):
+  name = models.CharField(max_length=100)
+  image = models.ImageField(upload_to=get_item_image_path, null=True, blank=True)
+  notes = models.CharField(max_length=500, blank=True)
+
 class Category(models.Model):
   MODEL_CHOICES = (
     (1, 'Item'),
@@ -111,22 +123,30 @@ class RangeBand(models.Model):
   def __unicode__(self):
     return self.name
 
-def get_item_image_path(instance, filename):
-  if hasattr(instance, 'weapon'):
-    path_start = 'weapon'
-  else:
-    path_start = 'item'
-  return os.path.join(path_start, str(instance.id), filename)
+class Index(models.Model):
+  book = models.ForeignKey(Book)
+  page = models.IntegerField()
+  entry = models.ForeignKey(Entry)
+  aka = models.CharField(max_length=100, blank=True)
 
-class Item(models.Model):
-  name = models.CharField(max_length=100)
+  def __unicode__(self):
+    ret_str = "{0}:{1}".format(self.book.display_initials, self.page)
+    if self.aka:
+      ret_str += "*"
+    return ret_str
+
+  def str(self):
+    return self.__unicode__()
+
+  class Meta:
+    ordering = ['book__product_key', 'page', 'entry__name']
+
+class Item(Entry):
   price = models.IntegerField()
   restricted = models.BooleanField()
   encumbrance = models.IntegerField()
   rarity = models.IntegerField()
   category = models.ForeignKey(Category)
-  image = models.ImageField(upload_to=get_item_image_path, null=True, blank=True)
-  notes = models.CharField(max_length=500, blank=True)
   
   def __unicode__(self):
     return self.name
@@ -173,24 +193,6 @@ class Item(models.Model):
   class Meta:
     ordering = ['name']
 
-class Index(models.Model):
-  book = models.ForeignKey(Book)
-  page = models.IntegerField()
-  item = models.ForeignKey(Item)
-  aka = models.CharField(max_length=100, blank=True)
-  
-  def __unicode__(self):
-    ret_str = "{0}:{1}".format(self.book.display_initials, self.page)
-    if self.aka:
-      ret_str += "*"
-    return ret_str
-    
-  def str(self):
-    return self.__unicode__()
-
-  class Meta:
-    ordering = ['book__product_key', 'page', 'item__name']
-  
 class Weapon(Item):
   skill = models.ForeignKey(Skill)
   damage = models.IntegerField()

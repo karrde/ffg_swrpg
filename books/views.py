@@ -37,7 +37,7 @@ def sorting_context(model_class, category_model, default_sort, valid_sorts, spec
   if order_by not in special_sorts:
     object_list = model_class.objects.filter(category__model=category_model).order_by(order_by, default_sort)
   elif order_by == 'index':
-    object_list = [model_class.objects.get(pk=x.item.id) for x in Index.objects.filter(item__category__model=category_model)]
+    object_list = [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__item__category__model=category_model)]
   elif order_by == 'crew':
     object_list = sorted(model_class.objects.filter(category__model=category_model).order_by(default_sort), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
   if reverse:

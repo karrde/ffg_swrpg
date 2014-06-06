@@ -2,3 +2,5 @@ db.sqlite3
 media
 *.pyc
 tmp
+ffg_swrpg/local_settings.py
+swrpg_my.cnf

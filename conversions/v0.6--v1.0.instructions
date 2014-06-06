@@ -1,0 +1,12 @@
+Dump existing database
+
+Edit dump file search-and-replace "`books_" with "`oldbooks_", 
+  remove "CONSTRAINT" lines from all oldbooks_* tables.  Remember to remove "," from line above those lines
+
+Drop and recreate database
+
+Run "manage.py syncdb"
+
+Import edited dump file
+
+Import v0.6--v1.0.sql
