@@ -1,4 +1,4 @@
-{% extends "equipment/base.html" %}
+{% extends "transportation/base.html" %}
 
 {% block title %}{{ block.super }} - Vehicles{% endblock title %}
 
@@ -10,17 +10,17 @@
     {% else %}
     <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
     {% endif %}
-    {% include "equipment/vehicle_list_header.html" %}
+    {% include "transportation/vehicle_list_header.html" %}
     {% if flattened == 'true' %}
         {% for vehicle in vehicle_list %}
-            {% include "equipment/vehicle_list_line.html" with vehicle=vehicle %}
+            {% include "transportation/vehicle_list_line.html" with vehicle=vehicle %}
         {% endfor %}
     {% else %}
         {% regroup vehicle_list|dictsort:"category.id" by category as categories %}
         {% for category in categories %}
-            <tr class="item_category"><td colspan=30><a href="{% url 'equipment:vehicle_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            <tr class="item_category"><td colspan=30><a href="{% url 'transportation:vehicle_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
             {% for vehicle in category.list %}
-                {% include "equipment/vehicle_list_line.html" with vehicle=vehicle %}
+                {% include "transportation/vehicle_list_line.html" with vehicle=vehicle %}
             {% endfor %}
         {% endfor %}
     {% endif %}

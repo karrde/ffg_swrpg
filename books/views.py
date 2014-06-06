@@ -18,7 +18,7 @@ class BookDetailView(DetailView):
   def get_context_data(self, **kwargs):
     context = super(BookDetailView, self).get_context_data(**kwargs)
     object = self.get_object()
-    context['item_list'] = object.item_set
+    context['gear_list'] = object.gear_set
     context['weapon_list'] = object.weapon_set
     context['armor_list'] = object.armor_set
     context['attachment_list'] = object.attachment_set

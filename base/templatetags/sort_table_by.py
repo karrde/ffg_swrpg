@@ -7,7 +7,6 @@ def sort_table_by(request, value):
   field = 'order_by'
   if field in dict_.keys() and dict_[field].lstrip('-') == value:
     if dict_[field].startswith('-'):
-    # click twice on same column, revert ascending/descending
       dict_[field] = value
     else:
       dict_[field] = "-"+value

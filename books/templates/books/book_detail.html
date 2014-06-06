@@ -2,11 +2,11 @@
 
 {% block content %}
 <h1>{{ book.name }}</h1>
-{% if item_list %}
+{% if gear_list %}
 <h3>Items</h3>
-    {% include "equipment/item_list_header.html" %}
-    {% for item in item_list %}            
-    {% include "equipment/item_list_line.html" with item=item %}
+    {% include "equipment/gear_list_header.html" %}
+    {% for gear in gear_list %}            
+    {% include "equipment/gear_list_line.html" with gear=gear %}
     {% endfor %}
     </table></div>
     <div class="page-break"></div>
@@ -37,17 +37,17 @@
 {% endif %}
 {% if vehicle_list %}
 <h3>Vehicles</h3>
-    {% include "equipment/vehicle_list_header.html" %}
+    {% include "transportation/vehicle_list_header.html" %}
     {% for vehicle in vehicle_list %}            
-    {% include "equipment/vehicle_list_line.html" with vehicle=vehicle %}
+    {% include "transportation/vehicle_list_line.html" with vehicle=vehicle %}
     {% endfor %}
     </table></div>
 {% endif %}
 {% if starship_list %}
 <h3>Starships</h3>
-    {% include "equipment/starship_list_header.html" %}
+    {% include "transportation/starship_list_header.html" %}
     {% for starship in starship_list %}            
-    {% include "equipment/starship_list_line.html" with starship=starship %}
+    {% include "transportation/starship_list_line.html" with starship=starship %}
     {% endfor %}
     </table></div>
 {% endif %}

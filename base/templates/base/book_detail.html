@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<h1>{{ book.name }}</h1>
+{% if entry_list %}
+<h3>Entries</h3>
+    {% include "base/entry_list_header.html" %}
+    {% for entry in entry_list %}            
+    {% include "base/entry_list_line.html" with gear=gear %}
+    {% endfor %}
+    </table></div>
+    <div class="page-break"></div>
+{% endif %}
+{% endblock content %}

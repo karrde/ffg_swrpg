@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }}{% endblock %}
+{% block content %}{{ block.super }}{% endblock %}
+{% block sb-transportation %}
+{{ block.super }}
+<ul>
+<li><a href="{% url 'transportation:vehicles' %}">Vehicles</a></li>
+<li><a href="{% url 'transportation:starships' %}">Starships</a></li>
+</ul>
+{% endblock %}

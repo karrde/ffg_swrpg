@@ -11,10 +11,11 @@ insert into equipment_rangeband select * from oldbooks_rangeband;
 insert into equipment_weapon select * from oldbooks_weapon;
 insert into equipment_armor select * from oldbooks_armor;
 insert into equipment_attachment select * from oldbooks_attachment;
-insert into equipment_vehicle select * from oldbooks_vehicle;
-insert into equipment_crewdescriptor select * from oldbooks_crewdescriptor;
-insert into equipment_crewentry select * from oldbooks_crewentry;
-insert into equipment_starship select * from oldbooks_starship;
-insert into equipment_hyperdrive select * from oldbooks_hyperdrive;
-insert into equipment_consumable select * from oldbooks_consumable;
+
+insert into transportation_vehicle select * from oldbooks_vehicle;
+insert into transportation_crewdescriptor select * from oldbooks_crewdescriptor;
+insert into transportation_crewentry select * from oldbooks_crewentry;
+insert into transportation_starship select * from oldbooks_starship;
+insert into transportation_hyperdrive select * from oldbooks_hyperdrive;
+insert into transportation_consumable select * from oldbooks_consumable;
        

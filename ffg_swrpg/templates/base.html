@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'books/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'base/style.css' %}" />
     <title>{% block title %}FFG Star Wars Index{% endblock %}</title>
 </head>
 
@@ -20,8 +20,9 @@
                 <ul>
                     {% block sidebar %}
                     <li><a href="{% url 'index' %}">Home</a></li>{% block sb-index %}{% endblock %}
-                    <li><a href="{% url 'books:index' %}">Books</a></li>{% block sb-books %}{% endblock %}
                     <li><a href="{% url 'equipment:index' %}">Equipment</a></li>{% block sb-equipment %}{% endblock %}
+                    <li><a href="{% url 'transportation:index' %}">Transportation</a></li>{% block sb-transportation %}{% endblock %}
+                    <li><a href="{% url 'books:index' %}">Books</a></li>{% block sb-books %}{% endblock %}
                     {% endblock %}
                 </ul>
             </div>
