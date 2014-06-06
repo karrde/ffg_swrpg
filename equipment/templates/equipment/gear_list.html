@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Gear</h1>
 {% if gear_list %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
     <a href="?order_by={{ order_by }}">Group by Categories</a>
     {% else %}
     <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
