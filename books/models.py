@@ -2,6 +2,7 @@ from django.db import models
 import os
 
 import base.models
+from equipment.models import *
 
 class Book(base.models.Book):
   class Meta:

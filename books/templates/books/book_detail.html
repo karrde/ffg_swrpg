@@ -4,50 +4,50 @@
 <h1>{{ book.name }}</h1>
 {% if item_list %}
 <h3>Items</h3>
-    {% include "books/item_list_header.html" %}
+    {% include "equipment/item_list_header.html" %}
     {% for item in item_list %}            
-    {% include "books/item_list_line.html" with item=item %}
+    {% include "equipment/item_list_line.html" with item=item %}
     {% endfor %}
     </table></div>
     <div class="page-break"></div>
 {% endif %}
 {% if weapon_list %}
 <h3>Weapons</h3>
-    {% include "books/weapon_list_header.html" %}
+    {% include "equipment/weapon_list_header.html" %}
     {% for weapon in weapon_list %}            
-    {% include "books/weapon_list_line.html" with weapon=weapon %}
+    {% include "equipment/weapon_list_line.html" with weapon=weapon %}
     {% endfor %}
     </table></div>
 {% endif %}
 {% if armor_list %}
 <h3>Armor</h3>
-    {% include "books/armor_list_header.html" %}
+    {% include "equipment/armor_list_header.html" %}
     {% for armor in armor_list %}            
-    {% include "books/armor_list_line.html" with armor=armor %}
+    {% include "equipment/armor_list_line.html" with armor=armor %}
     {% endfor %}
     </table></div>
 {% endif %}
 {% if attachment_list %}
 <h3>Attachments</h3>
-    {% include "books/attachment_list_header.html" %}
+    {% include "equipment/attachment_list_header.html" %}
     {% for attachment in attachment_list %}            
-    {% include "books/attachment_list_line.html" with attachment=attachment %}
+    {% include "equipment/attachment_list_line.html" with attachment=attachment %}
     {% endfor %}
     </table></div>
 {% endif %}
 {% if vehicle_list %}
 <h3>Vehicles</h3>
-    {% include "books/vehicle_list_header.html" %}
+    {% include "equipment/vehicle_list_header.html" %}
     {% for vehicle in vehicle_list %}            
-    {% include "books/vehicle_list_line.html" with vehicle=vehicle %}
+    {% include "equipment/vehicle_list_line.html" with vehicle=vehicle %}
     {% endfor %}
     </table></div>
 {% endif %}
 {% if starship_list %}
 <h3>Starships</h3>
-    {% include "books/starship_list_header.html" %}
+    {% include "equipment/starship_list_header.html" %}
     {% for starship in starship_list %}            
-    {% include "books/starship_list_line.html" with starship=starship %}
+    {% include "equipment/starship_list_line.html" with starship=starship %}
     {% endfor %}
     </table></div>
 {% endif %}
