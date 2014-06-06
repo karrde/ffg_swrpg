@@ -7,8 +7,6 @@ class Category(models.Model):
     (2, 'Weapon'),
     (3, 'Armor'),
     (4, 'Attachment'),
-    (5, 'Vehicle'),
-    (6, 'Starship'),
   )
   model = models.IntegerField(choices=MODEL_CHOICES)
   name = models.CharField(max_length=50)
@@ -22,16 +20,6 @@ class Category(models.Model):
     if self.model == 4:
       return Attachment.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   attachment_set = property(_attachment_set)
-
-  def _vehicle_set(self):
-    if self.model == 5:
-      return Vehicle.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
-  vehicle_set = property(_vehicle_set)
-
-  def _starship_set(self):
-    if self.model == 6:
-      return Starship.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
-  starship_set = property(_starship_set)
 
   def __unicode__(self):
     return self.name

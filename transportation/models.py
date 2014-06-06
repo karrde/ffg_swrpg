@@ -1,6 +1,42 @@
 from django.db import models
 
-from equipment.models import Gear, RangeBand, Category
+import equipment.models
+from equipment.models import Gear
+
+class Category(equipment.models.Category):
+  class Meta:
+    proxy = True
+
+  MODEL_CHOICES = (
+    (5, 'Vehicle'),
+    (6, 'Starship'),
+  )
+
+  def __init__(self, *args, **kwargs):
+    super(Category, self).__init__(*args, **kwargs)
+    self._meta.get_field_by_name('model')[0]._choices = Category.MODEL_CHOICES
+      
+  def _vehicle_set(self):
+    if self.model == 5:
+      return Vehicle.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
+  vehicle_set = property(_vehicle_set)
+
+  def _starship_set(self):
+    if self.model == 6:
+      return Starship.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
+  starship_set = property(_starship_set)
+
+class RangeBand(equipment.models.RangeBand):
+  class Meta:
+    proxy = True
+
+  RANGE_BAND_CHOICES = (
+    (2, 'Sensor'),
+  )
+
+  def __init__(self, *args, **kwargs):
+    super(RangeBand, self).__init__(*args, **kwargs)
+    self._meta.get_field_by_name('range_band')[0]._choices = RangeBand.RANGE_BAND_CHOICES
 
 class Vehicle(Gear):
   silhoutte = models.IntegerField()
