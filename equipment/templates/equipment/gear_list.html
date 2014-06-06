@@ -3,24 +3,24 @@
 {% block title %}{{ block.super }} - Items{% endblock title %}
 
 {% block content %}
-<h1>Items</h1>
-{% if item_list %}
+<h1>Gear</h1>
+{% if gear_list %}
     {% if flatened == 'true' %}
     <a href="?order_by={{ order_by }}">Group by Categories</a>
     {% else %}
-    <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
     {% endif %}
-    {% include "equipment/item_list_header.html" %}
-    {% if flatened == 'true' %}
-        {% for item in item_list %}
-            {% include "equipment/item_list_line.html" with item=item %}
+    {% include "equipment/gear_list_header.html" %}
+    {% if flattened == 'true' %}
+        {% for gear in gear_list %}
+            {% include "equipment/gear_list_line.html" with gear=gear %}
         {% endfor %}
     {% else %}
-        {% regroup item_list|dictsort:"category.id" by category as categories %}
+        {% regroup gear_list|dictsort:"category.id" by category as categories %}
         {% for category in categories %}
             <tr class="item_category"><td colspan=12><a href="{% url 'equipment:gear_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
-            {% for item in category.list %}
-                {% include "equipment/item_list_line.html" with item=item %}
+            {% for gear in category.list %}
+                {% include "equipment/gear_list_line.html" with gear=gear %}
             {% endfor %}
         {% endfor %}
     {% endif %}

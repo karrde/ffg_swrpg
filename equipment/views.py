@@ -9,7 +9,7 @@ from equipment.models import *
 
 def sorting_context(model_class, category_model, default_sort, valid_sorts, special_sorts, request):
   order_by = request.GET.get('order_by', default_sort)
-  flatened = request.GET.get('flatened', 'false')
+  flattened = request.GET.get('flattened', 'false')
   reverse = False
   if order_by.startswith("-"):
     order_by = order_by.lstrip("-")
@@ -19,7 +19,7 @@ def sorting_context(model_class, category_model, default_sort, valid_sorts, spec
   if order_by not in special_sorts:
     object_list = model_class.objects.filter(category__model=category_model).order_by(order_by, default_sort)
   elif order_by == 'index':
-    object_list = [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__item__category__model=category_model)]
+    object_list = [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__gear__category__model=category_model)]
   elif order_by == 'crew':
     object_list = sorted(model_class.objects.filter(category__model=category_model).order_by(default_sort), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
   if reverse:
@@ -30,28 +30,28 @@ def sorting_context(model_class, category_model, default_sort, valid_sorts, spec
     'order_by': order_by,
     '{0}_list'.format(model_class.__name__.lower()): object_list,
     'reverse': reverse,
-    'flatened': flatened,
+    'flattened': flattened,
   }
 
-class ItemListView(ListView):
-  queryset = Item.objects.filter(category__model=1)
+class GearListView(ListView):
+  queryset = Gear.objects.filter(category__model=1)
   
   def get_context_data(self, **kwargs):
-    context = super(ItemListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Item, 1, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context = super(GearListView, self).get_context_data(**kwargs)
+    context.update(sorting_context(Gear, 1, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
     return context 
   
-class ItemCategoryView(ItemListView):
-  model = Item
-  template_name = 'books/item_list.html'
+class GearCategoryView(GearListView):
+  model = Gear
+  template_name = 'books/gear_list.html'
 
   def get_context_data(self, **kwargs):
-    context = super(ItemCategoryView, self).get_context_data(**kwargs)
-    context['item_list'] = [i for i in context['item_list'] if i.category.id == int(self.kwargs['category'])]
+    context = super(GearCategoryView, self).get_context_data(**kwargs)
+    context['gear_list'] = [i for i in context['gear_list'] if i.category.id == int(self.kwargs['category'])]
     return context
   
-class ItemDetailView(DetailView):
-  model = Item
+class GearDetailView(DetailView):
+  model = Gear
 
 class WeaponListView(ListView):
   model = Weapon

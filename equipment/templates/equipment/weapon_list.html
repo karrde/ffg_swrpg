@@ -5,13 +5,13 @@
 {% block content %}
 <h1>Weapons</h1>
 {% if weapon_list %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
     <a href="?order_by={{ order_by }}">Group by Categories</a>
     {% else %}
-    <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
     {% endif %}
     {% include "equipment/weapon_list_header.html" %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
         {% for weapon in weapon_list %}
             {% include "equipment/weapon_list_line.html" with weapon=weapon %}
         {% endfor %}

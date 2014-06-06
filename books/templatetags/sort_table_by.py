@@ -14,6 +14,6 @@ def sort_table_by(request, value):
   else:
     dict_[field] = value
   ret = "?order_by={0}".format(dict_[field])
-  if 'flatened' in dict_.keys() and dict_['flatened'] == 'true':
-    ret += "&flatened=true"
+  if 'flattened' in dict_.keys() and dict_['flattened'] == 'true':
+    ret += "&flattened=true"
   return ret

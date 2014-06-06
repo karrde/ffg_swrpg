@@ -4,7 +4,7 @@ insert into base_entry (id, name, image, notes) SELECT id,name,image,notes FROM 
 insert into base_index select * from oldbooks_index;
 
 insert into equipment_category select * from oldbooks_category;
-insert into equipment_item (entry_ptr_id, price, restricted, encumbrance, rarity, category_id) select id, price, restricted, encumbrance, rarity, category_id from oldbooks_item;
+insert into equipment_gear (entry_ptr_id, price, restricted, encumbrance, rarity, category_id) select id, price, restricted, encumbrance, rarity, category_id from oldbooks_item;
   
 insert into equipment_skill select * from oldbooks_skill;
 insert into equipment_rangeband select * from oldbooks_rangeband;

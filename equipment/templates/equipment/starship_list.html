@@ -5,13 +5,13 @@
 {% block content %}
 <h1>Starships</h1>
 {% if starship_list %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
     <a href="?order_by={{ order_by }}">Group by Categories</a>
     {% else %}
-    <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
     {% endif %}
     {% include "equipment/starship_list_header.html" %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
         {% for starship in starship_list %}
             {% include "equipment/starship_list_line.html" with starship=starship %}
         {% endfor %}

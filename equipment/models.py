@@ -3,7 +3,7 @@ import base.models
 
 class Category(models.Model):
   MODEL_CHOICES = (
-    (1, 'Item'),
+    (1, 'Gear'),
     (2, 'Weapon'),
     (3, 'Armor'),
     (4, 'Attachment'),
@@ -15,22 +15,22 @@ class Category(models.Model):
 
   def _weapon_set(self):
     if self.model == 2:
-      return Weapon.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
+      return Weapon.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   weapon_set = property(_weapon_set)
 
   def _attachment_set(self):
     if self.model == 4:
-      return Attachment.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
+      return Attachment.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   attachment_set = property(_attachment_set)
 
   def _vehicle_set(self):
     if self.model == 5:
-      return Vehicle.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
+      return Vehicle.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   vehicle_set = property(_vehicle_set)
 
   def _starship_set(self):
     if self.model == 6:
-      return Starship.objects.filter(item_ptr_id__in=[x.id for x in self.item_set.all()])
+      return Starship.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   starship_set = property(_starship_set)
 
   def __unicode__(self):
@@ -60,7 +60,7 @@ class RangeBand(models.Model):
   def __unicode__(self):
     return self.name
 
-class Item(base.models.Entry):
+class Gear(base.models.Entry):
   price = models.IntegerField()
   restricted = models.BooleanField()
   encumbrance = models.IntegerField()
@@ -112,7 +112,7 @@ class Item(base.models.Entry):
   class Meta:
     ordering = ['name']
 
-class Weapon(Item):
+class Weapon(Gear):
   skill = models.ForeignKey(Skill)
   damage = models.IntegerField()
   critical = models.IntegerField()
@@ -145,7 +145,7 @@ class Weapon(Item):
   class Meta:
     ordering = ['name']
     
-class Armor(Item):
+class Armor(Gear):
   defense = models.IntegerField()
   soak = models.IntegerField()
   hard_points = models.IntegerField()
@@ -161,16 +161,16 @@ class Armor(Item):
   class Meta:
     ordering = ['name']
     
-class Attachment(Item):
+class Attachment(Gear):
   by_silhoutte = models.BooleanField()
   hard_points = models.IntegerField()
   
   def _display_price(self):
-    item_price = super(Attachment, self)._display_price()
+    gear_price = super(Attachment, self)._display_price()
     if self.by_silhoutte:
-      return "{0} x silhoutte".format(item_price)
+      return "{0} x silhoutte".format(gear_price)
     else:
-      return item_price
+      return gear_price
       
   def _display_encum(self):
     if self.price and self.encumbrance:
@@ -182,7 +182,7 @@ class Attachment(Item):
   display_encum = property(_display_encum)
 
   
-class Vehicle(Item):
+class Vehicle(Gear):
   silhoutte = models.IntegerField()
   speed = models.IntegerField()
   handling = models.IntegerField()

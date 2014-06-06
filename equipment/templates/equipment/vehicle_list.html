@@ -5,13 +5,13 @@
 {% block content %}
 <h1>Vehicles</h1>
 {% if vehicle_list %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
     <a href="?order_by={{ order_by }}">Group by Categories</a>
     {% else %}
-    <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
     {% endif %}
     {% include "equipment/vehicle_list_header.html" %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
         {% for vehicle in vehicle_list %}
             {% include "equipment/vehicle_list_line.html" with vehicle=vehicle %}
         {% endfor %}

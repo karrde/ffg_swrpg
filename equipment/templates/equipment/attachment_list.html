@@ -8,10 +8,10 @@
     {% if flatened == 'true' %}
     <a href="?order_by={{ order_by }}">Group by Categories</a>
     {% else %}
-    <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
     {% endif %}
     {% include "equipment/attachment_list_header.html" %}
-    {% if flatened == 'true' %}
+    {% if flattened == 'true' %}
         {% for attachment in attachment_list %}
             {% include "equipment/attachment_list_line.html" with attachment=attachment %}
         {% endfor %}
