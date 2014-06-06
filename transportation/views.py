@@ -43,3 +43,24 @@ class StarshipCategoryView(StarshipListView):
     context = super(StarshipCategoryView, self).get_context_data(**kwargs)
     context['starship_list'] = [i for i in context['starship_list'] if i.category.id == int(self.kwargs['category'])]
     return context
+
+
+class VehicleAttachmentListView(ListView):
+  model = VehicleAttachment
+
+  def get_context_data(self, **kwargs):
+    context = super(VehicleAttachmentListView, self).get_context_data(**kwargs)
+    context.update(sorting_context(VehicleAttachment, 7, 'name', ['name', 'price', 'hard_points', 'rarity', 'index'], ['index'], self.request))
+    return context 
+
+class VehicleAttachmentCategoryView(VehicleAttachmentListView):
+  model = VehicleAttachment
+  template_name = 'transportation/vehicleattachment_list.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(VehicleAttachmentCategoryView, self).get_context_data(**kwargs)
+    context['vehicleattachment_list'] = [i for i in context['vehicleattachment_list'] if i.category.id == int(self.kwargs['category'])]
+    return context
+
+class VehicleAttachmentDetailView(DetailView):
+  model = VehicleAttachment

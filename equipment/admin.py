@@ -56,7 +56,7 @@ class CategoryAdmin(admin.ModelAdmin):
   list_display = ('model', 'name')
   
 class AttachmentAdmin(GearAdmin):
-  fields = ['name', ('price', 'restricted', 'by_silhoutte'), 'encumbrance', 'hard_points', 'rarity', 'category', 'notes', 'image']
+  fields = ['name', ('price', 'restricted'), 'encumbrance', 'hard_points', 'rarity', 'category', 'notes', 'image']
 
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':

@@ -146,23 +146,14 @@ class Armor(Gear):
     ordering = ['name']
     
 class Attachment(Gear):
-  by_silhoutte = models.BooleanField()
   hard_points = models.IntegerField()
   
-  def _display_price(self):
-    gear_price = super(Attachment, self)._display_price()
-    if self.by_silhoutte:
-      return "{0} x silhoutte".format(gear_price)
-    else:
-      return gear_price
-      
   def _display_encum(self):
     if self.price and self.encumbrance:
       return "{0:+d}".format(self.encumbrance)
     else:
       return "-"
 
-  display_price = property(_display_price)
   display_encum = property(_display_encum)
 
   

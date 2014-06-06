@@ -46,6 +46,21 @@ class StarshipAdmin(equipment.admin.GearAdmin):
     qs = super(equipment.admin.GearAdmin, self).queryset(request)
     return qs.filter(category__model=6)
 
+class VehicleAttachmentAdmin(equipment.admin.GearAdmin):
+  fields = ['name', ('price', 'restricted', 'by_silhoutte'), 'encumbrance', 'hard_points', 'rarity', 'category', 'notes', 'image']
+
+  def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    if db_field.name == 'category':
+      kwargs['queryset'] = Category.objects.filter(model=7)
+    return super(equipment.admin.GearAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+  def queryset(self, request):
+    qs = super(equipment.admin.GearAdmin, self).queryset(request)
+    return qs.filter(category__model=7)
+
+
 admin.site.register(CrewDescriptor)
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(Starship, StarshipAdmin)
+admin.site.register(VehicleAttachment, VehicleAttachmentAdmin)
+

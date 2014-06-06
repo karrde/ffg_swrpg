@@ -1,7 +1,6 @@
 from django.db import models
 
 import equipment.models
-from equipment.models import Gear
 
 class Category(equipment.models.Category):
   class Meta:
@@ -10,6 +9,7 @@ class Category(equipment.models.Category):
   MODEL_CHOICES = (
     (5, 'Vehicle'),
     (6, 'Starship'),
+    (7, 'VehicleAttachment'),
   )
 
   def __init__(self, *args, **kwargs):
@@ -38,7 +38,7 @@ class RangeBand(equipment.models.RangeBand):
     super(RangeBand, self).__init__(*args, **kwargs)
     self._meta.get_field_by_name('range_band')[0]._choices = RangeBand.RANGE_BAND_CHOICES
 
-class Vehicle(Gear):
+class Vehicle(equipment.models.Gear):
   silhoutte = models.IntegerField()
   speed = models.IntegerField()
   handling = models.IntegerField()
@@ -194,4 +194,16 @@ class Consumable(models.Model):
       q = self.value
     return "{0} {1}".format(q, dict(Consumable.PERIOD_CHOICES)[self.period])
     
+  
+class VehicleAttachment(equipment.models.Attachment):
+  by_silhoutte = models.BooleanField()
+  
+  def _display_price(self):
+    gear_price = super(VehicleAttachment, self)._display_price()
+    if self.by_silhoutte:
+      return "{0} x silhoutte".format(gear_price)
+    else:
+      return gear_price
+      
+  display_price = property(_display_price)
   

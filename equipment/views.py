@@ -43,7 +43,7 @@ class GearListView(ListView):
   
 class GearCategoryView(GearListView):
   model = Gear
-  template_name = 'books/gear_list.html'
+  template_name = 'equipment/gear_list.html'
 
   def get_context_data(self, **kwargs):
     context = super(GearCategoryView, self).get_context_data(**kwargs)
@@ -63,7 +63,7 @@ class WeaponListView(ListView):
     
 class WeaponCategoryView(WeaponListView):
   model = Weapon
-  template_name = 'books/weapon_list.html'
+  template_name = 'equipment/weapon_list.html'
   
   def get_context_data(self, **kwargs):
     context = super(WeaponCategoryView, self).get_context_data(**kwargs)
@@ -94,7 +94,7 @@ class AttachmentListView(ListView):
 
 class AttachmentCategoryView(AttachmentListView):
   model = Attachment
-  template_name = 'books/attachment_list.html'
+  template_name = 'equipment/attachment_list.html'
 
   def get_context_data(self, **kwargs):
     context = super(AttachmentCategoryView, self).get_context_data(**kwargs)

@@ -11,4 +11,7 @@ urlpatterns = patterns('',
     url(r'^starships/$', StarshipListView.as_view(), name='starships'),
     url(r'^starships/(?P<pk>\d+)/$', StarshipDetailView.as_view(), name='starship'),
     url(r'^starshipscategory/(?P<category>\d+)/$', StarshipCategoryView.as_view(), name='starship_category'),
+    url(r'^vehicleattachments/$', VehicleAttachmentListView.as_view(), name='vehicleattachments'),
+    url(r'^vehicleattachments/category/(?P<category>\d+)/$', VehicleAttachmentCategoryView.as_view(), name='vehicleattachment_category'),
+    url(r'^vehicleattachments/(?P<pk>\d+)/$', VehicleAttachmentDetailView.as_view(), name='vehicleattachment'),
 )
