@@ -1,15 +1,16 @@
 from django.conf.urls import patterns, url
 from django.views.generic.base import RedirectView
 
-from books.views import *
 from equipment.views import *
 
 urlpatterns = patterns('',
-    url(r'^$', BookListView.as_view(), name='index'),
-    url(r'^book/(?P<pk>\d+)/$', BookDetailView.as_view(), name='book'),
-    url(r'^items/$', ItemListView.as_view(), name='items'),
-    url(r'^items/category/(?P<category>\d+)/$', ItemCategoryView.as_view(), name='item_category'),
-    url(r'^items/(?P<pk>\d+)/$', ItemDetailView.as_view(), name='item'),
+    url(r'^$', ItemListView.as_view(), name='index'),
+    url(r'^items/$', ItemListView.as_view()),
+    url(r'^items/category/(?P<category>\d+)/$', ItemCategoryView.as_view()),
+    url(r'^items/(?P<pk>\d+)/$', ItemDetailView.as_view()),
+    url(r'^gear/$', ItemListView.as_view(), name='gears'),
+    url(r'^gear/category/(?P<category>\d+)/$', ItemCategoryView.as_view(), name='gear_category'),
+    url(r'^gear/(?P<pk>\d+)/$', ItemDetailView.as_view(), name='gear'),
     url(r'^weapons/$', WeaponListView.as_view(), name='weapons'),
     url(r'^weapons/category/(?P<category>\d+)/$', WeaponCategoryView.as_view(), name='weapon_category'),
     url(r'^weapons/(?P<pk>\d+)/$', WeaponDetailView.as_view(), name='weapon'),

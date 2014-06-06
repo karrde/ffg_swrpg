@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^$', 'ffg_swrpg.views.index_view', name='index'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^equipment/', include('equipment.urls', namespace='equipment')),
     url(r'^books/', include('books.urls', namespace='books')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()

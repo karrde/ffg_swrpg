@@ -19,8 +19,9 @@
             <div class="col2 no-print">
                 <ul>
                     {% block sidebar %}
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'books:index' %}">Books</a></li>
+                    <li><a href="{% url 'index' %}">Home</a></li>{% block sb-index %}{% endblock %}
+                    <li><a href="{% url 'books:index' %}">Books</a></li>{% block sb-books %}{% endblock %}
+                    <li><a href="{% url 'equipment:index' %}">Equipment</a></li>{% block sb-equipment %}{% endblock %}
                     {% endblock %}
                 </ul>
             </div>

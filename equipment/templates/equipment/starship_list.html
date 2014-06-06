@@ -1,4 +1,4 @@
-{% extends "books/base.html" %}
+{% extends "equipment/base.html" %}
 
 {% block title %}{{ block.super }} - Starships{% endblock title %}
 
@@ -10,17 +10,17 @@
     {% else %}
     <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
     {% endif %}
-    {% include "books/starship_list_header.html" %}
+    {% include "equipment/starship_list_header.html" %}
     {% if flatened == 'true' %}
         {% for starship in starship_list %}
-            {% include "books/starship_list_line.html" with starship=starship %}
+            {% include "equipment/starship_list_line.html" with starship=starship %}
         {% endfor %}
     {% else %}
         {% regroup starship_list|dictsort:"category.id" by category as categories %}
         {% for category in categories %}
-            <tr class="item_category"><td colspan=30><a href="{% url 'books:starship_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            <tr class="item_category"><td colspan=30><a href="{% url 'equipment:starship_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
             {% for starship in category.list %}
-                {% include "books/starship_list_line.html" with starship=starship %}
+                {% include "equipment/starship_list_line.html" with starship=starship %}
             {% endfor %}
         {% endfor %}
     {% endif %}

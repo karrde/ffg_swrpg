@@ -1,4 +1,4 @@
-{% extends "books/base.html" %}
+{% extends "equipment/base.html" %}
 
 {% block title %}{{ block.super }} - Items{% endblock title %}
 
@@ -10,17 +10,17 @@
     {% else %}
     <a href="?order_by={{ order_by }}&flatened=true">Flaten Categories</a>
     {% endif %}
-    {% include "books/item_list_header.html" %}
+    {% include "equipment/item_list_header.html" %}
     {% if flatened == 'true' %}
         {% for item in item_list %}
-            {% include "books/item_list_line.html" with item=item %}
+            {% include "equipment/item_list_line.html" with item=item %}
         {% endfor %}
     {% else %}
         {% regroup item_list|dictsort:"category.id" by category as categories %}
         {% for category in categories %}
-            <tr class="item_category"><td colspan=12><a href="{% url 'books:item_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            <tr class="item_category"><td colspan=12><a href="{% url 'equipment:gear_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
             {% for item in category.list %}
-                {% include "books/item_list_line.html" with item=item %}
+                {% include "equipment/item_list_line.html" with item=item %}
             {% endfor %}
         {% endfor %}
     {% endif %}

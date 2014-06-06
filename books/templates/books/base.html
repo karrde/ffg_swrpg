@@ -3,10 +3,4 @@
 {% block content %}{{ block.super }}{% endblock %}
 {% block sidebar %}
 {{ block.super }}
-<li><a href="{% url 'books:items' %}">Items</a></li>
-<li><a href="{% url 'books:weapons' %}">Weapons</a></li>
-<li><a href="{% url 'books:armors' %}">Armor</a></li>
-<li><a href="{% url 'books:attachments' %}">Attachments</a></li>
-<li><a href="{% url 'books:vehicles' %}">Vehicles</a></li>
-<li><a href="{% url 'books:starships' %}">Starships</a></li>
 {% endblock %}
