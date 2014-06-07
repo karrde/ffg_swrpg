@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms
 
 import base.admin
 from equipment.models import *
