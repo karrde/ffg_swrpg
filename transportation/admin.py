@@ -58,8 +58,15 @@ class VehicleAttachmentAdmin(equipment.admin.GearAdmin):
     qs = super(equipment.admin.GearAdmin, self).queryset(request)
     return qs.filter(category__model=7)
 
+class CategoryAdmin(admin.ModelAdmin):
+  list_display = ('model', 'name')
+  
+  def queryset(self, request):
+    qs = super(CategoryAdmin, self).queryset(request)
+    return qs.filter(model__in=[x[0] for x in Category.MODEL_CHOICES])
 
 admin.site.register(CrewDescriptor)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(Starship, StarshipAdmin)
 admin.site.register(VehicleAttachment, VehicleAttachmentAdmin)

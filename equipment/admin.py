@@ -55,6 +55,10 @@ class ArmorAdmin(GearAdmin):
 class CategoryAdmin(admin.ModelAdmin):
   list_display = ('model', 'name')
   
+  def queryset(self, request):
+    qs = super(CategoryAdmin, self).queryset(request)
+    return qs.filter(model__in=[x[0] for x in Category.MODEL_CHOICES])
+  
 class AttachmentAdmin(GearAdmin):
   fields = ['name', ('price', 'restricted'), 'encumbrance', 'hard_points', 'rarity', 'category', 'notes', 'image']
 
