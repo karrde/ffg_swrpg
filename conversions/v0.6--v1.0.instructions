@@ -10,3 +10,17 @@ Run "manage.py syncdb"
 Import edited dump file
 
 Import v0.6--v1.0.sql
+
+Run the following in "manage.py shell"
+
+-------------
+from django.contrib.auth.management import create_permissions
+from django.db.models import get_apps
+for app in get_apps():
+    create_permissions(app, None, 2)
+
+from django.contrib.contenttypes.management import update_all_contenttypes
+update_all_contenttypes(interactive=True)
+--------------
+
+Reset permissions on groups.
