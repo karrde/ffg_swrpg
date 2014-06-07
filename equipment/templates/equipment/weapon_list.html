@@ -1,0 +1,31 @@
+{% extends "equipment/base.html" %}
+
+{% block title %}{{ block.super }} - Weapons{% endblock title %}
+
+{% block content %}
+<h1>Weapons</h1>
+{% if weapon_list %}
+    {% if flattened == 'true' %}
+    <a href="?order_by={{ order_by }}">Group by Categories</a>
+    {% else %}
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
+    {% endif %}
+    {% include "equipment/weapon_list_header.html" %}
+    {% if flattened == 'true' %}
+        {% for weapon in weapon_list %}
+            {% include "equipment/weapon_list_line.html" with weapon=weapon %}
+        {% endfor %}
+    {% else %}
+        {% regroup weapon_list|dictsort:"category.id" by category as categories %}
+        {% for category in categories %}
+            <tr class="item_category"><td colspan=12><a href="{% url 'equipment:weapon_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            {% for weapon in category.list %}
+                {% include "equipment/weapon_list_line.html" with weapon=weapon %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    </table></div>
+{% else %}
+    <p>No weapons.</p>
+{% endif %}
+{% endblock content %}

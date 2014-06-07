@@ -1,0 +1,31 @@
+{% extends "transportation/base.html" %}
+
+{% block title %}{{ block.super }} - Weapons{% endblock title %}
+
+{% block content %}
+<h1>Attachments</h1>
+{% if vehicleattachment_list %}
+    {% if flatened == 'true' %}
+    <a href="?order_by={{ order_by }}">Group by Categories</a>
+    {% else %}
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
+    {% endif %}
+    {% include "transportation/vehicleattachment_list_header.html" %}
+    {% if flattened == 'true' %}
+        {% for vehicleattachment in vehicleattachment_list %}
+            {% include "transportation/vehicleattachment_list_line.html" with vehicleattachment=vehicleattachment %}
+        {% endfor %}
+    {% else %}
+        {% regroup vehicleattachment_list|dictsort:"category.id" by category as categories %}
+        {% for category in categories %}
+            <tr class="item_category"><td colspan=12><a href="{% url 'transportation:vehicleattachment_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            {% for vehicleattachment in category.list %}
+                {% include "transportation/vehicleattachment_list_line.html" with vehicleattachment=vehicleattachment %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    </table></div>
+{% else %}
+    <p>No vehicleattachments.</p>
+{% endif %}
+{% endblock content %}

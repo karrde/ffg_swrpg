@@ -1,0 +1,10 @@
+{% load sort_table_by %}
+<div  class="itemtable">
+<table>
+<tr class="sortable_header">
+    <td><a href="{% sort_table_by request 'name' %}">Attachment</a></td>
+    <td><a href="{% sort_table_by request 'price' %}">Price</a></td>
+    <td><a href="{% sort_table_by request 'hard_points' %}">HP Required</a></td>
+    <td><a href="{% sort_table_by request 'rarity' %}">Rarity</a></td>
+    <td><a href="{% sort_table_by request 'index' %}">Index</a></td>
+</tr>

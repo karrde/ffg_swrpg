@@ -1,0 +1,23 @@
+{% extends "transportation/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ vehicleattachment.name }}</span><br />
+    {% if vehicleattachment.image %}<img class="item_image" src="{{ vehicleattachment.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if vehicleattachment.aka %}<span class="item_titles">AKA:</span> {{ vehicleattachment.aka }}<br />{% endif %}
+        <span class="item_titles">Price:</span> {{ vehicleattachment.display_price }}<br />
+        <span class="item_titles">HP Required:</span> {{ vehicleattachment.hard_points }}<br />
+        <span class="item_titles">Rarity:</span> {{ vehicleattachment.display_rarity }}<br />
+        <span class="item_titles">Type:</span> {{ vehicleattachment.category.name }}<br />
+        <span class="item_titles">Indexes:</span> {{ vehicleattachment.indexes }}<br />
+    </div>
+</div>
+{% if vehicleattachment.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ vehicleattachment.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

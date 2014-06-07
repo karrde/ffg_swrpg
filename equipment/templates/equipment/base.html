@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }}{% endblock %}
+{% block content %}{{ block.super }}{% endblock %}
+{% block sb-equipment %}
+{{ block.super }}
+<ul>
+<li><a href="{% url 'equipment:gears' %}">Gear</a></li>
+<li><a href="{% url 'equipment:weapons' %}">Weapons</a></li>
+<li><a href="{% url 'equipment:armors' %}">Armor</a></li>
+<li><a href="{% url 'equipment:attachments' %}">Attachments</a></li>
+</ul>
+{% endblock %}

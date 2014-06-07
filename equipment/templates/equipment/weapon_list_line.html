@@ -1,0 +1,13 @@
+<tr>
+    <td class="item_name"><a href="{% url 'equipment:weapon' weapon.id %}">{{ weapon.name }}</a></td>
+    <td class="weapon_skill">{{ weapon.skill }}</td>
+    <td>{{ weapon.display_damage }}</td>
+    <td>{{ weapon.display_crit }}</td>
+    <td class="weapon_range">{{ weapon.range_band.name }}</td>
+    <td class="weapon_encum">{{ weapon.display_encum }}</td>
+    <td>{{ weapon.display_hp }}</td>
+    <td>{{ weapon.display_price }}</td>
+    <td>{{ weapon.display_rarity }}</td>
+    <td class="weapon_special">{{ weapon.special }}</td>
+    <td>{{ weapon.indexes }}</td>
+</tr>

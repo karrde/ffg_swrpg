@@ -1,0 +1,29 @@
+{% extends "equipment/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ weapon.name }}</span><br />
+    {% if weapon.image %}<img class="item_image" src="{{ weapon.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if weapon.aka %}<span class="item_titles">AKA:</span> {{ weapon.aka }}<br />{% endif %}
+        <span class="item_titles">Skill:</span> {{ weapon.skill.name }}<br />
+        <span class="item_titles">Damage:</span> {{ weapon.display_damage }}<br />
+        <span class="item_titles">Critical:</span> {{ weapon.display_crit }}<br />
+        <span class="item_titles">Range:</span> {{ weapon.range_band.name }}<br />
+        <span class="item_titles">Encumbrance:</span> {{ weapon.display_encum }}<br />
+        <span class="item_titles">HP:</span> {{ weapon.display_hp }}<br />
+        <span class="item_titles">Price:</span> {{ weapon.display_price }}<br />
+        <span class="item_titles">Rarity:</span> {{ weapon.display_rarity }}<br />
+        <span class="item_titles">Special:</span> {{ weapon.special }}<br />
+        <span class="item_titles">Category:</span> {{ weapon.category.name }}<br />
+        <span class="item_titles">Indexes:</span> {{ weapon.indexes }}<br />
+    </div>
+</div>
+{% if weapon.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ weapon.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

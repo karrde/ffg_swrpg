@@ -1,0 +1,23 @@
+{% extends "equipment/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ gear.name }}</span><br />
+    {% if gear.image %}<img class="item_image" src="{{ gear.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if gear.aka %}<span class="item_titles">AKA:</span> {{ gear.aka }}<br />{% endif %}
+        <span class="item_titles">Price:</span> {{ gear.display_price }}<br />
+        <span class="item_titles">Encumbrance:</span> {{ gear.display_encum }}<br />
+        <span class="item_titles">Rarity:</span> {{ gear.display_rarity }}<br />
+        <span class="item_titles">Category:</span> {{ gear.category.name }}<br />
+        <span class="item_titles">Indexes:</span> {{ gear.indexes }}<br />
+    </div>
+</div>
+{% if gear.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ gear.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

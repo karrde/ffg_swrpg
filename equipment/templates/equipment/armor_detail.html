@@ -1,0 +1,25 @@
+{% extends "equipment/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ armor.name }}</span><br />
+    {% if armor.image %}<img class="item_image" src="{{ armor.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if armor.aka %}<span class="item_titles">AKA:</span> {{ armor.aka }}<br />{% endif %}
+        <span class="item_titles">Defense:</span> {{ armor.defense }}<br />
+        <span class="item_titles">soak:</span> {{ armor.soak }}<br />
+        <span class="item_titles">Price:</span> {{ armor.display_price }}<br />
+        <span class="item_titles">Encumbrance:</span> {{ armor.display_encum }}<br />
+        <span class="item_titles">HP:</span> {{ weapon.display_hp }}<br />
+        <span class="item_titles">Rarity:</span> {{ armor.display_rarity }}<br />
+        <span class="item_titles">Indexes:</span> {{ armor.indexes }}<br />
+    </div>
+</div>
+{% if armor.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ armor.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

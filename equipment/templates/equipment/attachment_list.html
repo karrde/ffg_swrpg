@@ -1,0 +1,31 @@
+{% extends "equipment/base.html" %}
+
+{% block title %}{{ block.super }} - Weapons{% endblock title %}
+
+{% block content %}
+<h1>Attachments</h1>
+{% if attachment_list %}
+    {% if flatened == 'true' %}
+    <a href="?order_by={{ order_by }}">Group by Categories</a>
+    {% else %}
+    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
+    {% endif %}
+    {% include "equipment/attachment_list_header.html" %}
+    {% if flattened == 'true' %}
+        {% for attachment in attachment_list %}
+            {% include "equipment/attachment_list_line.html" with attachment=attachment %}
+        {% endfor %}
+    {% else %}
+        {% regroup attachment_list|dictsort:"category.id" by category as categories %}
+        {% for category in categories %}
+            <tr class="item_category"><td colspan=12><a href="{% url 'equipment:attachment_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
+            {% for attachment in category.list %}
+                {% include "equipment/attachment_list_line.html" with attachment=attachment %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    </table></div>
+{% else %}
+    <p>No attachments.</p>
+{% endif %}
+{% endblock content %}
