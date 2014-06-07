@@ -42,12 +42,28 @@ def get_item_image_path(instance, filename):
     path_start = 'item'
   return os.path.join(path_start, str(instance.id), filename)
 
+class Category(models.Model):
+  MODEL_CHOICES = (
+    (0, 'No Model'),
+  )
+  model = models.IntegerField(choices=MODEL_CHOICES)
+  name = models.CharField(max_length=50)
+
+  def __unicode__(self):
+    return self.name
+
+  class Meta:
+    ordering = ['name']
+
 class Entry(models.Model):
   name = models.CharField(max_length=100)
   image = models.ImageField(upload_to=get_item_image_path, null=True, blank=True)
   notes = models.CharField(max_length=500, blank=True)
+  category = models.ForeignKey(Category)
+
   def __unicode__(self):
     return self.name
+
   def _indexes(self):
     return ", ".join([idx.str() for idx in self.index_set.all()])
   indexes = property(_indexes)

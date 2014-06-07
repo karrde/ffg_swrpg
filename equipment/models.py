@@ -1,16 +1,21 @@
 from django.db import models
 import base.models
 
-class Category(models.Model):
+class Category(base.models.Category):
+  class Meta:
+    proxy = True
+
   MODEL_CHOICES = (
     (1, 'Gear'),
     (2, 'Weapon'),
     (3, 'Armor'),
     (4, 'Attachment'),
   )
-  model = models.IntegerField(choices=MODEL_CHOICES)
-  name = models.CharField(max_length=50)
 
+  def __init__(self, *args, **kwargs):
+    super(Category, self).__init__(*args, **kwargs)
+    self._meta.get_field_by_name('model')[0]._choices = Category.MODEL_CHOICES
+      
   def _weapon_set(self):
     if self.model == 2:
       return Weapon.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
@@ -20,12 +25,6 @@ class Category(models.Model):
     if self.model == 4:
       return Attachment.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   attachment_set = property(_attachment_set)
-
-  def __unicode__(self):
-    return self.name
-
-  class Meta:
-    ordering = ['name']
 
 class Skill(models.Model):
   SKILL_CHOICES = (
@@ -53,7 +52,6 @@ class Gear(base.models.Entry):
   restricted = models.BooleanField()
   encumbrance = models.IntegerField()
   rarity = models.IntegerField()
-  category = models.ForeignKey(Category)
   
   def __unicode__(self):
     return self.name

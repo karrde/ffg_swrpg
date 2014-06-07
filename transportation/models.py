@@ -1,8 +1,8 @@
 from django.db import models
 
-import equipment.models
+import base.models, equipment.models
 
-class Category(equipment.models.Category):
+class Category(base.models.Category):
   class Meta:
     proxy = True
 
