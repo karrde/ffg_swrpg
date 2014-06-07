@@ -19,5 +19,4 @@ insert into transportation_starship select * from oldbooks_starship;
 insert into transportation_hyperdrive select * from oldbooks_hyperdrive;
 insert into transportation_consumable select * from oldbooks_consumable;
 insert into transportation_vehicleattachment (attachment_ptr_id, by_silhoutte) select a.item_ptr_id,a.by_silhoutte from oldbooks_attachment a, oldbooks_item i where a.item_ptr_id = i.id and ( i.category_id=26 or i.category_id=27);
-
-       
+update equipment_category set model=7 where id=26 or id=27;
