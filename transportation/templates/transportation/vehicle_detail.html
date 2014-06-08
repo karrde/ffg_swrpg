@@ -6,7 +6,7 @@
     <span class="item_name">{{ vehicle.name }}</span><br />
     {% if vehicle.image %}<img class="item_image" src="{{ vehicle.image.url }}" />{% endif %}
     <div class="vehicle_stats">
-        <div class="silhoutte"><span class="item_titles">Silhoutte:</sapn> <span class="item_value">{{ vehicle.silhoutte }}</span></div>
+        <div class="silhoutte"><span class="item_titles">Silhouette:</sapn> <span class="item_value">{{ vehicle.silhoutte }}</span></div>
         <div class="speed"><span class="item_titles">Speed:</sapn> <span class="item_value">{{ vehicle.speed }}</span></div>
         <div class="handling"><span class="item_titles">Handling:</sapn> <span class="item_value">{{ vehicle.display_handling }}</span></div>
         <div class="defense"><span class="item_titles">Defense:</sapn> <span class="item_value">{{ vehicle.defense }}</span></div>
@@ -22,7 +22,7 @@
         <span class="item_titles">Sensor Range:</span> {{ vehicle.sensor_range.name }}<br />
         <span class="item_titles">Crew:</span> {{ vehicle.crew_detail }}<br />
         <span class="item_titles">Encumbrance Capacity:</span> {{ vehicle.encumbrance }}<br />
-        <span class="item_titles">Pasenger Capacity:</span> {{ vehicle.passenger }}<br />
+        <span class="item_titles">Passenger Capacity:</span> {{ vehicle.passenger }}<br />
         <span class="item_titles">Cost/Rarity:</span> {{ vehicle.display_price }} credits/{{ vehicle.display_rarity }}<br />
         <span class="item_titles">Customization Hard Points:</span> {{ vehicle.hard_points }}<br />
         <span class="item_titles">Weapons:</span> {{ vehicle.weapon_count }}<br />
