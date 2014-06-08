@@ -11,11 +11,7 @@ class Category(base.models.Category):
     (3, 'Armor'),
     (4, 'Attachment'),
   )
-
-  def __init__(self, *args, **kwargs):
-    super(Category, self).__init__(*args, **kwargs)
-    self._meta.get_field_by_name('model')[0]._choices = Category.MODEL_CHOICES
-      
+  
   def _weapon_set(self):
     if self.model == 2:
       return Weapon.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])

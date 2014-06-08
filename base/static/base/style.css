@@ -215,7 +215,9 @@ img {
 .itemtable tr:hover td{
 	
 }
-.itemtable tr:nth-child(odd){ background-color:#bf9670; }
+/* .itemtable tr:nth-child(odd){ background-color:#bf9670; } */
+.itemtable tr:nth-child(odd){ background-color:#d2d3c7; } /* EotE */
+/* .itemtable tr:nth-child(odd){ background-color:#ecd0bc; } /* AoR */
 .itemtable tr:nth-child(even)    { background-color:#ffffff; }
 .itemtable td{
 	vertical-align:top;
@@ -237,12 +239,14 @@ img {
 .itemtable tr:last-child td:last-child{
 	border-width:0px 0px 0px 0px;
 } */
-.itemtable tr:first-child td{
-		background:-o-linear-gradient(bottom, #666666 5%, #666666 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #666666), color-stop(1, #666666) );
-	background:-moz-linear-gradient( center top, #666666 5%, #666666 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#666666", endColorstr="#666666");	background: -o-linear-gradient(top,#666666,666666);
 
-	background-color:#666666;
+.itemtable tr:first-child td{
+/*		background:-o-linear-gradient(bottom, #666666 5%, #666666 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #666666), color-stop(1, #666666) );
+	background:-moz-linear-gradient( center top, #666666 5%, #666666 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#666666", endColorstr="#666666");	background: -o-linear-gradient(top,#666666,666666);*/
+
+  background-color:#495f43; /* EotE */
+/*  background-color:#a8470d; /* AoR */
 	border:1px solid #000000;
 	text-align:left;
 /*	border-width:1px 0px 1px 1px; */
@@ -251,19 +255,6 @@ img {
 	font-weight:bold;
 	color:#ffffff;
 }
-.itemtable tr:first-child:hover td{
-	background:-o-linear-gradient(bottom, #666666 5%, #666666 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #666666), color-stop(1, #666666) );
-	background:-moz-linear-gradient( center top, #666666 5%, #666666 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#666666", endColorstr="#666666");	background: -o-linear-gradient(top,#666666,666666);
-
-	background-color:#666666;
-}
-/* .itemtable tr:first-child td:first-child{
-	border-width:0px 0px 1px 0px;
-}
-.itemtable tr:first-child td:last-child{
-	border-width:0px 0px 1px 1px;
-} */
 
 /* class for hiding objects during print */
 @media all {
@@ -375,4 +366,11 @@ span.item_titles {
   font-size: 80%;
   text-align: right;
   margin-top: 3px;
+}
+
+.model_link {
+  font-size: 120%;
+}
+.model_list {
+  margin-bottom: 5px;
 }

@@ -12,10 +12,6 @@ class Category(base.models.Category):
     (7, 'VehicleAttachment'),
   )
 
-  def __init__(self, *args, **kwargs):
-    super(Category, self).__init__(*args, **kwargs)
-    self._meta.get_field_by_name('model')[0]._choices = Category.MODEL_CHOICES
-      
   def _vehicle_set(self):
     if self.model == 5:
       return Vehicle.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])

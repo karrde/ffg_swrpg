@@ -1,0 +1,19 @@
+{% extends "equipment/base.html" %}
+
+{% block title %}{{ block.super }}{% endblock title %}
+
+{% block content %}
+<h1>Equipment</h1>
+{% if category_list %}
+    {% regroup category_list by model_info as models %}
+    {% for model in models %}
+        <div class="model_list"><a href="{% url 'equipment:'|add:model.grouper.name|lower|add:'s' %}" class="model_link">{{ model.grouper.name }}</a>: 
+        {% for category in model.list %}
+            <a href="{% url 'equipment:'|add:model.grouper.name|lower|add:'_category' category.id %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No equipment.</p>
+{% endif %}
+{% endblock content %}

@@ -4,7 +4,7 @@ from django.views.generic.base import RedirectView
 from transportation.views import *
 
 urlpatterns = patterns('',
-    url(r'^$', VehicleListView.as_view(), name='index'),
+    url(r'^$', CategoryListView.as_view(), name='index'),
     url(r'^vehicles/$', VehicleListView.as_view(), name='vehicles'),
     url(r'^vehicles/(?P<pk>\d+)/$', VehicleDetailView.as_view(), name='vehicle'),
     url(r'^vehicles/category/(?P<category>\d+)/$', VehicleCategoryView.as_view(), name='vehicle_category'),

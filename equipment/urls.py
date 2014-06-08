@@ -4,7 +4,7 @@ from django.views.generic.base import RedirectView
 from equipment.views import *
 
 urlpatterns = patterns('',
-    url(r'^$', GearListView.as_view(), name='index'),
+    url(r'^$', CategoryListView.as_view(), name='index'),
     url(r'^items/$', GearListView.as_view()),
     url(r'^items/category/(?P<category>\d+)/$', GearCategoryView.as_view()),
     url(r'^items/(?P<pk>\d+)/$', GearDetailView.as_view()),
@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^weapons/(?P<pk>\d+)/$', WeaponDetailView.as_view(), name='weapon'),
     url(r'^armor/$', ArmorListView.as_view(), name='armors'),
     url(r'^armor/(?P<pk>\d+)/$', ArmorDetailView.as_view(), name='armor'),
+    url(r'^armor/category/(?P<category>\d+)/$', ArmorListView.as_view(), name='armor_category'),
     url(r'^attachments/$', AttachmentListView.as_view(), name='attachments'),
     url(r'^attachments/category/(?P<category>\d+)/$', AttachmentCategoryView.as_view(), name='attachment_category'),
     url(r'^attachments/(?P<pk>\d+)/$', AttachmentDetailView.as_view(), name='attachment'),

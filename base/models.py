@@ -46,9 +46,26 @@ class Category(models.Model):
   MODEL_CHOICES = (
     (0, 'No Model'),
   )
+  
   model = models.IntegerField(choices=MODEL_CHOICES)
   name = models.CharField(max_length=50)
 
+  @classmethod
+  def model_hash(cls):
+    return { v[1]:v[0] for i,v in enumerate(cls.MODEL_CHOICES) }
+    
+  @classmethod
+  def model_numbers(cls):
+    mhash = cls.model_hash()
+    return [mhash[i] for i in mhash.keys()]
+    
+  def model_info(self):
+    return {'id': int(self.model), 'name': self.get_model_display() }
+    
+  def __init__(self, *args, **kwargs):
+    super(Category, self).__init__(*args, **kwargs)
+    self._meta.get_field_by_name('model')[0]._choices = self.__class__.MODEL_CHOICES
+      
   def __unicode__(self):
     return self.name
 

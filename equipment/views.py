@@ -104,3 +104,6 @@ class AttachmentCategoryView(AttachmentListView):
 class AttachmentDetailView(DetailView):
   model = Attachment
 
+class CategoryListView(ListView):
+  queryset = Category.objects.filter(model__in=Category.model_numbers()).order_by('model', 'name')
+

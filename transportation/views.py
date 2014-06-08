@@ -64,3 +64,6 @@ class VehicleAttachmentCategoryView(VehicleAttachmentListView):
 
 class VehicleAttachmentDetailView(DetailView):
   model = VehicleAttachment
+
+class CategoryListView(ListView):
+  queryset = Category.objects.filter(model__in=Category.model_numbers()).order_by('model', 'name')
