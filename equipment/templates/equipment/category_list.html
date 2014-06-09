@@ -7,9 +7,9 @@
 {% if category_list %}
     {% regroup category_list by model_info as models %}
     {% for model in models %}
-        <div class="model_list"><a href="{% url 'equipment:'|add:model.grouper.name|lower|add:'s' %}" class="model_link">{{ model.grouper.name }}</a>: 
-        {% for category in model.list %}
+        <div class="model_list"><a href="{% url 'equipment:'|add:model.grouper.name|lower|add:'s' %}" class="model_link">{{ model.grouper.name }}</a>{% for category in model.list %}{% if forloop.first and forloop.last %}{% else %}{% if forloop.first %}: {% endif %}
             <a href="{% url 'equipment:'|add:model.grouper.name|lower|add:'_category' category.id %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
+        {% endif %}
         {% endfor %}
         </div>
     {% endfor %}
