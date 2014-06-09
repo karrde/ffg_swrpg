@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
     return qs.filter(model__in=[x[0] for x in Category.MODEL_CHOICES])
 
 class SkillAdmin(base.admin.EntryAdmin):
-  fields = ['name', 'characteristic', 'category', 'notes']
+  fields = ['name', 'characteristic', 'skill_type', 'category', 'notes']
   inlines = [base.admin.IndexInline]
   
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -25,7 +25,7 @@ class SkillAdmin(base.admin.EntryAdmin):
     return qs.filter(category__model=102)
   
 class TalentAdmin(base.admin.EntryAdmin):
-  fields = ['name', 'category', 'ranked', 'notes']
+  fields = ['name', 'category', 'activation', 'ranked', 'force_sensitive', 'notes']
   inlines = [base.admin.IndexInline]
   
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -40,6 +40,7 @@ class TalentAdmin(base.admin.EntryAdmin):
 class CareerAdmin(base.admin.EntryAdmin):
   fields = ['name', 'skills', 'category', 'image', 'notes']
   inlines = [base.admin.IndexInline]
+  filter_horizontal = ('skills',)
   
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':
@@ -58,6 +59,7 @@ class TalentTreeEntryInline(admin.TabularInline):
 class TalentTreeAdmin(base.admin.EntryAdmin):
   fields = ['name', 'skills', 'category', 'image', 'notes']
   inlines = [TalentTreeEntryInline, base.admin.IndexInline]
+  filter_horizontal = ('skills',)
 
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':

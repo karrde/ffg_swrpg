@@ -12,7 +12,8 @@ class Category(base.models.Category):
     (104, 'Career'),
     (105, 'TalentTree'),
     (106, 'Specialization'),
-    (107, 'Species'),
+    (107, 'Ability'),
+    (108, 'Species'),
   )
   
 class Characteristic(base.models.Entry):
@@ -84,6 +85,10 @@ class TalentTreeEntry(models.Model):
 class Specialization(TalentTree):
   careers = models.ManyToManyField(Career)
 
+class Ability(base.models.Entry):
+  description = models.CharField(max_length=200)
+  rules_effect = models.CharField(max_length=500)
+
 class Species(base.models.Entry):
   player_race = models.BooleanField()
   base_brawn = models.IntegerField(default=0)
@@ -95,6 +100,6 @@ class Species(base.models.Entry):
   wound_threshold_modifier = models.IntegerField(default=0)
   strain_threshold_modifier = models.IntegerField(default=0)
   starting_experience = models.IntegerField(default=0)
-  special_abilities = models.CharField(max_length=500, blank=True)
+  abilities = models.ManyToManyField(Ability)
   
   
