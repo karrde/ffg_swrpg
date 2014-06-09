@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'books',
     'equipment',
     'transportation',
+    'character',
 )
 
 MIDDLEWARE_CLASSES = (
