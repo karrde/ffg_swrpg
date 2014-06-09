@@ -50,23 +50,36 @@ class CareerAdmin(base.admin.EntryAdmin):
     qs = super(CareerAdmin, self).queryset(request)
     return qs.filter(category__model=104)
   
-class SpecTalentEntryInline(admin.TabularInline):
-  model = SpecTalentEntry
+class TalentTreeEntryInline(admin.TabularInline):
+  model = TalentTreeEntry
   extra = 25
   max_num = 25
 
-class SpecializationAdmin(base.admin.EntryAdmin):
-  fields = ['name', 'careers', 'skills', 'category', 'image', 'notes']
-  inlines = [SpecTalentEntryInline, base.admin.IndexInline]
-  
+class TalentTreeAdmin(base.admin.EntryAdmin):
+  fields = ['name', 'skills', 'category', 'image', 'notes']
+  inlines = [TalentTreeEntryInline, base.admin.IndexInline]
+
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':
       kwargs['queryset'] = Category.objects.filter(model=105)
+    return super(TalentTreeAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+  def queryset(self, request):
+    qs = super(TalentTreeAdmin, self).queryset(request)
+    return qs.filter(category__model=105)
+
+class SpecializationAdmin(base.admin.EntryAdmin):
+  fields = ['name', 'careers', 'skills', 'category', 'image', 'notes']
+  inlines = [TalentTreeEntryInline, base.admin.IndexInline]
+  
+  def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    if db_field.name == 'category':
+      kwargs['queryset'] = Category.objects.filter(model=106)
     return super(SpecializationAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
   def queryset(self, request):
     qs = super(SpecializationAdmin, self).queryset(request)
-    return qs.filter(category__model=105)
+    return qs.filter(category__model=106)
   
 class SpeciesAdmin(base.admin.EntryAdmin):
   fieldsets = (
@@ -86,12 +99,12 @@ class SpeciesAdmin(base.admin.EntryAdmin):
   
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':
-      kwargs['queryset'] = Category.objects.filter(model=106)
+      kwargs['queryset'] = Category.objects.filter(model=107)
     return super(SpeciesAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
   def queryset(self, request):
     qs = super(SpeciesAdmin, self).queryset(request)
-    return qs.filter(category__model=106)
+    return qs.filter(category__model=107)
   
 
 
@@ -99,5 +112,6 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Talent, TalentAdmin)
 admin.site.register(Career, CareerAdmin)
+admin.site.register(TalentTree, TalentTreeAdmin)
 admin.site.register(Specialization, SpecializationAdmin)
 admin.site.register(Species, SpeciesAdmin)
