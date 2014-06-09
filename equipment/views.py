@@ -31,6 +31,7 @@ def sorting_context(model_class, category_model, default_sort, valid_sorts, spec
     '{0}_list'.format(model_class.__name__.lower()): object_list,
     'reverse': reverse,
     'flattened': flattened,
+    'in_category': "category" in request.path,
   }
 
 class GearListView(ListView):
@@ -48,6 +49,7 @@ class GearCategoryView(GearListView):
   def get_context_data(self, **kwargs):
     context = super(GearCategoryView, self).get_context_data(**kwargs)
     context['gear_list'] = [i for i in context['gear_list'] if i.category.id == int(self.kwargs['category'])]
+    context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
   
 class GearDetailView(DetailView):
@@ -68,6 +70,7 @@ class WeaponCategoryView(WeaponListView):
   def get_context_data(self, **kwargs):
     context = super(WeaponCategoryView, self).get_context_data(**kwargs)
     context['weapon_list'] = [i for i in context['weapon_list'] if i.category.id == int(self.kwargs['category'])]
+    context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
   
 class WeaponDetailView(DetailView):
@@ -99,6 +102,7 @@ class AttachmentCategoryView(AttachmentListView):
   def get_context_data(self, **kwargs):
     context = super(AttachmentCategoryView, self).get_context_data(**kwargs)
     context['attachment_list'] = [i for i in context['attachment_list'] if i.category.id == int(self.kwargs['category'])]
+    context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
 
 class AttachmentDetailView(DetailView):

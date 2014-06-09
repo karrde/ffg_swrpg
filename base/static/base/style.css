@@ -7,7 +7,7 @@ body {
 	background:#fff;
 	min-width:600px;    	/* Minimum width of layout - remove line if not required */
 					/* The min-width property does not work in old versions of Internet Explorer */
-	font-size:90%;
+	font-size:100%;
 }
 /*a {
 	color:#369;
@@ -182,8 +182,6 @@ img {
   .itemtable {
     box-shadow: none;
   }
-/*  .itemtable tr:nth-child(odd)  { background-color:#cccccc; }
-  .itemtable tr:nth-child(even) { background-color:#ffffff; } */
 }
 .itemtable table{
     border-collapse: collapse;
@@ -224,8 +222,8 @@ img {
 	border:1px solid #000000;
 /*	border-width:0px 1px 1px 0px; */
 	text-align:right;
-	padding:7px;
-	font-size:10px;
+	padding:.5em;
+	font-size:.825em;
 	font-family:Arial;
 	font-weight:normal;
 	color:#000000;
@@ -250,7 +248,7 @@ img {
 	border:1px solid #000000;
 	text-align:left;
 /*	border-width:1px 0px 1px 1px; */
-	font-size:14px;
+	font-size:1em;
 	font-family:Arial;
 	font-weight:bold;
 	color:#ffffff;
@@ -275,6 +273,12 @@ img {
       right: 100%;
     }
     .page-break { display: block; break-before: always; }
+    .itemtable td {
+      font-size: .65em !important;
+    }
+    .table_modifier {
+      display: none;
+    }
 }
 
 /* Additions for table def added by me */

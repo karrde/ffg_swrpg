@@ -3,7 +3,7 @@
 {% block title %}{{ block.super }}{% endblock title %}
 
 {% block content %}
-<h1>Equipment</h1>
+<h2>Equipment</h2>
 {% if category_list %}
     {% regroup category_list by model_info as models %}
     {% for model in models %}

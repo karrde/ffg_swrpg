@@ -3,15 +3,17 @@
 {% block title %}{{ block.super }} - Weapons{% endblock title %}
 
 {% block content %}
-<h1>Attachments</h1>
+<h2>{% if in_category %}{{ category.name }} {% endif %}Vehicle Attachments</h2>
 {% if vehicleattachment_list %}
+    {% if not in_category %}
     {% if flatened == 'true' %}
-    <a href="?order_by={{ order_by }}">Group by Categories</a>
+    <a href="?order_by={{ order_by }}" class="no-print">Group by Categories</a>
     {% else %}
-    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
+    <a href="?order_by={{ order_by }}&flattened=true" class="no-print">Flatten Categories</a>
+    {% endif %}
     {% endif %}
     {% include "transportation/vehicleattachment_list_header.html" %}
-    {% if flattened == 'true' %}
+    {% if flattened == 'true' or in_category %}
         {% for vehicleattachment in vehicleattachment_list %}
             {% include "transportation/vehicleattachment_list_line.html" with vehicleattachment=vehicleattachment %}
         {% endfor %}

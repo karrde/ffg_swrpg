@@ -22,6 +22,7 @@ class VehicleCategoryView(VehicleListView):
   def get_context_data(self, **kwargs):
     context = super(VehicleCategoryView, self).get_context_data(**kwargs)
     context['vehicle_list'] = [i for i in context['vehicle_list'] if i.category.id == int(self.kwargs['category'])]
+    context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
 
 class StarshipDetailView(DetailView):
@@ -42,6 +43,7 @@ class StarshipCategoryView(StarshipListView):
   def get_context_data(self, **kwargs):
     context = super(StarshipCategoryView, self).get_context_data(**kwargs)
     context['starship_list'] = [i for i in context['starship_list'] if i.category.id == int(self.kwargs['category'])]
+    context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
 
 
@@ -60,6 +62,7 @@ class VehicleAttachmentCategoryView(VehicleAttachmentListView):
   def get_context_data(self, **kwargs):
     context = super(VehicleAttachmentCategoryView, self).get_context_data(**kwargs)
     context['vehicleattachment_list'] = [i for i in context['vehicleattachment_list'] if i.category.id == int(self.kwargs['category'])]
+    context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
 
 class VehicleAttachmentDetailView(DetailView):

@@ -3,15 +3,17 @@
 {% block title %}{{ block.super }} - Vehicles{% endblock title %}
 
 {% block content %}
-<h1>Vehicles</h1>
+<h2>{% if in_category %}{{ category.name }} {% endif %}Vehicles</h2>
 {% if vehicle_list %}
+    {% if not in_category %}
     {% if flattened == 'true' %}
-    <a href="?order_by={{ order_by }}">Group by Categories</a>
+    <a href="?order_by={{ order_by }}" class="no-print">Group by Categories</a>
     {% else %}
-    <a href="?order_by={{ order_by }}&flattened=true">Flatten Categories</a>
+    <a href="?order_by={{ order_by }}&flattened=true" class="no-print">Flatten Categories</a>
+    {% endif %}
     {% endif %}
     {% include "transportation/vehicle_list_header.html" %}
-    {% if flattened == 'true' %}
+    {% if flattened == 'true' or in_category %}
         {% for vehicle in vehicle_list %}
             {% include "transportation/vehicle_list_line.html" with vehicle=vehicle %}
         {% endfor %}
