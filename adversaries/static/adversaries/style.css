@@ -1,0 +1,57 @@
+.adversary_characteristics {
+  width: 400px;
+  height: 62px;
+  background-image: url(/static/character/images/character_characteristics.png);
+  background-size: 400px;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.adversary_characteristics .brawn {
+  position: absolute;
+  left: 9.5%;
+  top: 30%;
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+}
+.adversary_characteristics .agility {
+  position: absolute;
+  left: 25%;
+  top: 30%;
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+}
+.adversary_characteristics .intellect {
+  position: absolute;
+  left: 41%;
+  top: 30%;
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+}
+.adversary_characteristics .cunning {
+  position: absolute;
+  left: 57%;
+  top: 30%;
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+}
+.adversary_characteristics .willpower {
+  position: absolute;
+  left: 72.5%;
+  top: 30%;
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+}
+.adversary_characteristics .presence {
+  position: absolute;
+  left: 88.5%;
+  top: 30%;
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+}

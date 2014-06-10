@@ -33,7 +33,7 @@ class AdversaryAdmin(admin.ModelAdmin):
   
   def formfield_for_manytomany(self, db_field, request, **kwargs):
     if db_field.name == "equipment":
-      kwargs["queryset"] = equipment.models.Gear.equipment.all()
+      kwargs["queryset"] = equipment.models.Gear.objects.all()
     return super(AdversaryAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
   
   

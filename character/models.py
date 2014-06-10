@@ -24,6 +24,9 @@ class Skill(base.models.Entry):
   characteristic = models.IntegerField(choices=Characteristic.LIST)
   skill_type = models.IntegerField(choices=SKILL_TYPES)
 
+  def __unicode__(self):
+    return self.name
+
 class Talent(base.models.Entry):
   ACTIVATION_CHOICES = (
     (1, 'Passive'),

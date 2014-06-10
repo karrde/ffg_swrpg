@@ -65,13 +65,11 @@ class RangeBand(models.Model):
   def __unicode__(self):
     return self.name
 
-class EquipmentManager(models.Manager):
+class GearManager(models.Manager):
   def get_queryset(self):
-    return super(EquipmentManager, self).get_queryset()
+    return super(GearManager, self).get_queryset()
 
 class Gear(base.models.Entry):
-  objects = base.models.EntryManager()
-  equipment = EquipmentManager()
   price = models.IntegerField()
   restricted = models.BooleanField()
   encumbrance = models.IntegerField()
@@ -103,24 +101,15 @@ class Gear(base.models.Entry):
       return str(self.rarity)
     else:
       return "-"
-      
-  def _aka(self):
-    akas = []
-    for x in self.index_set.all():
-      if x.aka:
-        akas.append("{0} ({1})".format(x.aka, x.book.display_initials))
-    return ", ".join(akas)
-    
+          
   display_price = property(_display_price)
   display_encum = property(_display_encum)
   display_rarity = property(_display_rarity)
-  aka = property(_aka)
   
   class Meta:
     ordering = ['name']
 
 class Weapon(Gear):
-  objects = base.models.EntryManager()
   skill = models.ForeignKey(Skill)
   damage = models.IntegerField()
   critical = models.IntegerField()
@@ -152,7 +141,6 @@ class Weapon(Gear):
   
     
 class Armor(Gear):
-  objects = base.models.EntryManager()
   defense = models.IntegerField()
   soak = models.IntegerField()
   hard_points = models.IntegerField()
@@ -166,7 +154,6 @@ class Armor(Gear):
   display_hp = property(_display_hp)
     
 class Attachment(Gear):
-  objects = base.models.EntryManager()
   hard_points = models.IntegerField()
   
   def _display_encum(self):

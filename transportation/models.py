@@ -35,7 +35,6 @@ class RangeBand(equipment.models.RangeBand):
     self._meta.get_field_by_name('range_band')[0]._choices = RangeBand.RANGE_BAND_CHOICES
 
 class Vehicle(equipment.models.Gear):
-  objects = base.models.EntryManager()
   silhoutte = models.IntegerField()
   speed = models.IntegerField()
   handling = models.IntegerField()
@@ -131,7 +130,6 @@ class Starship(Vehicle):
     (3, 'Astromech Droid Socket'),
   )
   navicomputer = models.IntegerField(choices=NAVCOMP_CHOICES)
-  objects = base.models.EntryManager()
   
   def _hyperdrive(self):
     return ", ".join([str(x) for x in self.hyperdrive_set.order_by('rank')]) or 'None'
@@ -194,7 +192,6 @@ class Consumable(models.Model):
     
   
 class VehicleAttachment(equipment.models.Attachment):
-  objects = base.models.EntryManager()
   by_silhoutte = models.BooleanField()
   
   def _display_price(self):

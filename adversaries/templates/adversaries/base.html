@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}{{ block.super }} - Equipment{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'adversaries/style.css' %}" />{% endblock %}
+{% block content %}{{ block.super }}{% endblock %}
+{% block sb-adversaries %}
+{{ block.super }}
+<ul>
+</ul>
+{% endblock %}

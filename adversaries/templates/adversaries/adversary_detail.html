@@ -1,0 +1,31 @@
+{% extends "adversaries/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ adversary.name }}</span><br />
+    {% if adversary.image %}<img class="item_image" src="{{ adversary.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if adversary.aka %}<span class="item_titles">AKA:</span> {{ adversary.aka }}<br />{% endif %}
+        <div class="adversary_characteristics">
+            <div class="brawn">{{ adversary.brawn }}</div>
+            <div class="agility">{{ adversary.agility }}</div>
+            <div class="intellect">{{ adversary.intellect }}</div>
+            <div class="cunning">{{ adversary.cunning }}</div>
+            <div class="willpower">{{ adversary.willpower }}</div>
+            <div class="presence">{{ adversary.presence }}</div>
+        </div>
+        <span class="item_titles">Skills{% if adversary.level == 'Minion' %} (groups only){% endif %}:</span> {{ adversary.display_skills }}<br />
+        <span class="item_titles">Talents:</span> {{ adversary.display_talents }}<br />
+        <span class="item_titles">Abilities:</span> {{ adversary.display_abilities }}<br />
+        <span class="item_titles">Equipment:</span> {{ adversary.display_equipment }}<br />
+        <span class="item_titles">Indexes:</span> {{ adversary.indexes }}<br />
+    </div>
+</div>
+{% if adversary.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ adversary.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

@@ -47,7 +47,6 @@ class EntryManager(models.Manager):
     return super(EntryManager, self).get_queryset().filter(model=self.model.__name__)
 
 class Entry(models.Model):
-  objects = EntryManager()
   name = models.CharField(max_length=100)
   image = models.ImageField(upload_to=get_item_image_path, null=True, blank=True)
   notes = models.CharField(max_length=500, blank=True)
@@ -59,6 +58,14 @@ class Entry(models.Model):
   def _indexes(self):
     return ", ".join([idx.str() for idx in self.index_set.all()])
   indexes = property(_indexes)
+
+  def _aka(self):
+    akas = []
+    for x in self.index_set.all():
+      if x.aka:
+        akas.append("{0} ({1})".format(x.aka, x.book.display_initials))
+    return ", ".join(akas)
+  aka = property(_aka)
   
   @receiver(pre_save)
   def my_callback(sender, instance, *args, **kwargs):
