@@ -1,16 +1,8 @@
 from django.contrib import admin
 from django import forms
 
-import base.admin
+import base.admin, equipment.models
 from adversaries.models import *
-
-class CategoryAdmin(admin.ModelAdmin):
-  list_display = ('model', 'name')
-  
-  def queryset(self, request):
-    qs = super(CategoryAdmin, self).queryset(request)
-    return qs.filter(model__in=[x[0] for x in Category.MODEL_CHOICES])
-
 
 class TalentEntryInline(admin.TabularInline):
   model = TalentEntry
@@ -32,21 +24,17 @@ class AdversaryAdmin(admin.ModelAdmin):
       'fields': ('abilities','equipment',),
     }),
     ('Base Fields', {
-      'fields': ('category', 'notes', 'image'),
+      'fields': ('notes', 'image'),
     })
   )
   
   inlines = [TalentEntryInline, SkillEntryInline, base.admin.IndexInline]
-  filter_horizontal = ('abilities', 'equipment')
-
-  def formfield_for_foreignkey(self, db_field, request, **kwargs):
-    if db_field.name == 'category':
-      kwargs['queryset'] = Category.objects.filter(model=201)
-    return super(AdversaryAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
-  def queryset(self, request):
-    qs = super(AdversaryAdmin, self).queryset(request)
-    return qs.filter(category__model=201)
+  filter_horizontal = ('abilities', 'equipment',)
   
-admin.site.register(Category, CategoryAdmin)
+  def formfield_for_manytomany(self, db_field, request, **kwargs):
+    if db_field.name == "equipment":
+      kwargs["queryset"] = equipment.models.Gear.equipment.all()
+    return super(AdversaryAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+  
+  
 admin.site.register(Adversary, AdversaryAdmin)

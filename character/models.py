@@ -1,21 +1,6 @@
 from django.db import models
 import base.models
 
-class Category(base.models.Category):
-  class Meta:
-    proxy = True
-
-  MODEL_CHOICES = (
-    (101, 'Characteristic'),
-    (102, 'Skill'),
-    (103, 'Talent'),
-    (104, 'Career'),
-    (105, 'TalentTree'),
-    (106, 'Specialization'),
-    (107, 'Ability'),
-    (108, 'Species'),
-  )
-  
 class Characteristic(base.models.Entry):
   class Meta:
     proxy = True
@@ -87,7 +72,7 @@ class Specialization(TalentTree):
 
 class Ability(base.models.Entry):
   description = models.CharField(max_length=200)
-  rules_effect = models.CharField(max_length=500)
+  rules_effect = models.CharField(max_length=500, blank=True)
 
 class Species(base.models.Entry):
   player_race = models.BooleanField()
@@ -100,6 +85,6 @@ class Species(base.models.Entry):
   wound_threshold_modifier = models.IntegerField(default=0)
   strain_threshold_modifier = models.IntegerField(default=0)
   starting_experience = models.IntegerField(default=0)
-  abilities = models.ManyToManyField(Ability)
+  abilities = models.ManyToManyField(Ability, blank=True)
   
   

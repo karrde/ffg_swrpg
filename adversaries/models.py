@@ -2,15 +2,6 @@ from django.db import models
 
 import base.models, character.models, equipment.models
 
-class Category(base.models.Category):
-  class Meta:
-    proxy = True
-
-  MODEL_CHOICES = (
-    (201, 'Adversary'),
-  )
-
-
 class Adversary(base.models.Entry):
   LEVEL_CHOICES = (
     ('Minion', 'Minion'),
@@ -29,6 +20,8 @@ class Adversary(base.models.Entry):
   strain_threshold = models.IntegerField(null=True, blank=True)
   melee_defense = models.IntegerField()
   ranged_defense = models.IntegerField()
+  skills = models.ManyToManyField(character.models.Skill, through='SkillEntry')
+  talents = models.ManyToManyField(character.models.Talent, through='TalentEntry')
   abilities = models.ManyToManyField(character.models.Ability, blank=True)
   equipment = models.ManyToManyField(equipment.models.Gear, blank=True)
   

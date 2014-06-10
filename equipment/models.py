@@ -65,8 +65,13 @@ class RangeBand(models.Model):
   def __unicode__(self):
     return self.name
 
+class EquipmentManager(models.Manager):
+  def get_queryset(self):
+    return super(EquipmentManager, self).get_queryset()
+
 class Gear(base.models.Entry):
   objects = base.models.EntryManager()
+  equipment = EquipmentManager()
   price = models.IntegerField()
   restricted = models.BooleanField()
   encumbrance = models.IntegerField()
