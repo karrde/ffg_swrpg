@@ -7,7 +7,7 @@ from django.db.models import Sum
 from base.models import Index
 from equipment.models import *
 
-def sorting_context(model_class, category_model, default_sort, valid_sorts, special_sorts, request):
+def sorting_context(model_class, default_sort, valid_sorts, special_sorts, request):
   order_by = request.GET.get('order_by', default_sort)
   flattened = request.GET.get('flattened', 'false')
   reverse = False
@@ -17,16 +17,17 @@ def sorting_context(model_class, category_model, default_sort, valid_sorts, spec
   if order_by not in valid_sorts:
     order_by = default_sort
   if order_by not in special_sorts:
-    object_list = model_class.objects.filter(category__model=category_model).order_by(order_by, default_sort)
+    object_list = model_class.objects.order_by(order_by, default_sort)
   elif order_by == 'index':
-    object_list = [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__gear__category__model=category_model)]
+    object_list = [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)]
   elif order_by == 'crew':
-    object_list = sorted(model_class.objects.filter(category__model=category_model).order_by(default_sort), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
+    object_list = sorted(model_class.objects.all(), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
   if reverse:
     object_list = reversed(object_list)
   return {
     'request': request,
     'valid_sorts': valid_sorts,
+    'special_sorts': special_sorts,
     'order_by': order_by,
     '{0}_list'.format(model_class.__name__.lower()): object_list,
     'reverse': reverse,
@@ -35,11 +36,11 @@ def sorting_context(model_class, category_model, default_sort, valid_sorts, spec
   }
 
 class GearListView(ListView):
-  queryset = Gear.objects.filter(category__model=1)
+  model = Gear
   
   def get_context_data(self, **kwargs):
     context = super(GearListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Gear, 1, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
     return context 
   
 class GearCategoryView(GearListView):
@@ -60,7 +61,7 @@ class WeaponListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(WeaponListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Weapon, 2, 'name', ['name', 'skill__name', 'damage', 'critical', 'range_band__id', 'encumbrance', 'hard_points', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'skill__name', 'damage', 'critical', 'range_band__id', 'encumbrance', 'hard_points', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
     return context 
     
 class WeaponCategoryView(WeaponListView):
@@ -81,7 +82,7 @@ class ArmorListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(ArmorListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Armor, 3, 'name', ['name', 'defense', 'soak', 'price', 'encumbrance', 'hard_points', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'defense', 'soak', 'price', 'encumbrance', 'hard_points', 'rarity', 'index'], ['index'], self.request))
     return context 
 
 class ArmorDetailView(DetailView):
@@ -92,7 +93,7 @@ class AttachmentListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(AttachmentListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Attachment, 4, 'name', ['name', 'price', 'encumbrance', 'hard_points', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'price', 'encumbrance', 'hard_points', 'rarity', 'index'], ['index'], self.request))
     return context 
 
 class AttachmentCategoryView(AttachmentListView):

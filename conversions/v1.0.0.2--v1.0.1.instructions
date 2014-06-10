@@ -1,0 +1,33 @@
+Import v1.0.0.2--v1.0.1.sql
+
+Comment out the "objects = " lines from all models in base, equipment, transportation
+
+Run the following in "manage.py shell"
+
+-------------
+from equipment.models import *
+from transportation.models import *
+for s in Starship.objects.all():
+  s.save()
+
+for va in VehicleAttachment.objects.all():
+  va.save()
+
+for v in Vehicle.objects.all():
+  v.save()
+
+for a in Attachment.objects.all():
+  a.save()
+
+for a in Armor.objects.all():
+  a.save()
+
+for w in Weapon.objects.all():
+  w.save()
+
+for g in Gear.objects.all():
+  g.save()
+
+--------------
+
+Restore "objects = " lines to models.

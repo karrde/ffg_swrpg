@@ -1,17 +1,39 @@
 from django.db import models
 import base.models
 
-class Category(base.models.Category):
-  class Meta:
-    proxy = True
-
+class Category(models.Model):
   MODEL_CHOICES = (
     (1, 'Gear'),
     (2, 'Weapon'),
     (3, 'Armor'),
     (4, 'Attachment'),
   )
-  
+
+  model = models.IntegerField(choices=MODEL_CHOICES)
+  name = models.CharField(max_length=50)
+
+  @classmethod
+  def model_hash(cls):
+    return { v[1]:v[0] for i,v in enumerate(cls.MODEL_CHOICES) }
+
+  @classmethod
+  def model_numbers(cls):
+    mhash = cls.model_hash()
+    return [mhash[i] for i in mhash.keys()]
+
+  def model_info(self):
+    return {'id': int(self.model), 'name': self.get_model_display() }
+
+  def __init__(self, *args, **kwargs):
+    super(Category, self).__init__(*args, **kwargs)
+    self._meta.get_field_by_name('model')[0]._choices = self.__class__.MODEL_CHOICES
+
+  def __unicode__(self):
+    return self.name
+
+  class Meta:
+    ordering = ['name']
+
   def _weapon_set(self):
     if self.model == 2:
       return Weapon.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
@@ -44,10 +66,12 @@ class RangeBand(models.Model):
     return self.name
 
 class Gear(base.models.Entry):
+  objects = base.models.EntryManager()
   price = models.IntegerField()
   restricted = models.BooleanField()
   encumbrance = models.IntegerField()
   rarity = models.IntegerField()
+  category = models.ForeignKey(Category)
   
   def __unicode__(self):
     return self.name
@@ -91,6 +115,7 @@ class Gear(base.models.Entry):
     ordering = ['name']
 
 class Weapon(Gear):
+  objects = base.models.EntryManager()
   skill = models.ForeignKey(Skill)
   damage = models.IntegerField()
   critical = models.IntegerField()
@@ -120,10 +145,9 @@ class Weapon(Gear):
   display_hp = property(_display_hp)
   display_damage = property(_display_damage)
   
-  class Meta:
-    ordering = ['name']
     
 class Armor(Gear):
+  objects = base.models.EntryManager()
   defense = models.IntegerField()
   soak = models.IntegerField()
   hard_points = models.IntegerField()
@@ -135,11 +159,9 @@ class Armor(Gear):
       return "-"
       
   display_hp = property(_display_hp)
-
-  class Meta:
-    ordering = ['name']
     
 class Attachment(Gear):
+  objects = base.models.EntryManager()
   hard_points = models.IntegerField()
   
   def _display_encum(self):

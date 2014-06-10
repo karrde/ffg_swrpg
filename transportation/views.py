@@ -12,7 +12,7 @@ class VehicleListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(VehicleListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Vehicle, 5, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'hard_points', 'rarity', 'weapon_count', 'crew', 'index'], ['index', 'crew'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'hard_points', 'rarity', 'weapon_count', 'crew', 'index'], ['index', 'crew'], self.request))
     return context 
 
 class VehicleCategoryView(VehicleListView):
@@ -28,13 +28,47 @@ class VehicleCategoryView(VehicleListView):
 class StarshipDetailView(DetailView):
   model = Starship
 
+def sorting_context2(view):
+  # This was a long dark rabbit hole. But there's a good idea here, come back to it.
+  order_by = view.request.GET.get('order_by', view.model._meta.ordering[0])
+  flattened = view.request.GET.get('flattened', 'false')
+  reverse = False
+  if order_by.startswith("-"):
+    order_by = order_by.lstrip("-")
+    reverse = True
+  if order_by not in view.valid_sorts:
+    order_by = view.model._meta.ordering[0]
+  if order_by not in view.special_sorts:
+    object_list = view.model.objects.order_by(order_by, view.model._meta.ordering[0])
+  elif order_by == 'index':
+    object_list = [view.model.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)]
+  elif order_by == 'crew':
+    object_list = sorted(view.model.objects.all(), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
+  if reverse:
+    object_list = reversed(object_list)
+  return {
+    'request': view.request,
+    'valid_sorts': view.valid_sorts,
+    'special_sorts': view.special_sorts,
+    'order_by': order_by,
+    '{0}_list'.format(view.model.__name__.lower()): object_list,
+    'reverse': reverse,
+    'flattened': flattened,
+    'in_category': "category" in view.request.path,
+  }
+
+
+
 class StarshipListView(ListView):
   model = Starship
+  valid_sorts = ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'rarity', 'hard_points', 'weapon_count', 'crew', 'navicomputer', 'index']
+  special_sorts = ['index', 'crew']
 
   def get_context_data(self, **kwargs):
     context = super(StarshipListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Starship, 6, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'rarity', 'hard_points', 'weapon_count', 'crew', 'navicomputer', 'index'], ['index', 'crew'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'silhoutte', 'speed', 'handling', 'model', 'manufacturer', 'passenger', 'price', 'encumbrance', 'rarity', 'hard_points', 'weapon_count', 'crew', 'navicomputer', 'index'], ['index', 'crew'], self.request))
     return context 
+
 
 class StarshipCategoryView(StarshipListView):
   model = Starship
@@ -42,7 +76,10 @@ class StarshipCategoryView(StarshipListView):
 
   def get_context_data(self, **kwargs):
     context = super(StarshipCategoryView, self).get_context_data(**kwargs)
-    context['starship_list'] = [i for i in context['starship_list'] if i.category.id == int(self.kwargs['category'])]
+    if context['order_by'] not in context['special_sorts']:
+      context['starship_list'] = context['starship_list'].filter(category__id=int(self.kwargs['category']))
+    else:
+      context['starship_list'] = [i for i in context['starship_list'] if i.category.id == int(self.kwargs['category'])]
     context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
 
@@ -52,7 +89,7 @@ class VehicleAttachmentListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(VehicleAttachmentListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(VehicleAttachment, 7, 'name', ['name', 'price', 'hard_points', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'price', 'hard_points', 'rarity', 'index'], ['index'], self.request))
     return context 
 
 class VehicleAttachmentCategoryView(VehicleAttachmentListView):
