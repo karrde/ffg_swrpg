@@ -1,7 +1,7 @@
 from django.db import models
 import os
-
-# Create your models here.
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 class System(models.Model):
   name = models.CharField(max_length=100)
@@ -42,41 +42,16 @@ def get_item_image_path(instance, filename):
     path_start = 'item'
   return os.path.join(path_start, str(instance.id), filename)
 
-class Category(models.Model):
-  MODEL_CHOICES = (
-    (0, 'No Model'),
-  )
-  
-  model = models.IntegerField(choices=MODEL_CHOICES)
-  name = models.CharField(max_length=50)
-
-  @classmethod
-  def model_hash(cls):
-    return { v[1]:v[0] for i,v in enumerate(cls.MODEL_CHOICES) }
-    
-  @classmethod
-  def model_numbers(cls):
-    mhash = cls.model_hash()
-    return [mhash[i] for i in mhash.keys()]
-    
-  def model_info(self):
-    return {'id': int(self.model), 'name': self.get_model_display() }
-    
-  def __init__(self, *args, **kwargs):
-    super(Category, self).__init__(*args, **kwargs)
-    self._meta.get_field_by_name('model')[0]._choices = self.__class__.MODEL_CHOICES
-      
-  def __unicode__(self):
-    return self.name
-
-  class Meta:
-    ordering = ['name']
+class EntryManager(models.Manager):
+  def get_queryset(self):
+    return super(EntryManager, self).get_queryset().filter(model=self.model.__name__)
 
 class Entry(models.Model):
+  objects = EntryManager()
   name = models.CharField(max_length=100)
   image = models.ImageField(upload_to=get_item_image_path, null=True, blank=True)
   notes = models.CharField(max_length=500, blank=True)
-  category = models.ForeignKey(Category)
+  model = models.CharField(max_length=100)
 
   def __unicode__(self):
     return self.name
@@ -84,7 +59,15 @@ class Entry(models.Model):
   def _indexes(self):
     return ", ".join([idx.str() for idx in self.index_set.all()])
   indexes = property(_indexes)
+  
+  @receiver(pre_save)
+  def my_callback(sender, instance, *args, **kwargs):
+    if Entry in instance._meta.get_parent_list():
+      if not instance.model:
+        instance.model = instance.__class__.__name__
 
+  class Meta:
+    ordering = ['name']
 
 class Index(models.Model):
   book = models.ForeignKey(Book)

@@ -16,7 +16,7 @@ class GearAdmin(base.admin.EntryAdmin):
 
   def queryset(self, request):
     qs = super(GearAdmin, self).queryset(request)
-    return qs.filter(category__model=1)
+    return qs.filter(model='Gear')
 
   
 class WeaponAdmin(GearAdmin):
