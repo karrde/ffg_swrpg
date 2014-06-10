@@ -1,5 +1,7 @@
 Import v1.0.0.2--v1.0.1.sql
 
+Comment out the "objects = " lines from all models in base, equipment, transportation
+
 Run the following in "manage.py shell"
 
 -------------
@@ -27,3 +29,5 @@ for g in Gear.objects.all():
   g.save()
 
 --------------
+
+Restore "objects = " lines to models.
