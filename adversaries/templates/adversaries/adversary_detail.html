@@ -15,11 +15,33 @@
             <div class="willpower">{{ adversary.willpower }}</div>
             <div class="presence">{{ adversary.presence }}</div>
         </div>
+        <div class="stats">
+        <div class="stat_block">
+            <div class="stat_title">Soak Value</div>
+            <div class="stat_value">{{ adversary.soak_value }}</div>
+        </div>
+        <div class="stat_block">
+            <div class="stat_title">W. Threshold</div>
+            <div class="stat_value">{{ adversary.wound_threshold }}</div>
+        </div>
+        {% if adversary.level == 'Nemesis' %}
+        <div class="stat_block">
+            <div class="stat_title">S. Threshold</div>
+            <div class="stat_value">{{ adversary.strain_threshold }}</div>
+        </div>
+        {% endif %}
+        <div class="stat_block">
+            <div class="stat_title">M/R Defense</div>
+            <div class="stat_value">{{ adversary.melee_defense }} | {{ adversary.ranged_defense }}</div>
+        </div>
+        </div>
+        <div class="details">
         <span class="item_titles">Skills{% if adversary.level == 'Minion' %} (groups only){% endif %}:</span> {{ adversary.display_skills }}<br />
         <span class="item_titles">Talents:</span> {{ adversary.display_talents }}<br />
         <span class="item_titles">Abilities:</span> {{ adversary.display_abilities }}<br />
         <span class="item_titles">Equipment:</span> {{ adversary.display_equipment }}<br />
         <span class="item_titles">Indexes:</span> {{ adversary.indexes }}<br />
+        </div>
     </div>
 </div>
 {% if adversary.notes %}

@@ -1,3 +1,6 @@
+.item_block {
+  width: 400px;
+}
 .adversary_characteristics {
   width: 400px;
   height: 62px;
@@ -5,6 +8,42 @@
   background-size: 400px;
   background-repeat: no-repeat;
   position: relative;
+}
+
+.stat_block {
+  background-image: url(/static/character/images/character_stat.png);
+  background-size: 80px;
+  background-repeat: no-repeat;
+  width: 80px;
+  height: 41px;
+  position: relative;
+  margin: .2em;
+  display: inline-block;
+  
+}
+.stat_title {
+  color: white;
+  font-size: .5em;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 10%;
+}
+.stats {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+.details {
+  clear: both;
+}
+
+.stat_value {
+  font-size: 1.5em;
+  position: absolute;
+  width:100%;
+  top: 29%;
+  text-align: center;
 }
 
 .adversary_characteristics .brawn {

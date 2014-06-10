@@ -101,6 +101,13 @@ class Gear(base.models.Entry):
       return str(self.rarity)
     else:
       return "-"
+      
+  def _equipment_display(self):
+    if self.model == 'Weapon':
+      return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name, skill=self.weapon.skill.name, damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.range_band.name, special=self.weapon.special)
+    else:
+      return self.name
+  equipment_display = property(_equipment_display)
           
   display_price = property(_display_price)
   display_encum = property(_display_encum)

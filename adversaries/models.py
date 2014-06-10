@@ -30,6 +30,9 @@ class Adversary(base.models.Entry):
   def _display_skills(self):
     if self.level == 'Minion':
       return ", ".join([str(x) for x in self.skills.all()]) or 'None'
+    else:
+      return ", ".join([x.display_skill for x in self.skillentry_set.all()]) or 'None'
+      
   display_skills = property(_display_skills)
   
   def _display_talents(self):
@@ -41,7 +44,7 @@ class Adversary(base.models.Entry):
   display_abilities = property(_display_abilities)
   
   def _display_equipment(self):
-    return ", ".join([str(x) for x in self.equipment.all()]) or 'None'
+    return ", ".join([x.equipment_display for x in self.equipment.all()]) or 'None'
   display_equipment = property(_display_equipment)
   
 class TalentEntry(models.Model):
@@ -59,4 +62,8 @@ class SkillEntry(models.Model):
   adversary = models.ForeignKey(Adversary)
   skill = models.ForeignKey(character.models.Skill)
   rank = models.IntegerField(null=True, blank=True)
+  
+  def _display_skill(self):
+    return "{0} {1}".format(self.skill.name, self.rank)
+  display_skill = property(_display_skill)
   
