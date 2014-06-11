@@ -67,11 +67,18 @@ class Entry(models.Model):
     return ", ".join(akas)
   aka = property(_aka)
   
+  def name_link(self):
+    return '<a href="{link}" class="{model}_name">{name}</a>'.format(link=self.get_absolute_url(), name=self.name, model=self.model.lower())
+    
   @receiver(pre_save)
   def my_callback(sender, instance, *args, **kwargs):
     if Entry in instance._meta.get_parent_list():
       if not instance.model:
         instance.model = instance.__class__.__name__
+
+  @models.permalink
+  def get_absolute_url(self):
+      return ('{0}:{1}'.format(self.__class__._meta.app_label, self.model.lower()), [str(self.id)])
 
   class Meta:
     ordering = ['name']

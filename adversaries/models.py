@@ -29,12 +29,15 @@ class Adversary(base.models.Entry):
   
   def _display_skills(self):
     if self.level == 'Minion':
-      return ", ".join([str(x) for x in self.skills.all()]) or 'None'
+      return ", ".join([x.name for x in self.skills.all()]) or 'None'
     else:
       return ", ".join([x.display_skill for x in self.skillentry_set.all()]) or 'None'
-      
   display_skills = property(_display_skills)
   
+  def _display_strain(self):
+    return self.strain_threshold if self.level == 'Nemesis' else '-'
+  display_strain = property(_display_strain)
+
   def _display_talents(self):
     return ", ".join([str(x) for x in self.talententry_set.all()]) or 'None'
   display_talents = property(_display_talents)
@@ -46,6 +49,10 @@ class Adversary(base.models.Entry):
   def _display_equipment(self):
     return ", ".join([x.equipment_display for x in self.equipment.all()]) or 'None'
   display_equipment = property(_display_equipment)
+
+  def _display_equipment_list(self):
+    return ", ".join([x.name_link() for x in self.equipment.all()]) or 'None'
+  display_equipment_list = property(_display_equipment_list)
   
 class TalentEntry(models.Model):
   adversary = models.ForeignKey(Adversary)

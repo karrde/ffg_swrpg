@@ -16,9 +16,6 @@ class AdversaryListView(ListView):
   
   def get_context_data(self, **kwargs):
     context = super(AdversaryListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Adversary, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(Adversary, 'name', ['name', 'level', 'index'], ['index'], self.request))
     return context 
-  
-class AdversaryLevelView(ListView):
-  model = Adversary
   
