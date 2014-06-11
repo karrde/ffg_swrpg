@@ -5,7 +5,7 @@ from adversaries.views import *
 
 urlpatterns = patterns('',
     url(r'^$', AdversaryListView.as_view(), name='index'),
-#    url(r'^adversaries/$', GearListView.as_view()),
-#    url(r'^adversaries/category/(?P<category>\d+)/$', GearCategoryView.as_view()),
-    url(r'^adversary/(?P<pk>\d+)/$', AdversaryDetailView.as_view()),
+    url(r'^adversaries/$', AdversaryListView.as_view(), name='adversaries'),
+    url(r'^adversaries/(?P<level>\w+)/$', AdversaryLevelView.as_view(), name='adversary_level'),
+    url(r'^adversary/(?P<pk>\d+)/$', AdversaryDetailView.as_view(), name='adversary'),
 )

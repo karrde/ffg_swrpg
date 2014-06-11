@@ -1,0 +1,34 @@
+{% extends "adversaries/base.html" %}
+
+{% block title %}{{ block.super }} - Adversaries{% endblock title %}
+
+{% block content %}
+<span>{{adversary_list}}</span>
+<h2>{% if in_category %}{{ category.name }} {% endif %}Adversaries</h2>
+{% if adversary_list %}
+    {% if not in_category %}
+        {% if flattened == 'true' %}
+        <a href="?order_by={{ order_by }}" class="no-print">Group by Categories</a>
+        {% else %}
+        <a href="?order_by={{ order_by }}&flattened=true" class="no-print">Flatten Categories</a>
+        {% endif %}
+    {% endif %}
+    {% include "adversaries/adversary_list_header.html" %}
+    {% if flattened == 'true' or in_category %}
+        {% for gear in adversary_list %}
+            {% include "adversaries/adversary_list_line.html" with gear=gear %}
+        {% endfor %}
+    {% else %}
+        {% regroup adversary_list|dictsort:"level" by level as levels %}
+        {% for level in level %}
+            <tr class="item_category"><td colspan=12><a href="{% url 'adversaries:adversary_level' level.grouper %}">{{ level.grouper }}</a></td></tr>
+            {% for adversary in level.list %}
+                {% include "adversaries/adversary_list_line.html" with adversary=adversary %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    </table></div>
+{% else %}
+    <p>No adversaries.</p>
+{% endif %}
+{% endblock content %}
