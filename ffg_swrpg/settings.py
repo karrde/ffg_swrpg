@@ -52,6 +52,15 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
+    'ffg_swrpg.context_processors.google_analytics',
+)
+
 ROOT_URLCONF = 'ffg_swrpg.urls'
 
 WSGI_APPLICATION = 'ffg_swrpg.wsgi.application'

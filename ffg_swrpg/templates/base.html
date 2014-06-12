@@ -29,5 +29,8 @@
 
         </div>
     </div>
+{% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+  {% include "ffg_swrpg/ga.html" %}
+{% endif %}
 </body>
 </html>
