@@ -1,0 +1,6 @@
+<tr>
+    <td class="item_name"><a href="{% url 'character:skill' skill.id %}">{{ skill.name }}</a></td>
+    <td>{{ skill.get_characteristic_display }}</td>
+    <td>{{ skill.get_skill_type_display }}</td>
+    <td>{{ skill.indexes }}</td>
+</tr>

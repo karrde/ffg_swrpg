@@ -1,0 +1,20 @@
+{% extends "character/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ ability.name }}</span><br />
+    {% if ability.image %}<img class="item_image" src="{{ ability.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if ability.aka %}<span class="item_titles">AKA:</span> {{ ability.aka }}<br />{% endif %}
+        <span class="item_titles">Description:</span> {{ ability.decsription }}<br />
+        <span class="item_titles">Indexes:</span> {{ ability.indexes }}<br />
+    </div>
+</div>
+{% if ability.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ ability.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

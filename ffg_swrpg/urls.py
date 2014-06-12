@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^equipment/', include('equipment.urls', namespace='equipment')),
     url(r'^transportation/', include('transportation.urls', namespace='transportation')),
     url(r'^adversaries/', include('adversaries.urls', namespace='adversaries')),
+    url(r'^character/', include('character.urls', namespace='character')),
     url(r'^books/', include('books.urls', namespace='books')),
     url(r'^base/', include('base.urls', namespace='base')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

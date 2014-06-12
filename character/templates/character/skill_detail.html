@@ -1,0 +1,21 @@
+{% extends "character/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ skill.name }}</span><br />
+    {% if skill.image %}<img class="item_image" src="{{ skill.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if skill.aka %}<span class="item_titles">AKA:</span> {{ skill.aka }}<br />{% endif %}
+        <span class="item_titles">Characteristic:</span> {{ skill.get_characteristic_display }}<br />
+        <span class="item_titles">Type:</span> {{ skill.get_skill_type_display }}<br />
+        <span class="item_titles">Indexes:</span> {{ skill.indexes }}<br />
+    </div>
+</div>
+{% if skill.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ skill.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

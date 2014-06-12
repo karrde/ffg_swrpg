@@ -42,7 +42,7 @@ class SpeciesAdmin(base.admin.EntryAdmin):
     }),
     ('Player Race Fields', {
       'classes': ('collapse',),
-      'fields': (('base_brawn', 'base_agility', 'base_intellect', 'base_cunning', 'base_willpower', 'base_presence'), 'wound_threshold_modifier', 'strain_threshold_modifier', 'starting_experience', 'special_abilities'),
+      'fields': (('base_brawn', 'base_agility', 'base_intellect', 'base_cunning', 'base_willpower', 'base_presence'), 'wound_threshold_modifier', 'strain_threshold_modifier', 'starting_experience', 'abilities'),
     }),
     ('Bese Fields', {
       'fields': ('notes', 'image'),

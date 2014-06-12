@@ -1,0 +1,16 @@
+{% extends "character/base.html" %}
+
+{% block title %}{{ block.super }} - Ability{% endblock title %}
+
+{% block content %}
+<h2>Ability</h2>
+{% if ability_list %}
+    {% include "character/ability_list_header.html" %}
+    {% for ability in ability_list %}
+    {% include "character/ability_list_line.html" with ability=ability %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No ability.</p>
+{% endif %}
+{% endblock content %}

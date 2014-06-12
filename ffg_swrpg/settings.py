@@ -36,13 +36,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apptemplates',
     'blog',
+    'adversaries',
     'base',
     'books',
     'equipment',
     'transportation',
     'character',
-    'adversaries',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,6 +98,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'apptemplates.Loader',
+)
 
 try:
    from local_settings import *

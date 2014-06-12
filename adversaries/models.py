@@ -29,7 +29,7 @@ class Adversary(base.models.Entry):
   
   def _display_skills(self):
     if self.level == 'Minion':
-      return ", ".join([x.name for x in self.skills.all()]) or 'None'
+      return ", ".join([x.name_link() for x in self.skills.all()]) or 'None'
     else:
       return ", ".join([x.display_skill for x in self.skillentry_set.all()]) or 'None'
   display_skills = property(_display_skills)
@@ -43,7 +43,7 @@ class Adversary(base.models.Entry):
   display_talents = property(_display_talents)
   
   def _display_abilities(self):
-    return ", ".join([str(x) for x in self.abilities.all()]) or 'None'
+    return ", ".join([x.name_link() for x in self.abilities.all()]) or 'None'
   display_abilities = property(_display_abilities)
   
   def _display_equipment(self):
@@ -61,9 +61,9 @@ class TalentEntry(models.Model):
   
   def __unicode__(self):
     if self.talent.ranked:
-      return "{0} {1}".format(self.talent.name, self.rank)
+      return "{0} {1}".format(self.talent.name_link(), self.rank)
     else:
-      return self.talent.name
+      return self.talent.name_link()
   
 class SkillEntry(models.Model):
   adversary = models.ForeignKey(Adversary)
@@ -71,6 +71,6 @@ class SkillEntry(models.Model):
   rank = models.IntegerField(null=True, blank=True)
   
   def _display_skill(self):
-    return "{0} {1}".format(self.skill.name, self.rank)
+    return "{0} {1}".format(self.skill.name_link(), self.rank)
   display_skill = property(_display_skill)
   

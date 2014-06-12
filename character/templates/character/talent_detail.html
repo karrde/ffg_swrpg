@@ -1,0 +1,22 @@
+{% extends "character/base.html" %}
+
+{% block content %}
+
+<div class="item_block">
+    <span class="item_name">{{ talent.name }}</span><br />
+    {% if talent.image %}<img class="item_image" src="{{ talent.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if talent.aka %}<span class="item_titles">AKA:</span> {{ talent.aka }}<br />{% endif %}
+        <span class="item_titles">Activation:</span> {{ talent.get_activation_display }}<br />
+        <span class="item_titles">Ranked:</span> {{ talent.ranked }}<br />
+        <span class="item_titles">Force Sensitive:</span> {{ talent.force_sensitive }}<br />
+        <span class="item_titles">Indexes:</span> {{ talent.indexes }}<br />
+    </div>
+</div>
+{% if talent.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ talent.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}
