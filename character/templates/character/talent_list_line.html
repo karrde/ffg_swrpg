@@ -1,0 +1,7 @@
+<tr>
+    <td class="item_name"><a href="{% url 'character:talent' talent.id %}">{{ talent.name }}</a></td>
+    <td>{{ talent.get_activation_display }}</td>
+    <td>{{ talent.ranked }}</td>
+    <td>{{ talent.force_sensitive }}</td>
+    <td>{{ talent.indexes }}</td>
+</tr>

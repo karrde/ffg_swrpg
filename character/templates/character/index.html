@@ -1,0 +1,9 @@
+{% extends "character/base.html" %}
+
+{% block content %}
+<h2>Character</h2>
+<div class="model_list"><a href="{% url 'character:skills' %}" class="model_link">Skills</a></div>
+<div class="model_list"><a href="{% url 'character:talents' %}" class="model_link">Talents</a></div>
+<div class="model_list"><a href="{% url 'character:abilities' %}" class="model_link">Abilities</a></div>
+
+{% endblock content %}

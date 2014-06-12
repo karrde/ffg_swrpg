@@ -51,5 +51,37 @@
     {% endfor %}
     </table></div>
 {% endif %}
+{% if skill_list %}
+<h3>Skills</h3>
+    {% include "character/skill_list_header.html" %}
+    {% for skill in skill_list %}
+    {% include "character/skill_list_line.html" with skill=skill %}
+    {% endfor %}
+    </table></div>
+{% endif %}
+{% if talent_list %}
+<h3>Talents</h3>
+     {% include "character/talent_list_header.html" %}
+     {% for talent in talent_list %}
+     {% include "character/talent_list_line.html" with talent=talent %}
+     {% endfor %}
+     </table></div>
+{% endif %}
+{% if ability_list %}
+<h3>Abilities</h3>
+    {% include "character/ability_list_header.html" %}
+    {% for ability in ability_list %}
+    {% include "character/ability_list_line.html" with ability=ability %}
+    {% endfor %}
+    </table></div>
+{% endif %}
+{% if adversary_list %}
+<h3>Adversaries</h3>
+    {% include "adversaries/adversary_list_header.html" %}
+        {% for adversary in adversary_list %}
+            {% include "adversaries/adversary_list_line.html" with adversary=adversary %}
+        {% endfor %}
+    </table></div>
+{% endif %}
 
 {% endblock content %}

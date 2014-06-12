@@ -1,0 +1,16 @@
+{% extends "character/base.html" %}
+
+{% block title %}{{ block.super }} - Armor{% endblock title %}
+
+{% block content %}
+<h2>Skill</h2>
+{% if skill_list %}
+    {% include "character/skill_list_header.html" %}
+    {% for skill in skill_list %}
+    {% include "character/skill_list_line.html" with skill=skill %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No skill.</p>
+{% endif %}
+{% endblock content %}

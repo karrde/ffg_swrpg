@@ -24,6 +24,10 @@ class BookDetailView(DetailView):
     context['attachment_list'] = object.attachment_set
     context['vehicle_list'] = object.vehicle_set
     context['starship_list'] = object.starship_set
+    context['skill_list'] = object.skill_set
+    context['talent_list'] = object.talent_set
+    context['ability_list'] = object.ability_set
+    context['adversary_list'] = object.adversary_set
     context['request'] = self.request
     return context
   

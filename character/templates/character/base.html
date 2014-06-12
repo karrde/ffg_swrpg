@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} - Equipment{% endblock %}
+{% block content %}{{ block.super }}{% endblock %}
+{% block sb-character %}
+{{ block.super }}
+<ul>
+<li><a href="{% url 'character:skills' %}">Skills</a></li>
+<li><a href="{% url 'character:talents' %}">Talents</a></li>
+<li><a href="{% url 'character:abilities' %}">Abilities</a></li>
+</ul>
+{% endblock %}

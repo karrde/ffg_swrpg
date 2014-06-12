@@ -17,7 +17,7 @@ def sorting_context(model_class, default_sort, valid_sorts, special_sorts, reque
   if order_by not in valid_sorts:
     order_by = default_sort
   if order_by not in special_sorts:
-    object_list = model_class.objects.order_by(order_by, default_sort)
+    object_list = model_class.objects.filter(model=model_class.__name__).order_by(order_by, default_sort)
   elif order_by == 'index':
     object_list = [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)]
   elif order_by == 'crew':
@@ -40,7 +40,7 @@ class GearListView(ListView):
   
   def get_context_data(self, **kwargs):
     context = super(GearListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(self.model, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(Gear, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
     return context 
   
 class GearCategoryView(GearListView):

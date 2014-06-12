@@ -1,0 +1,20 @@
+<tr>
+    <td class="item_name"><a href="{% url 'adversaries:adversary' adversary.id %}">{{ adversary.name }}</a></td>
+    <td>{{ adversary.level }}</td>
+<!--    <td>{{ adversary.brawn }}</td>
+    <td>{{ adversary.agility }}</td>
+    <td>{{ adversary.intellect }}</td>
+    <td>{{ adversary.cunning }}</td>
+    <td>{{ adversary.willpower }}</td>
+    <td>{{ adversary.presence }}</td>
+    <td>{{ adversary.soak_value }}</td>
+    <td>{{ adversary.wound_threshold }}</td>
+    <td>{{ adversary.display_strain }}</td>
+    <td>{{ adversary.melee_defense }}</td>
+    <td>{{ adversary.ranged_defense }}</td> -->
+    <td>{{ adversary.display_skills|safe }}</td>
+    <td>{{ adversary.display_talents|safe }}</td>
+    <td>{{ adversary.display_abilities|safe }}</td>
+    <td>{{ adversary.display_equipment_list|safe }}</td>
+    <td>{{ adversary.indexes }}</td>
+</tr>
