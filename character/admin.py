@@ -15,6 +15,12 @@ class TalentAdmin(base.admin.EntryAdmin):
 class AbilityAdmin(base.admin.EntryAdmin):
   fields = ['name', 'description', 'notes']
   inlines = [base.admin.IndexInline]
+  
+  def formfield_for_dbfield(self, db_field, **kwargs):
+    formfield = super(AbilityAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+    if db_field.name == 'description':
+      formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
+    return formfield
 
 class CareerAdmin(base.admin.EntryAdmin):
   fields = ['name', 'skills', 'image', 'notes']
