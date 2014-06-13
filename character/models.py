@@ -33,8 +33,8 @@ class Talent(base.models.Entry):
     (2, 'Active'),
     (3, 'Active (Action)'),
     (4, 'Active (Maneuver)'),
-    (5, 'Active (Incedential)'),
-    (6, 'Active (Incedential, Out of Turn)'),
+    (5, 'Active (Incidential)'),
+    (6, 'Active (Incidential, Out of Turn)'),
   )
   ranked = models.BooleanField()
   activation = models.IntegerField(choices=ACTIVATION_CHOICES)
