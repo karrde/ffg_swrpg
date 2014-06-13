@@ -74,7 +74,7 @@ class Specialization(TalentTree):
   careers = models.ManyToManyField(Career)
 
 class Ability(base.models.Entry):
-  description = models.CharField(max_length=200)
+  description = models.CharField(max_length=500)
   rules_effect = models.CharField(max_length=500, blank=True)
 
 class Species(base.models.Entry):
