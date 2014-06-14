@@ -19,7 +19,7 @@
         <span class="item_titles">Vehicle Type/Model:</span> {{ vehicle.category.name }}/{{ vehicle.vehicle_model }}<br />
         <span class="item_titles">Manufacturer:</span> {{ vehicle.manufacturer }}<br />
         <span class="item_titles">Maximum Altitude:</span> {{ vehicle.display_altitude }}<br />
-        <span class="item_titles">Sensor Range:</span> {{ vehicle.sensor_range.name }}<br />
+        <span class="item_titles">Sensor Range:</span> {{ vehicle.get_sensor_range_display }}<br />
         <span class="item_titles">Crew:</span> {{ vehicle.crew_detail }}<br />
         <span class="item_titles">Encumbrance Capacity:</span> {{ vehicle.encumbrance }}<br />
         <span class="item_titles">Passenger Capacity:</span> {{ vehicle.passenger }}<br />

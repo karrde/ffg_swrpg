@@ -22,19 +22,16 @@ class Category(equipment.models.Category):
       return Starship.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   starship_set = property(_starship_set)
 
-class RangeBand(equipment.models.RangeBand):
-  class Meta:
-    proxy = True
-
-  RANGE_BAND_CHOICES = (
-    (2, 'Sensor'),
+class Vehicle(equipment.models.Gear):
+  RANGE_CHOICES = (
+    (6, 'Close'),
+    (7, 'Short'),
+    (8, 'Medium'),
+    (9, 'Long'),
+    (10, 'Extreme'),
+    (11, 'None'),
   )
 
-  def __init__(self, *args, **kwargs):
-    super(RangeBand, self).__init__(*args, **kwargs)
-    self._meta.get_field_by_name('range_band')[0]._choices = RangeBand.RANGE_BAND_CHOICES
-
-class Vehicle(equipment.models.Gear):
   silhoutte = models.IntegerField()
   speed = models.IntegerField()
   handling = models.IntegerField()
@@ -48,7 +45,7 @@ class Vehicle(equipment.models.Gear):
   vehicle_model = models.CharField(max_length=100)
   manufacturer = models.CharField(max_length=100)
   max_altitude = models.IntegerField(null=True,blank=True)
-  sensor_range = models.ForeignKey(RangeBand)
+  sensor_range = models.IntegerField(choices = RANGE_CHOICES)
   passenger = models.IntegerField()
   hard_points = models.IntegerField()
   weapon_count = models.IntegerField()

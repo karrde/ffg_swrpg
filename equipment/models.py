@@ -44,17 +44,6 @@ class Category(models.Model):
       return Attachment.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   attachment_set = property(_attachment_set)
 
-class RangeBand(models.Model):
-  RANGE_BAND_CHOICES = (
-    (1, 'Weapon'),
-    (2, 'Sensor'),
-  )
-  range_band = models.IntegerField(choices=RANGE_BAND_CHOICES)
-  name = models.CharField(max_length=50)
-
-  def __unicode__(self):
-    return self.name
-
 class GearManager(models.Manager):
   def get_queryset(self):
     return super(GearManager, self).get_queryset()
@@ -94,7 +83,7 @@ class Gear(base.models.Entry):
       
   def _equipment_display(self):
     if self.model == 'Weapon':
-      return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.get_weapon_skill_display(), damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.range_band.name, special=self.weapon.special)
+      return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.get_weapon_skill_display(), damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.get_weapon_range_display(), special=self.weapon.special)
     else:
       return self.name_link()
   equipment_display = property(_equipment_display)
@@ -117,10 +106,17 @@ class Weapon(Gear):
     (7, 'Brawl'), # These are for items that do not add
     (8, 'Melee'), # To the Brawn Characteristic
   )
+  RANGE_CHOICES = (  
+    (1, 'Engaged'),
+    (2, 'Short'),
+    (3, 'Medium'),
+    (4, 'Long'),
+    (5, 'Extreme'),
+  )
   weapon_skill = models.IntegerField(choices=SKILL_CHOICES)
   damage = models.IntegerField()
   critical = models.IntegerField()
-  range_band = models.ForeignKey(RangeBand)
+  weapon_range = models.IntegerField(choices=RANGE_CHOICES)
   hard_points = models.IntegerField()
   special = models.CharField(max_length=200)
   

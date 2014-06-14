@@ -61,7 +61,7 @@ class WeaponListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(WeaponListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(self.model, 'name', ['name', 'weapon_skill', 'damage', 'critical', 'range_band__id', 'encumbrance', 'hard_points', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
     return context 
     
 class WeaponCategoryView(WeaponListView):

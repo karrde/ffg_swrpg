@@ -20,7 +20,7 @@ class GearAdmin(base.admin.EntryAdmin):
 
   
 class WeaponAdmin(GearAdmin):
-  fields = ['name', 'weapon_skill', 'damage', 'critical', 'range_band', 'encumbrance', 'hard_points', ('price', 'restricted'), 'rarity', 'special', 'category', 'notes', 'image']
+  fields = ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', ('price', 'restricted'), 'rarity', 'special', 'category', 'notes', 'image']
 
   def formfield_for_choice_field(self, db_field, request, **kwargs):
     if db_field.name == "weapon_skill":
@@ -45,8 +45,6 @@ class WeaponAdmin(GearAdmin):
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':
       kwargs['queryset'] = Category.objects.filter(model=2)
-    elif db_field.name == 'range_band':
-      kwargs['queryset'] = RangeBand.objects.filter(range_band=1)
     return super(GearAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
     
   def queryset(self, request):
@@ -91,4 +89,3 @@ admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(Armor, ArmorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Attachment, AttachmentAdmin)
-admin.site.register(RangeBand)

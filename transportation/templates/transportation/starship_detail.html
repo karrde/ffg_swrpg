@@ -21,7 +21,7 @@
         <span class="item_titles">Hyperdrive:</span> {{ starship.hyperdrive }}<br />
         <span class="item_titles">Navicomputer:</span> {{ starship.display_navicomputer }}<br />
         <span class="item_titles">Maximum Altitude:</span> {{ starship.display_altitude }}<br />
-        <span class="item_titles">Sensor Range:</span> {{ starship.sensor_range.name }}<br />
+        <span class="item_titles">Sensor Range:</span> {{ starship.get_sensor_range_display }}<br />
         <span class="item_titles">Crew:</span> {{ starship.crew_detail }}<br />
         <span class="item_titles">Encumbrance Capacity:</span> {{ starship.encumbrance }}<br />
         <span class="item_titles">Passenger Capacity:</span> {{ starship.passenger }}<br />
