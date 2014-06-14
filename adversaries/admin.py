@@ -12,7 +12,7 @@ class SkillEntryInline(admin.TabularInline):
   model = SkillEntry
   extra = 1
   
-class AdversaryAdmin(admin.ModelAdmin):
+class AdversaryAdmin(base.admin.EntryAdmin):
   fieldsets = (
     (None, {
       'fields': ('name', 'level'),

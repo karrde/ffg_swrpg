@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 
 import base.models, character.models, equipment.models
 
@@ -59,6 +60,14 @@ class TalentEntry(models.Model):
   talent = models.ForeignKey(character.models.Talent)
   rank = models.IntegerField(null=True, blank=True)
   
+  def clean(self, *args, **kwargs):
+    super(TalentEntry, self).clean(*args, **kwargs)
+    if self.talent.ranked:
+      if self.rank < 1:
+        raise ValidationError("{talent} is ranked, must have value".format(talent=self.talent.name))
+    else:
+      self.rank = None
+
   def __unicode__(self):
     if self.talent.ranked:
       return "{0} {1}".format(self.talent.name_link(), self.rank)
@@ -70,7 +79,14 @@ class SkillEntry(models.Model):
   skill = models.ForeignKey(character.models.Skill)
   rank = models.IntegerField(null=True, blank=True)
   
+  def clean(self, *args, **kwargs):
+    super(SkillEntry, self).clean(*args, **kwargs)
+    if self.adversary.level != 'Minion':
+      if self.rank < 1:
+        raise ValidationError("{adversary} is a {level}, {skill} must have rank".format(adversary=self.adversary.name, level=self.adversary.level, skill=self.skill.name))
+    else:
+      self.rank = None
+
   def _display_skill(self):
     return "{0} {1}".format(self.skill.name_link(), self.rank)
   display_skill = property(_display_skill)
-  
