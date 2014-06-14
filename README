@@ -1,0 +1,14 @@
+An Index and Tool site for the Fantasy Flight Games Star Wars RPG Systems
+=============================================================================
+
+A Django implementation of the structures of the RPG system.  Initially 
+conceived as an Indexing tool to Items/Weapons/Ships/Etc from the source
+books of the system.  Hopefully it will someday be much more, a Character
+Generator, Ship Generator, etc.
+
+Original concept and design: Jake Di Toro <karrde@viluppo.net>
+
+Live implementation can be found at:
+
+        http://swrpg.viluppo.net/
+        
