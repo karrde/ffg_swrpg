@@ -20,8 +20,22 @@ class GearAdmin(base.admin.EntryAdmin):
 
   
 class WeaponAdmin(GearAdmin):
-  fields = ['name', 'skill', 'damage', 'critical', 'range_band', 'encumbrance', 'hard_points', ('price', 'restricted'), 'rarity', 'special', 'category', 'notes', 'image']
+  fields = ['name', 'weapon_skill', 'damage', 'critical', 'range_band', 'encumbrance', 'hard_points', ('price', 'restricted'), 'rarity', 'special', 'category', 'notes', 'image']
 
+  def formfield_for_choice_field(self, db_field, request, **kwargs):
+    if db_field.name == "weapon_skill":
+      kwargs['choices'] = (
+        (1, 'Brawl'),
+        (2, 'Melee'),
+        (3, 'Ranged [Light]'),
+        (4, 'Ranged [Heavy]'),
+        (5, 'Gunnery'),
+        (6, 'Lightsaber'),
+        (7, 'Brawl - Non Brawn'), # These are for items that do not add
+        (8, 'Melee - Non Brawn'), # To the Brawn Characteristic
+      )
+    return super(WeaponAdmin, self).formfield_for_choice_field(db_field, request, **kwargs)
+      
   def formfield_for_dbfield(self, db_field, **kwargs):
     formfield = super(WeaponAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     if db_field.name == 'special':
@@ -31,8 +45,6 @@ class WeaponAdmin(GearAdmin):
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
     if db_field.name == 'category':
       kwargs['queryset'] = Category.objects.filter(model=2)
-    elif db_field.name == 'skill':
-      kwargs['queryset'] = Skill.objects.filter(skill=1)
     elif db_field.name == 'range_band':
       kwargs['queryset'] = RangeBand.objects.filter(range_band=1)
     return super(GearAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
@@ -79,5 +91,4 @@ admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(Armor, ArmorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Attachment, AttachmentAdmin)
-admin.site.register(Skill)
 admin.site.register(RangeBand)

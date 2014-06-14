@@ -1,6 +1,6 @@
 <tr>
     <td class="item_name"><a href="{% url 'equipment:weapon' weapon.id %}">{{ weapon.name }}</a></td>
-    <td class="weapon_skill">{{ weapon.skill }}</td>
+    <td class="weapon_skill">{{ weapon.get_skill_display }}</td>
     <td>{{ weapon.display_damage }}</td>
     <td>{{ weapon.display_crit }}</td>
     <td class="weapon_range">{{ weapon.range_band.name }}</td>

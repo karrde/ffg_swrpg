@@ -44,16 +44,6 @@ class Category(models.Model):
       return Attachment.objects.filter(gear_ptr_id__in=[x.id for x in self.gear_set.all()])
   attachment_set = property(_attachment_set)
 
-class Skill(models.Model):
-  SKILL_CHOICES = (
-    (1, 'Weapon'),
-  )
-  skill = models.IntegerField(choices=SKILL_CHOICES)
-  name = models.CharField(max_length=50)
-
-  def __unicode__(self):
-    return self.name
-
 class RangeBand(models.Model):
   RANGE_BAND_CHOICES = (
     (1, 'Weapon'),
@@ -104,7 +94,7 @@ class Gear(base.models.Entry):
       
   def _equipment_display(self):
     if self.model == 'Weapon':
-      return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.skill.name, damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.range_band.name, special=self.weapon.special)
+      return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.get_weapon_skill_display(), damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.range_band.name, special=self.weapon.special)
     else:
       return self.name_link()
   equipment_display = property(_equipment_display)
@@ -117,7 +107,17 @@ class Gear(base.models.Entry):
     ordering = ['name']
 
 class Weapon(Gear):
-  skill = models.ForeignKey(Skill)
+  SKILL_CHOICES = (
+    (1, 'Brawl'),
+    (2, 'Melee'),
+    (3, 'Ranged [Light]'),
+    (4, 'Ranged [Heavy]'),
+    (5, 'Gunnery'),
+    (6, 'Lightsaber'),
+    (7, 'Brawl'), # These are for items that do not add
+    (8, 'Melee'), # To the Brawn Characteristic
+  )
+  weapon_skill = models.IntegerField(choices=SKILL_CHOICES)
   damage = models.IntegerField()
   critical = models.IntegerField()
   range_band = models.ForeignKey(RangeBand)
@@ -125,7 +125,7 @@ class Weapon(Gear):
   special = models.CharField(max_length=200)
   
   def _display_damage(self):
-    if (self.skill.name in ['Melee', 'Brawl']):
+    if (self.weapon_skill in [1, 2]):
       return "{0:+d}".format(self.damage)
     else:
       return self.damage
