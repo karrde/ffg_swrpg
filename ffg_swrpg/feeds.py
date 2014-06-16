@@ -5,7 +5,7 @@ from equipment.models import Gear
 from blog.models import Blog
 
 class BlogFeed(Feed):
-  totle = "FFG Star Wars RPG Blog Feed"
+  title = "FFG Star Wars RPG Blog Feed"
   link = '/blog'
   description = 'Latest blog entries for the RPG Index'
   
