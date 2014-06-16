@@ -10,3 +10,4 @@ def index_view(request):
 class BlogDetailView(DetailView):
     model = Blog
     template_name = 'ffg_swrpg/blog_detail.html'
+    
