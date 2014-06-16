@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import RedirectView
 
+
 from django.contrib import admin
 admin.autodiscover()
 
