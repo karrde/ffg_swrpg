@@ -6,6 +6,7 @@ from django.views.generic import RedirectView
 from ffg_swrpg.feeds import *
 from ffg_swrpg.views import *
 
+
 from django.contrib import admin
 admin.autodiscover()
 
