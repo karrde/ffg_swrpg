@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import RedirectView
 
-
 from django.contrib import admin
 admin.autodiscover()
 
@@ -21,6 +20,9 @@ urlpatterns = patterns('',
     url(r'^character/', include('character.urls', namespace='character')),
     url(r'^books/', include('books.urls', namespace='books')),
     url(r'^base/', include('base.urls', namespace='base')),
+    url(r'^blog/(?P<pk>\d+)/$', BlogDetailView.as_view(), name='blog'),
+    url(r'^entries/feed/$', EntryFeed()),
+    url(r'^blog/feed/$', BlogFeed()),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
