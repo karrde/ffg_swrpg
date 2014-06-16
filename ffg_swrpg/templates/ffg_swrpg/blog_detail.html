@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Blog Posts</h3>
+{% include "blog/blog_entry.html" with blog_entry=blog %}
+{% endblock %}
