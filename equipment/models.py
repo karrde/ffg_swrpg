@@ -49,51 +49,30 @@ class GearManager(models.Manager):
     return super(GearManager, self).get_queryset()
 
 class Gear(base.models.Entry):
-  price = models.IntegerField()
-  restricted = models.BooleanField()
   encumbrance = models.IntegerField()
-  rarity = models.IntegerField()
-  category = models.ForeignKey(Category)
-  
-  def __unicode__(self):
-    return self.name
-    
-  def _display_price(self):
-    if self.restricted:
-      res = "(R) "
-    else:
-      res = ""
-    if self.price:
-      rprice = "{0:,d}".format(self.price)
-    else:
-      rprice = "-"
-    return '{0}{1}'.format(res, rprice)
 
-  def _display_encum(self):
-    if self.price or self.encumbrance:
-      return str(self.encumbrance)
-    else:
-      return "-"
-
-  def _display_rarity(self):
-    if self.price or self.rarity:
-      return str(self.rarity)
-    else:
-      return "-"
-      
   def _equipment_display(self):
     if self.model == 'Weapon':
       return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.get_weapon_skill_display(), damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.get_weapon_range_display(), special=self.weapon.special)
     else:
       return self.name_link()
   equipment_display = property(_equipment_display)
-          
-  display_price = property(_display_price)
-  display_encum = property(_display_encum)
-  display_rarity = property(_display_rarity)
   
+  def __unicode__(self):
+    return self.name
+    
   class Meta:
     ordering = ['name']
+
+class Equipment(models.Model):
+  price = models.IntegerField()
+  restricted = models.BooleanField()
+  rarity = models.IntegerField()
+  category = models.ForeignKey(Category)
+  gear = models.OneToOneField(Gear)
+
+  def _display_price(self):
+    return '{restricted}{price:,d}'.format(restricted=["","(R) "][self.restricted], price=self.price)
 
 class Weapon(Gear):
   SKILL_CHOICES = (

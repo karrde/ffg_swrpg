@@ -4,23 +4,37 @@ from django import forms
 import base.admin
 from equipment.models import *
 
-class GearAdmin(base.admin.EntryAdmin):  
-  list_display = ('name', 'price', 'encumbrance', 'rarity', 'indexes')
-  fields = ['name', ('price', 'restricted'), 'encumbrance', 'rarity', 'category', 'notes', 'image']
-  inlines = [base.admin.IndexInline]
-  
-  def formfield_for_foreignkey(self, db_field, request, **kwargs):
-    if db_field.name == 'category':
-      kwargs['queryset'] = Category.objects.filter(model=1)
-    return super(GearAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+class EquipmentInline(admin.TabularInline):
+  model = Equipment
 
+  def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+    field = super(EquipmentInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+    if db_field.name == 'category':
+      if request.model is not None:
+        field.queryset = field.queryset.filter(model=Category.model_hash()[request.model])
+      else:
+        field.queryset = field.queryset.none()
+    return field
+
+
+class GearAdmin(base.admin.EntryAdmin):  
+  list_display = ('name', 'indexes')
+  fields = ['name', 'model', 'encumbrance', 'notes', 'image']
+  inlines = [EquipmentInline, base.admin.IndexInline]
+  
   def queryset(self, request):
     qs = super(GearAdmin, self).queryset(request)
     return qs.filter(model='Gear')
-
+    
+  def get_form(self, request, obj=None, **kwargs):
+    # just save obj reference for future processing in Inline
+    if not hasattr(request, 'model'):
+      request.model = 'Gear'
+    return super(GearAdmin, self).get_form(request, obj, **kwargs)
   
 class WeaponAdmin(GearAdmin):
-  fields = ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', ('price', 'restricted'), 'rarity', 'special', 'category', 'notes', 'image']
+  fields = ['name', 'model', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'special', 'notes', 'image']
 
   def formfield_for_choice_field(self, db_field, request, **kwargs):
     if db_field.name == "weapon_skill":
@@ -42,27 +56,29 @@ class WeaponAdmin(GearAdmin):
       formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
     return formfield
           
-  def formfield_for_foreignkey(self, db_field, request, **kwargs):
-    if db_field.name == 'category':
-      kwargs['queryset'] = Category.objects.filter(model=2)
-    return super(GearAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-    
   def queryset(self, request):
     qs = super(GearAdmin, self).queryset(request)
-    return qs.filter(category__model=2)
+    return qs.filter(model='Weapon')
     
+  def get_form(self, request, obj=None, **kwargs):
+    # just save obj reference for future processing in Inline
+    if not hasattr(request, 'model'):
+      request.model = 'Weapon'
+    return super(GearAdmin, self).get_form(request, obj, **kwargs)
+
 class ArmorAdmin(GearAdmin):
-  fields = ['name', 'defense', 'soak', ('price', 'restricted'), 'encumbrance', 'hard_points', 'rarity', 'category', 'notes', 'image']
-
-  def formfield_for_foreignkey(self, db_field, request, **kwargs):
-    if db_field.name == 'category':
-      kwargs['queryset'] = Category.objects.filter(model=3)
-    return super(GearAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+  fields = ['name', 'defense', 'soak', 'encumbrance', 'hard_points', 'notes', 'image']
 
   def queryset(self, request):
     qs = super(GearAdmin, self).queryset(request)
-    return qs.filter(category__model=3)
+    return qs.filter(model='Armor')
   
+  def get_form(self, request, obj=None, **kwargs):
+    # just save obj reference for future processing in Inline
+    if not hasattr(request, 'model'):
+      request.model = 'Armor'
+    return super(ArmorAdmin, self).get_form(request, obj, **kwargs)
+
 class CategoryAdmin(admin.ModelAdmin):
   list_display = ('model', 'name')
   
@@ -71,17 +87,17 @@ class CategoryAdmin(admin.ModelAdmin):
     return qs.filter(model__in=[x[0] for x in Category.MODEL_CHOICES])
   
 class AttachmentAdmin(GearAdmin):
-  fields = ['name', ('price', 'restricted'), 'encumbrance', 'hard_points', 'rarity', 'category', 'notes', 'image']
-
-  def formfield_for_foreignkey(self, db_field, request, **kwargs):
-    if db_field.name == 'category':
-      kwargs['queryset'] = Category.objects.filter(model=4)
-    return super(GearAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+  fields = ['name', 'encumbrance', 'hard_points', 'notes', 'image']
 
   def queryset(self, request):
     qs = super(GearAdmin, self).queryset(request)
-    return qs.filter(category__model=4)
+    return qs.filter(model='Attachment')
 
+  def get_form(self, request, obj=None, **kwargs):
+    # just save obj reference for future processing in Inline
+    if not hasattr(request, 'model'):
+      request.model = 'Attachment'
+    return super(AttachmentAdmin, self).get_form(request, obj, **kwargs)
 
 
 admin.site.register(Gear, GearAdmin)

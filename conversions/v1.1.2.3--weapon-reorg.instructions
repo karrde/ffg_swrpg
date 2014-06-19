@@ -1,0 +1,2 @@
+./manage syncdb
+import v1.1.2.3--weapon-reorg.sql
