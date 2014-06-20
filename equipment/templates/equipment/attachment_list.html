@@ -18,7 +18,7 @@
             {% include "equipment/attachment_list_line.html" with attachment=attachment %}
         {% endfor %}
     {% else %}
-        {% regroup attachment_list|dictsort:"category.id" by category as categories %}
+        {% regroup attachment_list|dictsort:"equipment.category.id" by equipment.category as categories %}
         {% for category in categories %}
             <tr class="item_category"><td colspan=12><a href="{% url 'equipment:attachment_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
             {% for attachment in category.list %}

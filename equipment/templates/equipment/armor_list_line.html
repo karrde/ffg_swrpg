@@ -2,9 +2,9 @@
     <td class="item_name"><a href="{% url 'equipment:armor' armor.id %}">{{ armor.name }}</a></td>
     <td>{{ armor.defense }}</td>
     <td>{{ armor.soak }}</td>
-    <td>{{ armor.display_price }}</td>
-    <td>{{ armor.display_encum }}</td>
+    <td>{{ armor.equipment.display_price }}</td>
+    <td>{{ armor.encumbrance }}</td>
     <td>{{ armor.display_hp }}</td>
-    <td>{{ armor.display_rarity }}</td>
+    <td>{{ armor.equipment.rarity }}</td>
     <td>{{ armor.indexes }}</td>
 </tr>

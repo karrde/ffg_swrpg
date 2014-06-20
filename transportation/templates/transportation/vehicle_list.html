@@ -18,7 +18,7 @@
             {% include "transportation/vehicle_list_line.html" with vehicle=vehicle %}
         {% endfor %}
     {% else %}
-        {% regroup vehicle_list|dictsort:"category.id" by category as categories %}
+        {% regroup vehicle_list|dictsort:"equipment.category.id" by equipment.category as categories %}
         {% for category in categories %}
             <tr class="item_category"><td colspan=30><a href="{% url 'transportation:vehicle_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
             {% for vehicle in category.list %}

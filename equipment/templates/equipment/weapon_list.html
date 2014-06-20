@@ -18,7 +18,7 @@
             {% include "equipment/weapon_list_line.html" with weapon=weapon %}
         {% endfor %}
     {% else %}
-        {% regroup weapon_list|dictsort:"category.id" by category as categories %}
+        {% regroup weapon_list|dictsort:"equipment.category.id" by equipment.category as categories %}
         {% for category in categories %}
             <tr class="item_category"><td colspan=12><a href="{% url 'equipment:weapon_category' category.grouper.id %}">{{ category.grouper.name }}</a></td></tr>
             {% for weapon in category.list %}

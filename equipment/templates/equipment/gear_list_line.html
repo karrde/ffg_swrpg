@@ -1,7 +1,7 @@
 <tr>
     <td class="item_name"><a href="{% url 'equipment:gear' gear.id %}">{{ gear.name }}</a></td>
-    <td>{{ gear.display_price }}</td>
-    <td>{{ gear.display_encum }}</td>
-    <td>{{ gear.display_rarity }}</td>
+    <td>{{ gear.equipment.display_price }}</td>
+    <td>{{ gear.encumbrance }}</td>
+    <td>{{ gear.equipment.rarity }}</td>
     <td>{{ gear.indexes }}</td>
 </tr>

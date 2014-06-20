@@ -1,7 +1,7 @@
 <tr>
     <td class="item_name"><a href="{% url 'transportation:vehicleattachment' vehicleattachment.id %}">{{ vehicleattachment.name }}</a></td>
-    <td>{{ vehicleattachment.display_price }}</td>
+    <td>{{ vehicleattachment.equipment.display_price }}</td>
     <td>{{ vehicleattachment.hard_points }}</td>
-    <td>{{ vehicleattachment.display_rarity }}</td>
+    <td>{{ vehicleattachment.equipment.rarity }}</td>
     <td>{{ vehicleattachment.indexes }}</td>
 </tr>

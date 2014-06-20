@@ -5,9 +5,9 @@
     <td><a href="{% sort_table_by request 'name' %}">Armor</a></td>
     <td><a href="{% sort_table_by request 'defense' %}">Defense</a></td>
     <td><a href="{% sort_table_by request 'soak' %}">Soak</a></td>
-    <td><a href="{% sort_table_by request 'price' %}">Price</a></td>
+    <td><a href="{% sort_table_by request 'equipment__price' %}">Price</a></td>
     <td><a href="{% sort_table_by request 'encumbrance' %}">Encum</a></td>
     <td><a href="{% sort_table_by request 'hard_points' %}">HP</a></td>
-    <td><a href="{% sort_table_by request 'rarity' %}">Rarity</a></td>
+    <td><a href="{% sort_table_by request 'equipment__rarity' %}">Rarity</a></td>
     <td><a href="{% sort_table_by request 'index' %}">Index</a></td>
 </tr>

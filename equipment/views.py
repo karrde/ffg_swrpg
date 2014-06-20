@@ -17,9 +17,9 @@ def sorting_context(model_class, default_sort, valid_sorts, special_sorts, reque
   if order_by not in valid_sorts:
     order_by = default_sort
   if order_by not in special_sorts:
-    object_list = model_class.objects.filter(model=model_class.__name__).order_by(order_by, default_sort)
+    object_list = model_class.objects.filter(equipment__isnull=False).filter(model=model_class.__name__).order_by(order_by, default_sort)
   elif order_by == 'index':
-    object_list = [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)]
+    object_list = [x for x in [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)] if hasattr(x, 'equipment')]
   elif order_by == 'crew':
     object_list = sorted(model_class.objects.all(), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
   if reverse:
@@ -36,11 +36,11 @@ def sorting_context(model_class, default_sort, valid_sorts, special_sorts, reque
   }
 
 class GearListView(ListView):
-  model = Gear
+  queryset = Gear.objects.filter(equipment__isnull=False)
   
   def get_context_data(self, **kwargs):
     context = super(GearListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(Gear, 'name', ['name', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(Gear, 'name', ['name', 'equipment__price', 'encumbrance', 'equipment__rarity', 'index'], ['index'], self.request))
     return context 
   
 class GearCategoryView(GearListView):
@@ -49,7 +49,7 @@ class GearCategoryView(GearListView):
 
   def get_context_data(self, **kwargs):
     context = super(GearCategoryView, self).get_context_data(**kwargs)
-    context['gear_list'] = [i for i in context['gear_list'] if i.category.id == int(self.kwargs['category'])]
+    context['gear_list'] = [i for i in context['gear_list'] if i.equipment.category.id == int(self.kwargs['category'])]
     context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
   
@@ -61,7 +61,7 @@ class WeaponListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(WeaponListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(self.model, 'name', ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'price', 'encumbrance', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'equipment__price', 'encumbrance', 'equipment__rarity', 'index'], ['index'], self.request))
     return context 
     
 class WeaponCategoryView(WeaponListView):
@@ -70,7 +70,7 @@ class WeaponCategoryView(WeaponListView):
   
   def get_context_data(self, **kwargs):
     context = super(WeaponCategoryView, self).get_context_data(**kwargs)
-    context['weapon_list'] = [i for i in context['weapon_list'] if i.category.id == int(self.kwargs['category'])]
+    context['weapon_list'] = [i for i in context['weapon_list'] if i.equipment.category.id == int(self.kwargs['category'])]
     context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
   
@@ -82,7 +82,7 @@ class ArmorListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(ArmorListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(self.model, 'name', ['name', 'defense', 'soak', 'price', 'encumbrance', 'hard_points', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'defense', 'soak', 'equipment__price', 'encumbrance', 'hard_points', 'equipment__rarity', 'index'], ['index'], self.request))
     return context 
 
 class ArmorDetailView(DetailView):
@@ -102,7 +102,7 @@ class AttachmentCategoryView(AttachmentListView):
 
   def get_context_data(self, **kwargs):
     context = super(AttachmentCategoryView, self).get_context_data(**kwargs)
-    context['attachment_list'] = [i for i in context['attachment_list'] if i.category.id == int(self.kwargs['category'])]
+    context['attachment_list'] = [i for i in context['attachment_list'] if i.equipment.category.id == int(self.kwargs['category'])]
     context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
 

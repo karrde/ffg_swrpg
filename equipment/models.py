@@ -73,6 +73,7 @@ class Equipment(models.Model):
 
   def _display_price(self):
     return '{restricted}{price:,d}'.format(restricted=["","(R) "][self.restricted], price=self.price)
+  display_price = property(_display_price)
 
 class Weapon(Gear):
   SKILL_CHOICES = (
@@ -128,10 +129,7 @@ class Armor(Gear):
   hard_points = models.IntegerField()
 
   def _display_hp(self):
-    if self.price or self.hard_points:
-      return str(self.hard_points)
-    else:
-      return "-"
+    return str(self.hard_points)
       
   display_hp = property(_display_hp)
     
