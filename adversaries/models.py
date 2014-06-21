@@ -90,3 +90,11 @@ class SkillEntry(models.Model):
   def _display_skill(self):
     return "{0} {1}".format(self.skill.name_link(), self.rank)
   display_skill = property(_display_skill)
+
+
+class CreatureWeapon(equipment.models.Weapon):
+  species = models.ForeignKey(character.models.Species)
+  
+  def __unicode__(self):
+    return "{species} {weapon}".format(species=self.species.name, weapon=self.name)
+    

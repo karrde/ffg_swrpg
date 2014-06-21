@@ -44,11 +44,11 @@ class SpecializationAdmin(base.admin.EntryAdmin):
 class SpeciesAdmin(base.admin.EntryAdmin):
   fieldsets = (
     (None, {
-      'fields': ('name', 'player_race'),
+      'fields': ('name', 'abilities', 'player_race'),
     }),
     ('Player Race Fields', {
       'classes': ('collapse',),
-      'fields': (('base_brawn', 'base_agility', 'base_intellect', 'base_cunning', 'base_willpower', 'base_presence'), 'wound_threshold_modifier', 'strain_threshold_modifier', 'starting_experience', 'abilities'),
+      'fields': (('base_brawn', 'base_agility', 'base_intellect', 'base_cunning', 'base_willpower', 'base_presence'), 'wound_threshold_modifier', 'strain_threshold_modifier', 'starting_experience'),
     }),
     ('Bese Fields', {
       'fields': ('notes', 'image'),
@@ -57,6 +57,7 @@ class SpeciesAdmin(base.admin.EntryAdmin):
   
   inlines = [base.admin.IndexInline]
   
+
 
 
 admin.site.register(Skill, SkillAdmin)

@@ -6,6 +6,7 @@ from equipment.models import *
 
 class EquipmentInline(admin.TabularInline):
   model = Equipment
+  max_num = 1
 
   def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
     field = super(EquipmentInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
@@ -20,7 +21,7 @@ class EquipmentInline(admin.TabularInline):
 
 class GearAdmin(base.admin.EntryAdmin):  
   list_display = ('name', 'indexes')
-  fields = ['name', 'model', 'encumbrance', 'notes', 'image']
+  fields = ['name', 'encumbrance', 'notes', 'image']
   inlines = [EquipmentInline, base.admin.IndexInline]
   
   def queryset(self, request):
@@ -34,7 +35,7 @@ class GearAdmin(base.admin.EntryAdmin):
     return super(GearAdmin, self).get_form(request, obj, **kwargs)
   
 class WeaponAdmin(GearAdmin):
-  fields = ['name', 'model', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'special', 'notes', 'image']
+  fields = ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'special', 'notes', 'image']
 
   def formfield_for_choice_field(self, db_field, request, **kwargs):
     if db_field.name == "weapon_skill":

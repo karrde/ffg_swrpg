@@ -49,7 +49,7 @@ class GearManager(models.Manager):
     return super(GearManager, self).get_queryset()
 
 class Gear(base.models.Entry):
-  encumbrance = models.IntegerField()
+  encumbrance = models.IntegerField(default=0)
 
   def _equipment_display(self):
     if self.model == 'Weapon':
@@ -61,6 +61,10 @@ class Gear(base.models.Entry):
   def __unicode__(self):
     return self.name
     
+  def _equipment(self):
+    return self.equipment_set.first()
+  equipment = property(_equipment)
+    
   class Meta:
     ordering = ['name']
 
@@ -69,7 +73,7 @@ class Equipment(models.Model):
   restricted = models.BooleanField()
   rarity = models.IntegerField()
   category = models.ForeignKey(Category)
-  gear = models.OneToOneField(Gear)
+  gear = models.ForeignKey(Gear)
 
   def _display_price(self):
     return '{restricted}{price:,d}'.format(restricted=["","(R) "][self.restricted], price=self.price)
@@ -97,7 +101,7 @@ class Weapon(Gear):
   damage = models.IntegerField()
   critical = models.IntegerField()
   weapon_range = models.IntegerField(choices=RANGE_CHOICES)
-  hard_points = models.IntegerField()
+  hard_points = models.IntegerField(default=0)
   special = models.CharField(max_length=200)
   
   def _display_damage(self):
@@ -113,10 +117,7 @@ class Weapon(Gear):
       return "-"
 
   def _display_hp(self):
-    if self.price or self.hard_points:
-      return str(self.hard_points)
-    else:
-      return "-"
+    return str(self.hard_points)
       
   display_crit = property(_display_crit)
   display_hp = property(_display_hp)
