@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="item_block">
-    <span class="item_name">{{ adversary.name }}</span><br />
+    <span class="item_name">{{ adversary.name }} [{{ adversary.level }}]</span><br />
     {% if adversary.image %}<img class="item_image" src="{{ adversary.image.url }}" />{% endif %}
     <div class="item_detail">
         {% if adversary.aka %}<span class="item_titles">AKA:</span> {{ adversary.aka }}<br />{% endif %}

@@ -56,7 +56,7 @@ class SpeciesAdmin(base.admin.EntryAdmin):
   )
   
   inlines = [base.admin.IndexInline]
-  
+  filter_horizontal = ('abilities',)
 
 
 

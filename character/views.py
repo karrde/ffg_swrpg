@@ -5,7 +5,7 @@ from django.db.models import Sum
 
 # Create your views here.
 from base.models import Index
-from equipment.views import sorting_context
+from base.views import sorting_context
 from character.models import *
 
 class SkillListView(ListView):
