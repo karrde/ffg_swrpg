@@ -6,5 +6,8 @@
 {% block sb-adversaries %}
 {{ block.super }}
 <ul>
+<li><a href="{% url 'adversaries:adversaries' %}">Adversaries</a></li>
+<li><a href="{% url 'adversaries:creatures' %}">Creatures</a></li>
+<li><a href="{% url 'adversaries:creatureweapons' %}">Creature Weapons</a></li>
 </ul>
 {% endblock %}

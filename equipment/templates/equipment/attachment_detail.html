@@ -7,11 +7,11 @@
     {% if attachment.image %}<img class="item_image" src="{{ attachment.image.url }}" />{% endif %}
     <div class="item_detail">
         {% if attachment.aka %}<span class="item_titles">AKA:</span> {{ attachment.aka }}<br />{% endif %}
-        <span class="item_titles">Price:</span> {{ attachment.display_price }}<br />
-        <span class="item_titles">Encumbrance:</span> {{ attachment.display_encum }}<br />
+        {% if weapon.equipment %}<span class="item_titles">Price:</span> {{ attachment.equipment.display_price }}<br />{% endif %}
+        <span class="item_titles">Encumbrance:</span> {{ attachment.encumbrance }}<br />
         <span class="item_titles">HP Required:</span> {{ attachment.hard_points }}<br />
-        <span class="item_titles">Rarity:</span> {{ attachment.display_rarity }}<br />
-        <span class="item_titles">Type:</span> {{ attachment.category.name }}<br />
+        {% if weapon.equipment %}<span class="item_titles">Rarity:</span> {{ attachment.equipment.rarity }}<br />{% endif %}
+        {% if weapon.equipment %}<span class="item_titles">Type:</span> {{ attachment.equipment.category.name }}<br />{% endif %}
         <span class="item_titles">Indexes:</span> {{ attachment.indexes }}<br />
     </div>
 </div>

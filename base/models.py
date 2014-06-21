@@ -69,10 +69,6 @@ class Entry(models.Model):
   
   def name_link(self):
     return '<a href="{link}" class="{model}_name">{name}</a>'.format(link=self.get_absolute_url(), name=self.name, model=self.model.lower())
-   
-  def __init__(self, *args, **kwargs):
-    super(Entry, self).__init__(*args, **kwargs)
-    self.model = self.__class__.__name__
     
   @receiver(pre_save)
   def my_callback(sender, instance, *args, **kwargs):

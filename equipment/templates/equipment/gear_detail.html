@@ -7,10 +7,10 @@
     {% if gear.image %}<img class="item_image" src="{{ gear.image.url }}" />{% endif %}
     <div class="item_detail">
         {% if gear.aka %}<span class="item_titles">AKA:</span> {{ gear.aka }}<br />{% endif %}
-        <span class="item_titles">Price:</span> {{ gear.display_price }}<br />
-        <span class="item_titles">Encumbrance:</span> {{ gear.display_encum }}<br />
-        <span class="item_titles">Rarity:</span> {{ gear.display_rarity }}<br />
-        <span class="item_titles">Category:</span> {{ gear.category.name }}<br />
+        {% if weapon.equipment %}<span class="item_titles">Price:</span> {{ gear.equipment.display_price }}<br />{% endif %}
+        <span class="item_titles">Encumbrance:</span> {{ gear.encumbrance }}<br />
+        {% if weapon.equipment %}<span class="item_titles">Rarity:</span> {{ gear.equipment.display_rarity }}<br />{% endif %}
+        {% if weapon.equipment %}<span class="item_titles">Category:</span> {{ gear.equipment.category.name }}<br />{% endif %}
         <span class="item_titles">Indexes:</span> {{ gear.indexes }}<br />
     </div>
 </div>

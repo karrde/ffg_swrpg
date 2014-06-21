@@ -1,0 +1,16 @@
+{% extends "adversaries/base.html" %}
+
+{% block title %}{{ block.super }} - Creatures{% endblock title %}
+
+{% block content %}
+<h2>Creatures</h2>
+{% if creature_list %}
+    {% include "adversaries/adversary_list_header.html" %}
+        {% for adversary in creature_list %}
+            {% include "adversaries/adversary_list_line.html" with adversary=adversary %}
+        {% endfor %}
+    </table></div>
+{% else %}
+    <p>No creatures.</p>
+{% endif %}
+{% endblock content %}

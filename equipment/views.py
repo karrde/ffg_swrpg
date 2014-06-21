@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
 from django.db.models import Sum
+from operator import xor
 
 # Create your views here.
 from base.models import Index
 from equipment.models import *
 
-def sorting_context(model_class, default_sort, valid_sorts, special_sorts, request):
+def sorting_context(model_class, default_sort, valid_sorts, special_sorts, request, is_adversary=False):
   order_by = request.GET.get('order_by', default_sort)
   flattened = request.GET.get('flattened', 'false')
   reverse = False
@@ -17,9 +18,9 @@ def sorting_context(model_class, default_sort, valid_sorts, special_sorts, reque
   if order_by not in valid_sorts:
     order_by = default_sort
   if order_by not in special_sorts:
-    object_list = model_class.objects.filter(equipment__isnull=False).filter(model=model_class.__name__).order_by(order_by, default_sort)
+    object_list = model_class.objects.filter(equipment__isnull=is_adversary).filter(model=model_class.__name__).order_by(order_by, default_sort)
   elif order_by == 'index':
-    object_list = [x for x in [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)] if hasattr(x, 'equipment')]
+    object_list = [x for x in [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)] if xor(hasattr(x, 'equipment'), is_adversary)]
   elif order_by == 'crew':
     object_list = sorted(model_class.objects.all(), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
   if reverse:

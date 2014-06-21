@@ -52,8 +52,10 @@ class Gear(base.models.Entry):
   encumbrance = models.IntegerField(default=0)
 
   def _equipment_display(self):
-    if self.model == 'Weapon':
+    if 'Weapon' in self.model:
       return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.get_weapon_skill_display(), damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.get_weapon_range_display(), special=self.weapon.special)
+    elif 'Armor' in self.model:
+      return "{name} ({soak:+d} soak; {defense:+d} defense)".format(name=self.name_link(), soak=self.armor.soak, defense=self.armor.defense)
     else:
       return self.name_link()
   equipment_display = property(_equipment_display)
@@ -122,6 +124,10 @@ class Weapon(Gear):
   display_crit = property(_display_crit)
   display_hp = property(_display_hp)
   display_damage = property(_display_damage)
+
+#  def _equipment_display(self):
+#    return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.get_weapon_skill_display(), damage=self.weapon.display_damage, critical=self.weapon.display_crit, range=self.weapon.get_weapon_range_display(), special=self.weapon.special)
+#  equipment_display = property(_equipment_display)
   
     
 class Armor(Gear):

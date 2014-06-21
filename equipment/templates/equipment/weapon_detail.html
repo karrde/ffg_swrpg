@@ -6,16 +6,16 @@
     {% if weapon.image %}<img class="item_image" src="{{ weapon.image.url }}" />{% endif %}
     <div class="item_detail">
         {% if weapon.aka %}<span class="item_titles">AKA:</span> {{ weapon.aka }}<br />{% endif %}
-        <span class="item_titles">Skill:</span> {{ weapon.get_skill_display }}<br />
+        <span class="item_titles">Skill:</span> {{ weapon.get_weapon_skill_display }}<br />
         <span class="item_titles">Damage:</span> {{ weapon.display_damage }}<br />
         <span class="item_titles">Critical:</span> {{ weapon.display_crit }}<br />
         <span class="item_titles">Range:</span> {{ weapon.get_weapon_range_display }}<br />
-        <span class="item_titles">Encumbrance:</span> {{ weapon.display_encum }}<br />
+        <span class="item_titles">Encumbrance:</span> {{ weapon.encumbrance }}<br />
         <span class="item_titles">HP:</span> {{ weapon.display_hp }}<br />
-        <span class="item_titles">Price:</span> {{ weapon.display_price }}<br />
-        <span class="item_titles">Rarity:</span> {{ weapon.display_rarity }}<br />
+        {% if weapon.equipment %}<span class="item_titles">Price:</span> {{ weapon.equipment.display_price }}<br />{% endif %}
+        {% if weapon.equipment %}<span class="item_titles">Rarity:</span> {{ weapon.equipment.rarity }}<br />{% endif %}
         <span class="item_titles">Special:</span> {{ weapon.special }}<br />
-        <span class="item_titles">Category:</span> {{ weapon.category.name }}<br />
+        {% if weapon.equipment %}<span class="item_titles">Category:</span> {{ weapon.equipment.category.name }}<br />{% endif %}
         <span class="item_titles">Indexes:</span> {{ weapon.indexes }}<br />
     </div>
 </div>

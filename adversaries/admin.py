@@ -54,3 +54,20 @@ class CreatureWeaponAdmin(equipment.admin.WeaponAdmin):
     return super(equipment.admin.GearAdmin, self).get_form(request, obj, **kwargs)
 admin.site.register(CreatureWeapon, CreatureWeaponAdmin)
 
+class CreatureAdmin(AdversaryAdmin):
+  fieldsets = (
+    (None, {
+      'fields': ('name', 'species', 'level'),
+    }),
+    ('Stat Fields', {
+      'fields': (('brawn', 'agility', 'intellect', 'cunning', 'willpower', 'presence'), 'soak_value', 'wound_threshold', 'strain_threshold', 'melee_defense', 'ranged_defense'),
+    }),
+    ('Base Fields', {
+      'fields': ('notes', 'image'),
+    })
+  )
+  
+  inlines = [TalentEntryInline, SkillEntryInline, base.admin.IndexInline]
+admin.site.register(Creature, CreatureAdmin)
+  
+

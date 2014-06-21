@@ -81,9 +81,13 @@ class SkillEntry(models.Model):
   
   def clean(self, *args, **kwargs):
     super(SkillEntry, self).clean(*args, **kwargs)
-    if self.adversary.level != 'Minion':
+    try:
+      adversary = getattr(self.adversary, self.adversary.model.lower())
+    except Adversary.DoesNotExist:
+      adversary = self.adversary    
+    if adversary.level != 'Minion':
       if self.rank < 1:
-        raise ValidationError("{adversary} is a {level}, {skill} must have rank".format(adversary=self.adversary.name, level=self.adversary.level, skill=self.skill.name))
+        raise ValidationError("{adversary} is a {level}, {skill} must have rank".format(adversary=adversary.name, level=adversary.level, skill=self.skill.name))
     else:
       self.rank = None
 
@@ -98,3 +102,22 @@ class CreatureWeapon(equipment.models.Weapon):
   def __unicode__(self):
     return "{species} {weapon}".format(species=self.species.name, weapon=self.name)
     
+    
+class Creature(Adversary):
+  species = models.ForeignKey(character.models.Species)
+  
+  def _display_equipment_list(self):
+    return ", ".join([x.name_link() for x in self.species.creatureweapon_set.all()]) or 'None'
+  display_equipment_list = property(_display_equipment_list)
+  
+  def _display_equipment(self):
+    return ", ".join([x.equipment_display for x in self.species.creatureweapon_set.all()]) or 'None'
+  display_equipment = property(_display_equipment)
+
+  def _display_abilities(self):
+    return ", ".join([x.name_link() for x in self.species.abilities.all()]) or 'None'
+  display_abilities = property(_display_abilities)
+
+  
+  display_equipment_list = property(_display_equipment_list)
+  

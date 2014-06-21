@@ -5,7 +5,7 @@ from django.db.models import Sum
 
 # Create your views here.
 from base.models import Index
-from equipment.views import sorting_context
+from base.views import sorting_context
 from adversaries.models import *
 
 class AdversaryDetailView(DetailView):
@@ -18,4 +18,43 @@ class AdversaryListView(ListView):
     context = super(AdversaryListView, self).get_context_data(**kwargs)
     context.update(sorting_context(Adversary, 'name', ['name', 'level', 'index'], ['index'], self.request))
     return context 
+  
+class CreatureWeaponDetailView(DetailView):
+  model = CreatureWeapon
+  template_name = "equipment/weapon_detail.html"
+  
+  def get_context_data(self, **kwargs):
+    context = super(CreatureWeaponDetailView, self).get_context_data(**kwargs)
+    context['weapon'] = self.get_object()
+    return context
+    
+class CreatureWeaponListView(ListView):
+  model = CreatureWeapon
+
+  def get_context_data(self, **kwargs):
+    context = super(CreatureWeaponListView, self).get_context_data(**kwargs)
+    context.update(sorting_context(CreatureWeapon, 'name', ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'index'], ['index'], self.request))
+    return context 
+
+class CreatureDetailView(DetailView):
+  model = Creature
+  template_name = 'adversaries/adversary_detail.html'
+  
+  def get_context_data(self, **kwargs):
+    context = super(CreatureDetailView, self).get_context_data(**kwargs)
+    context['adversary'] = self.get_object()
+    return context
+
+class CreatureListView(ListView):
+  model = Creature
+
+  def get_context_data(self, **kwargs):
+    context = super(CreatureListView, self).get_context_data(**kwargs)
+    context.update(sorting_context(Creature, 'name', ['name', 'level', 'index'], ['index'], self.request))
+    return context 
+
+
+
+  
+  
   
