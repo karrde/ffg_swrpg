@@ -55,6 +55,12 @@ class Adversary(base.models.Entry):
     return ", ".join([x.name_link() for x in self.equipment.all()]) or 'None'
   display_equipment_list = property(_display_equipment_list)
   
+  def clean(self, *args, **kwargs):
+    super(Adversary, self).clean(*args, **kwargs)
+    if self.level == 'Nemesis':
+      if self.strain_threshold < 1:
+        raise ValidationError("{adversary} is a Nemesis, Strain Threshold must have value".format(adversary=self.name))
+
 class TalentEntry(models.Model):
   adversary = models.ForeignKey(Adversary)
   talent = models.ForeignKey(character.models.Talent)
