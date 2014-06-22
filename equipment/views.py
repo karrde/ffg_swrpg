@@ -37,7 +37,7 @@ def sorting_context(model_class, default_sort, valid_sorts, special_sorts, reque
   }
 
 class GearListView(ListView):
-  queryset = Gear.objects.filter(equipment__isnull=False)
+  model = Gear
   
   def get_context_data(self, **kwargs):
     context = super(GearListView, self).get_context_data(**kwargs)

@@ -7,7 +7,11 @@
 {{ block.super }}
 <ul>
 <li><a href="{% url 'adversaries:adversaries' %}">Adversaries</a></li>
-<li><a href="{% url 'adversaries:weapons' %}">Adversary Weapons</a></li>
+<ul>
+<li><a href="{% url 'adversaries:gear' %}">Gear</a></li>
+<li><a href="{% url 'adversaries:weapons' %}">Weapons</a></li>
+<li><a href="{% url 'adversaries:armor' %}">Armor</a></li>
+</ul>
 <li><a href="{% url 'adversaries:creatures' %}">Creatures</a></li>
 <li><a href="{% url 'adversaries:creatureweapons' %}">Creature Weapons</a></li>
 </ul>

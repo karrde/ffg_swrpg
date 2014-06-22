@@ -1,0 +1,16 @@
+{% extends "adversaries/base.html" %}
+
+{% block title %}{{ block.super }} - Adversary Gear{% endblock title %}
+
+{% block content %}
+<h2>{% if in_category %}{{ category.name }} {% endif %}Gear</h2>
+{% if gear_list %}
+    {% include "adversaries/gear_list_header.html" %}
+        {% for gear in gear_list %}
+            {% include "adversaries/gear_list_line.html" with gear=gear %}
+        {% endfor %}
+    </table></div>
+{% else %}
+    <p>No gear.</p>
+{% endif %}
+{% endblock content %}

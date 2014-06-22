@@ -1,0 +1,16 @@
+{% extends "adversaries/base.html" %}
+
+{% block title %}{{ block.super }} - Adversary Armor{% endblock title %}
+
+{% block content %}
+<h2>Adversary Armor</h2>
+{% if armor_list %}
+    {% include "adversaries/armor_list_header.html" %}
+    {% for armor in armor_list %}
+    {% include "adversaries/armor_list_line.html" with armor=armor %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No armor.</p>
+{% endif %}
+{% endblock content %}

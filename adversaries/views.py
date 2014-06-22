@@ -63,7 +63,23 @@ class WeaponListView(ListView):
     context.update(equipment_sorting_context(equipment.models.Weapon, 'name', ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'index'], ['index'], self.request, True))
     return context 
 
+class GearListView(ListView):
+  model = equipment.models.Gear
+  template_name = 'adversaries/gear_list.html'
 
+  def get_context_data(self, **kwargs):
+    context = super(GearListView, self).get_context_data(**kwargs)
+    context.update(equipment_sorting_context(self.model, 'name', ['name', 'encumbrance', 'index'], ['index'], self.request, True))
+    return context 
+
+class ArmorListView(ListView):
+  model = equipment.models.Armor
+  template_name = 'adversaries/armor_list.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(ArmorListView, self).get_context_data(**kwargs)
+    context.update(equipment_sorting_context(self.model, 'name', ['name', 'defense', 'soak', 'encumbrance', 'hard_points', 'index'], ['index'], self.request, True))
+    return context 
   
   
   
