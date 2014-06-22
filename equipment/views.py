@@ -20,7 +20,7 @@ def sorting_context(model_class, default_sort, valid_sorts, special_sorts, reque
   if order_by not in special_sorts:
     object_list = model_class.objects.filter(equipment__isnull=is_adversary).filter(model=model_class.__name__).order_by(order_by, default_sort)
   elif order_by == 'index':
-    object_list = [x for x in [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__model=model_class.__name__)] if xor(hasattr(x, 'equipment'), is_adversary)]
+    object_list = [x for x in [model_class.objects.get(pk=x.entry.id) for x in Index.objects.filter(entry__gear__equipment__isnull=is_adversary).filter(entry__model=model_class.__name__)]]
   elif order_by == 'crew':
     object_list = sorted(model_class.objects.all(), key=lambda x: x.crewentry_set.aggregate(Sum('quantity')))
   if reverse:

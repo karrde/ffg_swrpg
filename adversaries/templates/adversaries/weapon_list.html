@@ -1,0 +1,17 @@
+{% extends "adversaries/base.html" %}
+
+{% block title %}{{ block.super }} - Adversary Weapons{% endblock title %}
+
+{% block content %}
+<span>{{ request.valid_sorts }}</span>
+<h2>Adversary Weapons</h2>
+{% if weapon_list %}
+    {% include "adversaries/weapon_list_header.html" %}
+    {% for weapon in weapon_list %}
+    {% include "adversaries/weapon_list_line.html" with weapon=weapon %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No adversary weapons.</p>
+{% endif %}
+{% endblock content %}

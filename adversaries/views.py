@@ -6,6 +6,7 @@ from django.db.models import Sum
 # Create your views here.
 from base.models import Index
 from base.views import sorting_context
+from equipment.views import sorting_context as equipment_sorting_context
 from adversaries.models import *
 
 class AdversaryDetailView(DetailView):
@@ -53,6 +54,14 @@ class CreatureListView(ListView):
     context.update(sorting_context(Creature, 'name', ['name', 'level', 'index'], ['index'], self.request))
     return context 
 
+class WeaponListView(ListView):
+  model = equipment.models.Weapon
+  template_name = 'adversaries/weapon_list.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(WeaponListView, self).get_context_data(**kwargs)
+    context.update(equipment_sorting_context(equipment.models.Weapon, 'name', ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'index'], ['index'], self.request, True))
+    return context 
 
 
   

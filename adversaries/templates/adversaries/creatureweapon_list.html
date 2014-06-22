@@ -5,7 +5,7 @@
 {% block content %}
 <h2>Creature Weapons</h2>
 {% if creatureweapon_list %}
-    {% include "adversaries/creatureweapon_list_header.html" %}
+    {% include "adversaries/weapon_list_header.html" %}
     {% for creatureweapon in creatureweapon_list %}
     {% include "adversaries/creatureweapon_list_line.html" with creatureweapon=creatureweapon %}
     {% endfor %}
