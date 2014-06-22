@@ -48,7 +48,7 @@ class Adversary(base.models.Entry):
   display_abilities = property(_display_abilities)
   
   def _display_equipment(self):
-    return ", ".join([x.equipment_display for x in self.equipment.all()]) or 'None'
+    return ", ".join([x._equipment_display(brawn=self.brawn) for x in self.equipment.all()]) or 'None'
   display_equipment = property(_display_equipment)
 
   def _display_equipment_list(self):
