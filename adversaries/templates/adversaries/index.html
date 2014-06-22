@@ -3,7 +3,8 @@
 {% block content %}
 <h2>Adversaries</h2>
 <div class="model_list"><a href="{% url 'adversaries:adversaries' %}" class="model_link">Adversaries</a></div>
+<div class="model_list"><a href="{% url 'adversaries:weapons' %}" class="model_link">Adversary Weapons</a></div>
 <div class="model_list"><a href="{% url 'adversaries:creatures' %}" class="model_link">Creatures</a></div>
-<div class="model_list"><a href="{% url 'adversaries:creatureweapons' %}" class="model_link">Weapons</a></div>
+<div class="model_list"><a href="{% url 'adversaries:creatureweapons' %}" class="model_link">Creature Weapons</a></div>
 
 {% endblock content %}
