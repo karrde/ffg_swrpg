@@ -26,7 +26,7 @@ class Adversary(base.models.Entry):
   skills = models.ManyToManyField(character.models.Skill, through='SkillEntry')
   talents = models.ManyToManyField(character.models.Talent, through='TalentEntry')
   abilities = models.ManyToManyField(character.models.Ability, blank=True)
-  equipment = models.ManyToManyField(equipment.models.Gear)
+  equipment = models.ManyToManyField(equipment.models.Gear, blank=True)
   
   def _display_skills(self):
     if self.level == 'Minion':
