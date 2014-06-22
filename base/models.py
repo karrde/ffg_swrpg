@@ -76,6 +76,11 @@ class Entry(models.Model):
       if not instance.model:
         instance.model = instance.__class__.__name__
 
+  def clean(self, *args, **kwargs):
+    super(Entry, self).clean(*args, **kwargs)
+    if not self.model:
+      self.model = self.__class__.__name__
+
   @models.permalink
   def get_absolute_url(self):
       return ('{0}:{1}'.format(self.__class__._meta.app_label, self.model.lower()), [str(self.id)])
