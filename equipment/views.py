@@ -94,7 +94,7 @@ class AttachmentListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(AttachmentListView, self).get_context_data(**kwargs)
-    context.update(sorting_context(self.model, 'name', ['name', 'price', 'encumbrance', 'hard_points', 'rarity', 'index'], ['index'], self.request))
+    context.update(sorting_context(self.model, 'name', ['name', 'equipment__price', 'encumbrance', 'hard_points', 'equipment__rarity', 'index'], ['index'], self.request))
     return context 
 
 class AttachmentCategoryView(AttachmentListView):
