@@ -81,7 +81,7 @@ class VehicleAttachmentAdmin(equipment.admin.GearAdmin):
 
   def queryset(self, request):
     qs = super(equipment.admin.GearAdmin, self).queryset(request)
-    return qs.filter(category__model=7)
+    return qs.filter(model='VehicleAttachment')
 
   def get_form(self, request, obj=None, **kwargs):
     # just save obj reference for future processing in Inline
