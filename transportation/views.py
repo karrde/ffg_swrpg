@@ -76,10 +76,10 @@ class StarshipCategoryView(StarshipListView):
 
   def get_context_data(self, **kwargs):
     context = super(StarshipCategoryView, self).get_context_data(**kwargs)
-    if context['order_by'] not in context['special_sorts']:
-      context['starship_list'] = context['starship_list'].filter(category__id=int(self.kwargs['category']))
-    else:
-      context['starship_list'] = [i for i in context['starship_list'] if i.equipment.category.id == int(self.kwargs['category'])]
+#    if context['order_by'] not in context['special_sorts']:
+#      context['starship_list'] = context['starship_list'].filter(category__id=int(self.kwargs['category']))
+#    else:
+    context['starship_list'] = [i for i in context['starship_list'] if i.equipment.category.id == int(self.kwargs['category'])]
     context['category'] = Category.objects.get(pk=self.kwargs['category'])
     return context
 
