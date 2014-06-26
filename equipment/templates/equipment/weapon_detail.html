@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="item_block">
-    <span class="item_name">{{ weapon.name }}</span><br />
+    <span class="item_name">{{ weapon }}</span><br />
     {% if weapon.image %}<img class="item_image" src="{{ weapon.image.url }}" />{% endif %}
     <div class="item_detail">
         {% if weapon.aka %}<span class="item_titles">AKA:</span> {{ weapon.aka }}<br />{% endif %}

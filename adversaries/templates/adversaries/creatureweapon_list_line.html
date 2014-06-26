@@ -1,5 +1,5 @@
 <tr>
-    <td class="item_name"><a href="{% url 'adversaries:creatureweapon' creatureweapon.id %}">{{ creatureweapon.name }}</a></td>
+    <td class="item_name"><a href="{% url 'adversaries:creatureweapon' creatureweapon.id %}">{{ creatureweapon }}</a></td>
     <td class="weapon_skill">{{ creatureweapon.get_weapon_skill_display }}</td>
     <td>{{ creatureweapon.display_damage }}</td>
     <td>{{ creatureweapon.display_crit }}</td>
