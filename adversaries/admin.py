@@ -72,6 +72,11 @@ class CreatureAdmin(AdversaryAdmin):
   )
   
   inlines = [TalentEntryInline, SkillEntryInline, base.admin.IndexInline]
+
+  def queryset(self, request):
+    qs = super(AdversaryAdmin, self).queryset(request)
+    return qs.filter(model='Creature')
+
 admin.site.register(Creature, CreatureAdmin)
   
 
