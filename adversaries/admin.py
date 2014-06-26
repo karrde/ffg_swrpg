@@ -31,6 +31,10 @@ class AdversaryAdmin(base.admin.EntryAdmin):
   inlines = [TalentEntryInline, SkillEntryInline, base.admin.IndexInline]
   filter_horizontal = ('abilities', 'equipment',)
   
+  def queryset(self, request):
+    qs = super(AdversaryAdmin, self).queryset(request)
+    return qs.filter(model='Adversary')
+
   def formfield_for_manytomany(self, db_field, request, **kwargs):
     if db_field.name == "equipment":
       kwargs["queryset"] = equipment.models.Gear.objects.filter(model__in=['Gear', 'Weapon', 'Armor', 'Vehicles', 'Starships'])
