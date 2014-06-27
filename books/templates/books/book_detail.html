@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ book.name }}</h1>
 {% if gear_list %}
-<h3>Items</h3>
+<h3>Gear</h3>
     {% include "equipment/gear_list_header.html" %}
     {% for gear in gear_list %}            
     {% include "equipment/gear_list_line.html" with gear=gear %}
@@ -79,6 +79,14 @@
 <h3>Adversaries</h3>
     {% include "adversaries/adversary_list_header.html" %}
         {% for adversary in adversary_list %}
+            {% include "adversaries/adversary_list_line.html" with adversary=adversary %}
+        {% endfor %}
+    </table></div>
+{% endif %}
+{% if creature_list %}
+<h3>Creatures</h3>
+    {% include "adversaries/adversary_list_header.html" %}
+        {% for adversary in creature_list %}
             {% include "adversaries/adversary_list_line.html" with adversary=adversary %}
         {% endfor %}
     </table></div>

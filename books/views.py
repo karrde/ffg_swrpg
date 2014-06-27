@@ -28,6 +28,7 @@ class BookDetailView(DetailView):
     context['talent_list'] = object.talent_set
     context['ability_list'] = object.ability_set
     context['adversary_list'] = object.adversary_set
+    context['creature_list'] = object.creature_set
     context['request'] = self.request
     return context
   
