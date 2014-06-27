@@ -44,3 +44,6 @@ class AbilityListView(ListView):
 
 class AbilityDetailView(DetailView):
   model = Ability
+
+class SpeciesDetailView(DetailView):
+  model = Species

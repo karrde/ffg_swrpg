@@ -7,7 +7,7 @@
     {% if ability.image %}<img class="item_image" src="{{ ability.image.url }}" />{% endif %}
     <div class="item_detail">
         {% if ability.aka %}<span class="item_titles">AKA:</span> {{ ability.aka }}<br />{% endif %}
-        <span class="item_titles">Description:</span> {{ ability.description }}<br />
+        <span class="item_titles">Description:</span> {{ ability.display_abilities }}<br />
         <span class="item_titles">Indexes:</span> {{ ability.indexes }}<br />
     </div>
 </div>

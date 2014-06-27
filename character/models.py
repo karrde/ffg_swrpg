@@ -90,4 +90,7 @@ class Species(base.models.Entry):
   starting_experience = models.IntegerField(default=0)
   abilities = models.ManyToManyField(Ability, blank=True)
   
+  def _display_abilities(self):
+    return ", ".join([x.name_link() for x in self.abilities.all()]) or 'None'
+  display_abilities = property(_display_abilities)
   

@@ -40,12 +40,21 @@ class EntryFeed(Feed):
       try:
         subitem = getattr(item, 'gear')
       except Entry.DoesNotExist:
-        subitem = getattr(item, item.model.lower())
+        subitem = item
+        try:
+          subitem = getattr(item, 'adversary')
+        except Entry.DoesNotExist:
+          pass
+        subitem = getattr(subitem, item.model.lower())
       else:
         try:
           subitem = getattr(subitem, 'vehicle')
         except Gear.DoesNotExist:
-          pass  
+          pass 
+        try:
+          subitem = getattr(subitem, 'weapon')
+        except Gear.DoesNotExist: 
+          pass
         subitem = getattr(subitem, subitem.model.lower())
       
       return reverse('{0}:{1}'.format(subitem.__class__._meta.app_label, subitem.model.lower()), args=[subitem.pk])

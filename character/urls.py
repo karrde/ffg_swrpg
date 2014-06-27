@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^talent/(?P<pk>\d+)/$', TalentDetailView.as_view(), name='talent'),
     url(r'^ability/$', AbilityListView.as_view(), name='abilities'),
     url(r'^ability/(?P<pk>\d+)/$', AbilityDetailView.as_view(), name='ability'),
+    url(r'^species/(?P<pk>\d+)/$', SpeciesDetailView.as_view(), name='species'),
 )
