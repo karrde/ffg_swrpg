@@ -14,6 +14,7 @@ class BookAdmin(admin.ModelAdmin):
   list_display = ('name', 'initials', 'num_pages', 'product_key', 'system_initials' )
   
 class EntryAdmin(admin.ModelAdmin):
+  search_fields = ['name']
   def formfield_for_dbfield(self, db_field, **kwargs):
     formfield = super(EntryAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     if db_field.name == 'notes':
