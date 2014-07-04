@@ -16,7 +16,7 @@
     </div>
     <div class="item_detail">
         {% if vehicle.aka %}<span class="item_titles">AKA:</span> {{ vehicle.aka }}<br />{% endif %}
-        <span class="item_titles">Vehicle Type/Model:</span> {{ vehicle.category.name }}/{{ vehicle.vehicle_model }}<br />
+        <span class="item_titles">Vehicle Type/Model:</span> {{ vehicle.equipment.category.name }}/{{ vehicle.vehicle_model }}<br />
         <span class="item_titles">Manufacturer:</span> {{ vehicle.manufacturer }}<br />
         <span class="item_titles">Maximum Altitude:</span> {{ vehicle.display_altitude }}<br />
         <span class="item_titles">Sensor Range:</span> {{ vehicle.get_sensor_range_display }}<br />
