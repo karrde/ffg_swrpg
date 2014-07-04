@@ -51,7 +51,7 @@ class ConsumableInline(admin.TabularInline):
   model = Consumable
 
 class StarshipAdmin(equipment.admin.GearAdmin):
-  fields = ['name', 'silhoutte', 'speed', 'handling', ('def_fore', 'def_port', 'def_starboard', 'def_aft'), 'armor_value', 'hull_trauma', 'system_strain', 'model',  'manufacturer', 'navicomputer', 'sensor_range', 'encumbrance', 'passenger', 'hard_points', 'weapon_count', 'notes', 'image']
+  fields = ['name', 'silhoutte', 'speed', 'handling', ('def_fore', 'def_port', 'def_starboard', 'def_aft'), 'armor_value', 'hull_trauma', 'system_strain', 'manufacturer', 'navicomputer', 'sensor_range', 'encumbrance', 'passenger', 'hard_points', 'weapon_count', 'notes', 'image']
   inlines = [CrewEntryInline, HyperdriveInline, ConsumableInline, EquipmentInline, base.admin.IndexInline]
 
   def formfield_for_foreignkey(self, db_field, request, **kwargs):
