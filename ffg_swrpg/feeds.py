@@ -55,6 +55,10 @@ class EntryFeed(Feed):
           subitem = getattr(subitem, 'weapon')
         except Gear.DoesNotExist: 
           pass
+        try:
+          subitem = getattr(subitem, 'attachment')
+        except Gear.DoesNotExist:
+          pass
         subitem = getattr(subitem, subitem.model.lower())
       
       return reverse('{0}:{1}'.format(subitem.__class__._meta.app_label, subitem.model.lower()), args=[subitem.pk])
