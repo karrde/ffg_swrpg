@@ -78,6 +78,9 @@ class WeaponCategoryView(WeaponListView):
 class WeaponDetailView(DetailView):
   model = Weapon
 
+class WeaponQualityDetailView(DetailView):
+  model = WeaponQuality
+
 class ArmorListView(ListView):
   model = Armor
 

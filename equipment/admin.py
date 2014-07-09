@@ -33,10 +33,19 @@ class GearAdmin(base.admin.EntryAdmin):
     if not hasattr(request, 'model'):
       request.model = 'Gear'
     return super(GearAdmin, self).get_form(request, obj, **kwargs)
+    
+class WeaponQualityAdmin(base.admin.EntryAdmin):
+  fields = ['name', ('active', 'ranked',), ('activation_cost', 'activation_cost_mod', 'activation_cost_by_sil',), 'effect']
+  inlines = [base.admin.IndexInline]
+  
+class WeaponQualityEntryInline(admin.TabularInline):
+  model = WeaponQualityEntry
+  extra = 1
   
 class WeaponAdmin(GearAdmin):
   fields = ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'special', 'notes', 'image']
-
+  inlines = [WeaponQualityEntryInline, EquipmentInline, base.admin.IndexInline]
+  
   def formfield_for_choice_field(self, db_field, request, **kwargs):
     if db_field.name == "weapon_skill":
       kwargs['choices'] = (
@@ -106,3 +115,4 @@ admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(Armor, ArmorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Attachment, AttachmentAdmin)
+admin.site.register(WeaponQuality, WeaponQualityAdmin)

@@ -1,5 +1,6 @@
 from django.db import models
 import base.models
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 
 class Category(models.Model):
   MODEL_CHOICES = (
@@ -84,6 +85,14 @@ class Equipment(models.Model):
     return '{restricted}{price:,d}'.format(restricted=["","(R) "][self.restricted], price=self.price)
   display_price = property(_display_price)
 
+class WeaponQuality(base.models.Entry):
+  active = models.BooleanField()
+  ranked = models.BooleanField()
+  activation_cost = models.IntegerField(default=2)
+  effect = models.TextField(max_length=500)
+  activation_cost_mod = models.IntegerField(default=0)
+  activation_cost_by_sil = models.IntegerField(default=0)
+
 class Weapon(Gear):
   SKILL_CHOICES = (
     (1, 'Brawl'),
@@ -128,6 +137,25 @@ class Weapon(Gear):
   display_hp = property(_display_hp)
   display_damage = property(_display_damage)
     
+class WeaponQualityEntry(models.Model):
+  weapon = models.ForeignKey(Weapon)
+  quality = models.ForeignKey(WeaponQuality)
+  rank = models.IntegerField(null=True, blank=True)
+
+  def clean(self, *args, **kwargs):
+    super(WeaponQualityEntry, self).clean(*args, **kwargs)
+    if self.quality.ranked:
+      if self.rank < 1:
+        raise ValidationError("{quality} is ranked, must have value".format(quality=self.quality.name))
+    else:
+      self.rank = None
+
+  def __unicode__(self):
+    if self.quality.ranked:
+      return "{0} {1}".format(self.quality.name_link(), self.rank)
+    else:
+      return self.quality.name_link()
+
 class Armor(Gear):
   defense = models.IntegerField()
   soak = models.IntegerField()
@@ -149,4 +177,3 @@ class Attachment(Gear):
 
   display_encum = property(_display_encum)
 
-  
