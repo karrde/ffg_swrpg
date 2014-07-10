@@ -13,6 +13,7 @@
         {% endfor %}
         </div>
     {% endfor %}
+    <div class="model_list"><a href="{% url 'equipment:weaponqualities' %}" class="model_link">Weapon Qualities</a></div>
 {% else %}
     <p>No equipment.</p>
 {% endif %}

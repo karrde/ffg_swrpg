@@ -35,6 +35,7 @@ class GearAdmin(base.admin.EntryAdmin):
     return super(GearAdmin, self).get_form(request, obj, **kwargs)
     
 class WeaponQualityAdmin(base.admin.EntryAdmin):
+  list_display = ('name', 'indexes')
   fields = ['name', ('active', 'ranked',), ('activation_cost', 'activation_cost_mod', 'activation_cost_by_sil',), 'effect']
   inlines = [base.admin.IndexInline]
   

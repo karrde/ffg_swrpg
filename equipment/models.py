@@ -97,22 +97,6 @@ class Equipment(models.Model):
   display_price = property(_display_price)
   
 
-class WeaponQuality(base.models.Entry):
-  active = models.BooleanField()
-  ranked = models.BooleanField()
-  activation_cost = models.IntegerField(default=2)
-  effect = models.TextField(max_length=500)
-  activation_cost_mod = models.IntegerField(default=0)
-  activation_cost_by_sil = models.IntegerField(default=0)
-  
-  def _display_active(self):
-    return "Active" if self.active else "Passive"
-  display_active = property(_display_active)
-
-  def _display_ranked(self):
-    return "Yes" if self.ranked else "No"
-  display_ranked = property(_display_ranked)
-
 class Weapon(Gear):
   SKILL_CHOICES = (
     (1, 'Brawl'),
@@ -160,6 +144,23 @@ class Weapon(Gear):
     return str(self.hard_points)
   display_hp = property(_display_hp)
     
+class WeaponQuality(base.models.Entry):
+  active = models.BooleanField()
+  ranked = models.BooleanField()
+  activation_cost = models.IntegerField(default=2)
+  effect = models.TextField(max_length=500)
+  activation_cost_mod = models.IntegerField(default=0)
+  activation_cost_by_sil = models.IntegerField(default=0)
+  weapons = models.ManyToManyField(Weapon, through='WeaponQualityEntry')
+
+  def _display_active(self):
+    return "Active" if self.active else "Passive"
+  display_active = property(_display_active)
+
+  def _display_ranked(self):
+    return "Yes" if self.ranked else "No"
+  display_ranked = property(_display_ranked)
+
 class WeaponQualityEntry(models.Model):
   weapon = models.ForeignKey(Weapon)
   quality = models.ForeignKey(WeaponQuality)

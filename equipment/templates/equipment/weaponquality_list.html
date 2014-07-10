@@ -1,0 +1,16 @@
+{% extends "equipment/base.html" %}
+
+{% block title %}{{ block.super }} - Weapon Quality{% endblock title %}
+
+{% block content %}
+<h2>Weapon Quality</h2>
+{% if weaponquality_list %}
+    {% include "equipment/weaponquality_list_header.html" %}
+    {% for weaponquality in weaponquality_list %}
+    {% include "equipment/weaponquality_list_line.html" with weaponquality=weaponquality %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No weapon qualities.</p>
+{% endif %}
+{% endblock content %}

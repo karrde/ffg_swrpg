@@ -78,6 +78,14 @@ class WeaponCategoryView(WeaponListView):
 class WeaponDetailView(DetailView):
   model = Weapon
 
+class WeaponQualityListView(ListView):
+  model = WeaponQuality
+
+  def get_context_data(self, **kwargs):
+    context = super(WeaponQualityListView, self).get_context_data(**kwargs)
+    context.update(base.views.sorting_context(self.model, 'name', ['name', 'active', 'ranked', 'index'], ['index'], self.request))
+    return context 
+
 class WeaponQualityDetailView(DetailView):
   model = WeaponQuality
 

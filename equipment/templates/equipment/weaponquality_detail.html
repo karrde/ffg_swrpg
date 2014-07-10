@@ -17,4 +17,10 @@
 </div>
 {% endif %}
 
+{% if weaponquality.weapons.count %}
+<div>
+Weapons with {{ weaponquality.name }}: {% for weapon in weaponquality.weapons.all %}{% if not forloop.first %}, {% endif %}{{ weapon.name_link|safe }}{% endfor %}
+</div>
+{% endif %}
+
 {% endblock content %}
