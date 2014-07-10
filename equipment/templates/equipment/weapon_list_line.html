@@ -8,6 +8,6 @@
     <td>{{ weapon.display_hp }}</td>
     <td>{{ weapon.equipment.display_price }}</td>
     <td>{{ weapon.equipment.rarity }}</td>
-    <td class="weapon_special">{{ weapon.special }}</td>
+    <td class="weapon_special">{{ weapon.display_special|safe }}</td>
     <td>{{ weapon.indexes }}</td>
 </tr>

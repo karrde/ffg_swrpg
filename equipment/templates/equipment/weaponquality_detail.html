@@ -1,0 +1,20 @@
+{% extends "equipment/base.html" %}
+
+{% block content %}
+<div class="item_block">
+    <span class="item_name">{{ weaponquality.name }} ({{ weaponquality.display_active }})</span><br />
+    {% if weaponquality.image %}<img class="item_image" src="{{ weaponquality.image.url }}" />{% endif %}
+    <div class="item_detail">
+        {% if weaponquality.aka %}<span class="item_titles">AKA:</span> {{ weaponquality.aka }}<br />{% endif %}
+        <span class="item_titles">Ranked:</span> {{ weaponquality.display_ranked }}<br />
+        <span class="item_titles">Effect:</span> {{ weaponquality.effect }}<br />
+        <span class="item_titles">Indexes:</span> {{ weaponquality.indexes }}<br />
+    </div>
+</div>
+{% if weaponquality.notes %}
+<div class="note_block">
+<span class="item_titles">Notes:</span><span class="item_notes"> {{ weaponquality.notes }}</span>
+</div>
+{% endif %}
+
+{% endblock content %}

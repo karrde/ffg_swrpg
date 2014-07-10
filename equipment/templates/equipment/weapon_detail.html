@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="item_block">
-    <span class="item_name">{{ weapon }}</span><br />
+    <span class="item_name">{{ weapon.name }}</span><br />
     {% if weapon.image %}<img class="item_image" src="{{ weapon.image.url }}" />{% endif %}
     <div class="item_detail">
         {% if weapon.aka %}<span class="item_titles">AKA:</span> {{ weapon.aka }}<br />{% endif %}
@@ -14,7 +14,7 @@
         <span class="item_titles">HP:</span> {{ weapon.display_hp }}<br />
         {% if weapon.equipment %}<span class="item_titles">Price:</span> {{ weapon.equipment.display_price }}<br />{% endif %}
         {% if weapon.equipment %}<span class="item_titles">Rarity:</span> {{ weapon.equipment.rarity }}<br />{% endif %}
-        <span class="item_titles">Special:</span> {{ weapon.special }}<br />
+        <span class="item_titles">Special:</span> {{ weapon.display_special|safe }}<br />
         {% if weapon.equipment %}<span class="item_titles">Category:</span> {{ weapon.equipment.category.name }}<br />{% endif %}
         <span class="item_titles">Indexes:</span> {{ weapon.indexes }}<br />
     </div>

@@ -43,6 +43,7 @@ class WeaponQualityEntryInline(admin.TabularInline):
   extra = 1
   
 class WeaponAdmin(GearAdmin):
+  list_display = ('name', 'special', 'indexes')
   fields = ['name', 'weapon_skill', 'damage', 'critical', 'weapon_range', 'encumbrance', 'hard_points', 'special', 'notes', 'image']
   inlines = [WeaponQualityEntryInline, EquipmentInline, base.admin.IndexInline]
   
@@ -77,6 +78,7 @@ class WeaponAdmin(GearAdmin):
     return super(GearAdmin, self).get_form(request, obj, **kwargs)
 
 class ArmorAdmin(GearAdmin):
+  list_display = ('name', 'indexes')
   fields = ['name', 'defense', 'soak', 'encumbrance', 'hard_points', 'notes', 'image']
 
   def queryset(self, request):
@@ -97,6 +99,7 @@ class CategoryAdmin(admin.ModelAdmin):
     return qs.filter(model__in=[x[0] for x in Category.MODEL_CHOICES])
   
 class AttachmentAdmin(GearAdmin):
+  list_display = ('name', 'indexes')
   fields = ['name', 'encumbrance', 'hard_points', 'notes', 'image']
 
   def queryset(self, request):

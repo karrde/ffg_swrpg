@@ -1,6 +1,7 @@
 from django.db import models
 import base.models
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.utils.html import strip_tags
 
 class Category(models.Model):
   MODEL_CHOICES = (
@@ -57,15 +58,25 @@ class Gear(base.models.Entry):
       damage = self.weapon.damage
       if self.weapon.weapon_skill in [1,2]:
         damage += brawn
-      return "{name} ({skill}; Damage {damage}; Critical {critical}; Range ({range}); {special})".format(name=self.name_link(), skill=self.weapon.get_weapon_skill_display(), damage=damage, critical=self.weapon.display_crit, range=self.weapon.get_weapon_range_display(), special=self.weapon.special)
+      return "{name} ({attribs})".format(name=self.name_link(), attribs="; ".join(
+        [
+          self.weapon.get_weapon_skill_display(), 
+          "Damage {damage}".format(damage=damage),
+          "Critical {critical}".format(critical=self.weapon.display_crit),
+          "Range ({range})".format(range=self.weapon.get_weapon_range_display()),
+        ] + ([self.weapon.display_special] if self.weapon.display_special else [])
+      ))
     elif 'Armor' in self.model:
-      return "{name} ({soak:+d} soak; {defense:+d} defense)".format(name=self.name_link(), soak=self.armor.soak, defense=self.armor.defense)
+      attribs = []
+      if self.armor.soak: attribs.append("{soak:+d} soak".format(soak=self.armor.soak)) 
+      if self.armor.defense: attribs.append("{defense:+d} defense".format(defense=self.armor.defense))
+      return "{name} ({attribs})".format(name=self.name_link(), attribs="; ".join(attribs))
     else:
       return self.name_link()
   equipment_display = property(_equipment_display)
   
   def __unicode__(self):
-    return self.name
+    return strip_tags(self.equipment_display)
     
   def _equipment(self):
     return self.equipment_set.first()
@@ -84,6 +95,7 @@ class Equipment(models.Model):
   def _display_price(self):
     return '{restricted}{price:,d}'.format(restricted=["","(R) "][self.restricted], price=self.price)
   display_price = property(_display_price)
+  
 
 class WeaponQuality(base.models.Entry):
   active = models.BooleanField()
@@ -92,6 +104,14 @@ class WeaponQuality(base.models.Entry):
   effect = models.TextField(max_length=500)
   activation_cost_mod = models.IntegerField(default=0)
   activation_cost_by_sil = models.IntegerField(default=0)
+  
+  def _display_active(self):
+    return "Active" if self.active else "Passive"
+  display_active = property(_display_active)
+
+  def _display_ranked(self):
+    return "Yes" if self.ranked else "No"
+  display_ranked = property(_display_ranked)
 
 class Weapon(Gear):
   SKILL_CHOICES = (
@@ -116,26 +136,29 @@ class Weapon(Gear):
   critical = models.IntegerField()
   weapon_range = models.IntegerField(choices=RANGE_CHOICES)
   hard_points = models.IntegerField(default=0)
-  special = models.CharField(max_length=200)
+  special = models.CharField(max_length=200, null=True, blank=True)
+  
+  def _display_special(self):
+    return ", ".join([str(x) for x in self.weaponqualityentry_set.all()]+[self.special])
+  display_special = property(_display_special)
   
   def _display_damage(self):
     if (self.weapon_skill in [1, 2]):
       return "{0:+d}".format(self.damage)
     else:
       return self.damage
+  display_damage = property(_display_damage)
   
   def _display_crit(self):
     if self.critical:
       return str(self.critical)
     else:
       return "-"
+  display_crit = property(_display_crit)
 
   def _display_hp(self):
     return str(self.hard_points)
-      
-  display_crit = property(_display_crit)
   display_hp = property(_display_hp)
-  display_damage = property(_display_damage)
     
 class WeaponQualityEntry(models.Model):
   weapon = models.ForeignKey(Weapon)

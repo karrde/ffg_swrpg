@@ -4,6 +4,6 @@
     <td>{{ weapon.display_damage }}</td>
     <td>{{ weapon.display_crit }}</td>
     <td class="weapon_range">{{ weapon.get_weapon_range_display }}</td>
-    <td class="weapon_special">{{ weapon.special }}</td>
+    <td class="weapon_special">{{ weapon.display_special|safe }}</td>
     <td>{{ weapon.indexes }}</td>
 </tr>
