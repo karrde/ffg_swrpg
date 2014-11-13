@@ -1,0 +1,16 @@
+{% extends "character/base.html" %}
+
+{% block title %}{{ block.super }} - Species{% endblock title %}
+
+{% block content %}
+<h2>Species</h2>
+{% if species_list %}
+    {% include "character/species_list_header.html" %}
+    {% for species in species_list %}
+    {% include "character/species_list_line.html" with species=species %}
+    {% endfor %}
+    </table></div>
+{% else %}
+    <p>No species.</p>
+{% endif %}
+{% endblock content %}

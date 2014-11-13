@@ -47,3 +47,12 @@ class AbilityDetailView(DetailView):
 
 class SpeciesDetailView(DetailView):
   model = Species
+
+class SpeciesListView(ListView):
+  model = Species
+
+  def get_context_data(self, **kwargs):
+    context = super(SpeciesListView, self).get_context_data(**kwargs)
+    context.update(sorting_context(Species, 'name', ['name', 'player_race', 'index'], ['index'], self.request))
+    return context 
+

@@ -1,0 +1,5 @@
+<tr>
+    <td class="item_name"><a href="{% url 'character:species' species.id %}">{{ species.name }}</a></td>
+    <td>{% if species.player_race %}X{% endif %}</td>
+    <td>{{ species.indexes }}</td>
+</tr>
