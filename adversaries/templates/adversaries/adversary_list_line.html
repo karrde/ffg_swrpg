@@ -1,5 +1,5 @@
 <tr>
-    <td class="item_name"><a href="{% url 'adversaries:{{ adversary.model.lower }}' adversary.id %}">{{ adversary.name }}</a></td>
+    <td class="item_name"><a href="{% url 'adversaries:'|add:adversary.model.lower adversary.id %}">{{ adversary.name }}</a></td>
     <td>{{ adversary.level }}</td>
 <!--    <td>{{ adversary.brawn }}</td>
     <td>{{ adversary.agility }}</td>
