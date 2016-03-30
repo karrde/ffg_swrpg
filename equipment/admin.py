@@ -59,6 +59,9 @@ class WeaponAdmin(GearAdmin):
         (6, 'Lightsaber'),
         (7, 'Brawl - Non Brawn'), # These are for items that do not add
         (8, 'Melee - Non Brawn'), # To the Brawn Characteristic
+        (9, 'Lightsaber - Plus Brawn'), # This skill does add brawn
+        (10, 'Mechanics'), # Minimal use for Mines
+        (11, 'Medicine'), # Rare
       )
     return super(WeaponAdmin, self).formfield_for_choice_field(db_field, request, **kwargs)
       

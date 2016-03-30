@@ -107,6 +107,9 @@ class Weapon(Gear):
     (6, 'Lightsaber'),
     (7, 'Brawl'), # These are for items that do not add
     (8, 'Melee'), # To the Brawn Characteristic
+    (9, 'Lightsaber'), # This skill does add brawn
+    (10, 'Mechanics'), # Minimal use for Mines
+    (11, 'Medicine'), # Rare
   )
   RANGE_CHOICES = (  
     (1, 'Engaged'),
@@ -127,7 +130,7 @@ class Weapon(Gear):
   display_special = property(_display_special)
   
   def _display_damage(self):
-    if (self.weapon_skill in [1, 2]):
+    if (self.weapon_skill in [1, 2, 9]):
       return "{0:+d}".format(self.damage)
     else:
       return self.damage
