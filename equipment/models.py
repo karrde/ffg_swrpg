@@ -56,7 +56,7 @@ class Gear(base.models.Entry):
   def _equipment_display(self, brawn=0):
     if 'Weapon' in self.model:
       damage = self.weapon.damage
-      if self.weapon.weapon_skill in [1,2]:
+      if self.weapon.weapon_skill in [1,2,9]:
         damage += brawn
       return "{name} ({attribs})".format(name=self.name_link(), attribs="; ".join(
         [
