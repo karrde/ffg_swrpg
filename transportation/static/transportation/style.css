@@ -1,0 +1,169 @@
+.item_block {
+  width: 600px;
+}
+
+.vehicle_image {
+  background-image: url(/static/transportation/images/vehiclebg.jpg);
+  background-size: 600px;
+  background-position: bottom;
+}
+
+.starship_image {
+  background-image: url(/static/transportation/images/spacebg.jpg);
+  background-size: 600px;
+}
+
+.item_image {
+  display: block;
+  float: none;
+  margin: auto !important;
+  width: initial;
+  max-width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.vehicle_stats {
+  width: 600px;
+  height: 133px;
+  background-image: url(/static/transportation/images/transportation_stats.png);
+  background-size: 600px;
+  background-repeat: no-repeat;
+  position: relative;
+  font-size: .9em;
+}
+
+.vehicle_stats .item_titles {
+  color: white;
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+.vehicle_stats .title_sep {
+  visibility: hidden;
+}
+.vehicle_stats .item_value {
+  position: absolute;
+  text-align: center;
+  font-size: 200%;
+}
+
+.silhoutte .item_titles {
+  left: 1.5%;
+  top: 55.4%;
+  width: 13%;
+}
+.silhoutte .item_value {
+  left: 4%;
+  width: 8%;
+  top: 12%;
+  font-size: 310%;
+}
+
+.speed .item_titles {
+  left: 16%;
+  top: 55.4%;
+  width: 13%;
+}
+.speed .item_value {
+  left: 18.5%;
+  width: 8%;
+  top: 12%;
+  font-size: 310%;
+}
+
+.handling .item_titles {
+  left: 30.5%;
+  top: 55.4%;
+  width: 13%;
+}
+.handling .item_value {
+  left: 33%;
+  width: 8%;
+  top: 12%;
+  font-size: 310%;
+}
+
+.defense .item_titles {
+  left: 48%;
+  top: 7%;
+  width: 28%;
+}
+.defense .item_value {
+  left: 45.5%;
+  width: 33%;
+  top: 19%;
+}
+.defense .item_value .def_fore {
+  width: 25%;
+  left: 0%;
+  position: absolute;
+}
+.defense .item_value .def_port {
+  width: 25%;
+  left: 25%;
+  position: absolute;
+}
+.defense .item_value .def_starboard {
+  width: 25%;
+  left: 50%;
+  position: absolute;
+}
+.defense .item_value .def_aft {
+  width: 25%;
+  left: 75%;
+  position: absolute;
+}
+
+.armor .item_titles {
+  left: 83%;
+  top: 7%;
+  width: 13%;
+}
+.armor .item_value {
+  left: 83%;
+  width: 13%;
+  top: 19%;
+}
+
+.hull_trauma .item_titles {
+  left: 57%;
+  top: 54%;
+  width: 15%;
+  font-size: 90%;
+}
+.hull_trauma .item_value {
+  left: 57%;
+  width: 14%;
+  top: 65%;
+}
+
+.system_strain .item_titles {
+  left: 82%;
+  top: 54%;
+  width: 16%;
+  font-size: 90%;
+}
+.system_strain .item_value {
+  left: 82.5%;
+  width: 14%;
+  top: 65%;
+}
+
+.stats {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+.details {
+  clear: both;
+}
+
+.stat_value {
+  font-size: 1.5em;
+  position: absolute;
+  width:100%;
+  top: 29%;
+  text-align: center;
+}

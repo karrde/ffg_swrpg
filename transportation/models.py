@@ -57,6 +57,18 @@ class Vehicle(equipment.models.Gear):
       defps = "/{0}/{1}/".format(self.def_port, self.def_starboard)
     return "{0}{1}{2}".format(self.def_fore, defps, self.def_aft)
   defense = property(_display_def)
+  def _display_def_fore(self):
+    return self.def_fore
+  defense_fore = property(_display_def_fore)
+  def _display_def_port(self):
+    return self.def_port if self.silhoutte >= 5 else "-"
+  defense_port = property(_display_def_port)
+  def _display_def_starboard(self):
+    return self.def_starboard if self.silhoutte >= 5 else "-"
+  defense_starboard = property(_display_def_starboard)
+  def _display_def_aft(self):
+    return self.def_aft
+  defense_aft = property(_display_def_aft)
   
   def _total_defense(self):
     return self.def_fore + self.def_port + self.def_starboard + self.def_aft

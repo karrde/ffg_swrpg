@@ -4,29 +4,28 @@
 
 <div class="item_block">
     <span class="item_name">{{ starship.name }}</span><br />
-    {% if starship.image %}<img class="item_image" src="{{ starship.image.url }}" />{% endif %}
+    {% if starship.image %}<div class="starship_image"><img class="item_image" src="{{ starship.image.url }}" /></div>{% endif %}
     <div class="vehicle_stats">
-        <div class="silhoutte"><span class="item_titles">Silhouette:</sapn> <span class="item_value">{{ starship.silhoutte }}</span></div>
-        <div class="speed"><span class="item_titles">Speed:</sapn> <span class="item_value">{{ starship.speed }}</span></div>
-        <div class="handling"><span class="item_titles">Handling:</sapn> <span class="item_value">{{ starship.display_handling }}</span></div>
-        <div class="defense"><span class="item_titles">Defense:</sapn> <span class="item_value">{{ starship.defense }}</span></div>
-        <div class="armor"><span class="item_titles">Armor:</sapn> <span class="item_value">{{ starship.armor_value }}</span></div>
-        <div class="hull_trauma"><span class="item_titles">Hull Trauma:</sapn> <span class="item_value">{{ starship.hull_trauma }}</span></div>
-        <div class="system_strain"><span class="item_titles">System Strain:</sapn> <span class="item_value">{{ starship.system_strain }}</span></div>
+        <div class="silhoutte"><span class="item_titles">Silhouette<span class="title_sep">:</span></span></span> <span class="item_value">{{ starship.silhoutte }}</span></div>
+        <div class="speed"><span class="item_titles">Speed<span class="title_sep">:</span></span> <span class="item_value">{{ starship.speed }}</span></div>
+        <div class="handling"><span class="item_titles">Handling<span class="title_sep">:</span></span> <span class="item_value">{{ starship.display_handling }}</span></div>
+        <div class="defense"><span class="item_titles">Defense (F/P/S/A)<span class="title_sep">:</span></span> <span class="item_value"><span class="def_fore">{{ starship.defense_fore }}</span><span class="title_sep">/</span><span class="def_port">{{ starship.defense_port }}</span><span class="title_sep">/</span><span class="def_starboard">{{ starship.defense_starboard }}</span><span class="title_sep">/</span><span class="def_aft">{{ starship.defense_aft }}</span></span></div>
+        <div class="armor"><span class="item_titles">Armor<span class="title_sep">:</span></span> <span class="item_value">{{ starship.armor_value }}</span></div>
+        <div class="hull_trauma"><span class="item_titles">HT Threshold<span class="title_sep">:</span></span> <span class="item_value">{{ starship.hull_trauma }}</span></div>
+        <div class="system_strain"><span class="item_titles">SS Threshold<span class="title_sep">:</span></span> <span class="item_value">{{ starship.system_strain }}</span></div>
     </div>
     <div class="item_detail">
         {% if starship.aka %}<span class="item_titles">AKA:</span> {{ starship.aka }}<br />{% endif %}
-        <span class="item_titles">Vehicle Type/Model:</span> {{ starship.equipment.category.name }}/{{ starship.vehicle_model }}<br />
+        <span class="item_titles">Hull Type/Class:</span> {{ starship.equipment.category.name }}/{{ starship.vehicle_model }}<br />
         <span class="item_titles">Manufacturer:</span> {{ starship.manufacturer }}<br />
         <span class="item_titles">Hyperdrive:</span> {{ starship.hyperdrive }}<br />
         <span class="item_titles">Navicomputer:</span> {{ starship.display_navicomputer }}<br />
-        <span class="item_titles">Maximum Altitude:</span> {{ starship.display_altitude }}<br />
         <span class="item_titles">Sensor Range:</span> {{ starship.get_sensor_range_display }}<br />
         <span class="item_titles">Crew:</span> {{ starship.crew_detail }}<br />
         <span class="item_titles">Encumbrance Capacity:</span> {{ starship.encumbrance }}<br />
         <span class="item_titles">Passenger Capacity:</span> {{ starship.passenger }}<br />
         <span class="item_titles">Consumables:</span> {{ starship.consumables }}<br />
-        <span class="item_titles">Cost/Rarity:</span> {{ starship.display_price }} credits/{{ starship.display_rarity }}<br />
+        <span class="item_titles">Cost/Rarity:</span> {{ starship.equipment.display_price }} credits/{{ starship.equipment.rarity }}<br />
         <span class="item_titles">Customization Hard Points:</span> {{ starship.hard_points }}<br />
         <span class="item_titles">Weapons:</span> {{ starship.weapon_count }}<br />
         <span class="item_titles">Indexes:</span> {{ starship.indexes }}<br />
